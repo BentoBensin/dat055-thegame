@@ -25,6 +25,7 @@ public abstract class GameCharacter {
 	private int height;
 	
 	public GameCharacter(int speed, int width, int height){
+		image = new HashMap<String,HashMap<String, ArrayList<BufferedImage>>>();
 		this.speed = speed;
 		this.width = width;
 		this.height = height;
@@ -35,7 +36,10 @@ public abstract class GameCharacter {
 	 * @param HashMap containing images.
 	 */
 	public void loadImages(HashMap<String,HashMap<String, ArrayList<String>>> images){		
+		if( images == null)
+			throw new NullPointerException();
 		for(String action: images.keySet()){
+			System.out.println(action);
 			image.put(action, new HashMap<String, ArrayList<BufferedImage>>());
 			for(String direction: images.get(action).keySet()){
 				image.get(action).put(direction, new ArrayList<BufferedImage>());
