@@ -4,7 +4,6 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,6 +37,7 @@ public class TranspContainer extends JPanel {
 		this.height = height;
 		this.width = width;
 		this.setLayout(null);
+		initContainer();
 		setSize(this.height, this.width);
 	}
 
@@ -103,15 +103,11 @@ public class TranspContainer extends JPanel {
 			graphic.setColor(Color.BLACK);
 			graphic.fill(wrongtangle);
 			graphic.draw(wrongtangle);
-			//setLocation(new Point(20, 20));
 		} catch (IOException e) {
 			System.out.println("Image not found IOEXCEPTION \n");
 			System.out.println( e.getMessage());
 			e.printStackTrace();
-			wrongtangle = new Rectangle(0, 0, 20, 20);
-			graphic.setColor(Color.BLACK);
-			graphic.fill(wrongtangle);
-			graphic.draw(wrongtangle);
+			
 		}
 		
 		repaint();
@@ -119,12 +115,10 @@ public class TranspContainer extends JPanel {
 
 	}
 	public void setImage(BufferedImage bimg) {
-		Graphics2D graphic = getNewGraphics();
-		/*wrongtangle = new Rectangle(0, 0, 20, 20);
-		graphic.setColor(Color.BLACK);
-		graphic.fill(wrongtangle);
-		graphic.draw(wrongtangle);*/
-		repaint();
-		graphic.drawImage(bimg, 0, 0, null);
+		if( bimg != null ){
+			Graphics2D graphic = getNewGraphics();
+			repaint();
+			graphic.drawImage(bimg, 0, 0, null);
+		}
 	}
 }
