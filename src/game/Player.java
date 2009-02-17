@@ -1,8 +1,9 @@
 package game;
 
+import gamecharacter.GameCharacter;
+
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @file Player.java
@@ -12,17 +13,18 @@ import java.util.HashMap;
 //TODO KOMMENTERA!!!!!!!
 public class Player extends Client{
 
-	public Player(int id, Point point, int health, String name, HashMap<String,ArrayList<String>>images, Engine engine,GameCharacter gc){
-		super(id, point, health, name,images, engine,gc);
+	public Player(int id, Point point, int health, String name, GameCharacter gc, Engine engine){
+		super(id, point, health, name, gc, engine);
 	}
 	
 	public Player(Player p){	//TODO Animation not coppied...... BAD
-		super(IDGen.generateID(), (Point)p.getPoint().clone(), p.getHealth(), p.getName(),new HashMap<String,ArrayList<String>>(), p.engine);
+		super(IDGen.generateID(), (Point)p.getPoint().clone(), p.getHealth(), p.getName(),p.getGameCharacter(), p.engine);
 	}
 	
 	public void run() {
 		ArrayList<Client> nc = null;
 		while (true) {
+			System.out.println("player kör");
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -35,6 +37,7 @@ public class Player extends Client{
 				e.printStackTrace();
 			}
 			if (nc != null && !nc.isEmpty()) {
+				System.out.println("ändrat");
 				setChanged();
 			}
 			notifyObservers(nc);

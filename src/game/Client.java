@@ -5,8 +5,10 @@ package game;
  * @version 0.2
  * @author Mattias Lögdberg
  */
+import gamecharacter.GameCharacter;
+
 import java.awt.Point;
-import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -20,8 +22,8 @@ public abstract class Client extends Observable implements Runnable {
     private int health;
     private int id;
     private String name;
-    private HashMap<String,ArrayList<String>> images;
     private String direction;
+    private String action;
     private int position;
     private GameCharacter gc;
     
@@ -33,16 +35,15 @@ public abstract class Client extends Observable implements Runnable {
      * @param HashMap<String,ArrayList<String>>
      * @param name
      */
-    public Client(int id, Point point, int health, String name, HashMap<String,ArrayList<String>> images, Engine engine, GameCharacter gc){
+    public Client(int id, Point point, int health, String name, GameCharacter gc, Engine engine){
     	aktivitet = new Thread(this);
     	this.id = id;
         this.health = health;
         this.name = name;
-        //this.point = (Point) point.clone();
         this.point = point;
         this.engine = engine;
-        this.images = images;
-        direction = "south";
+        direction = "west";
+        action = "walk";
         position = 0;
         this.gc=gc;
     }
@@ -79,11 +80,10 @@ public abstract class Client extends Observable implements Runnable {
      * 	Get's the next image in the animation
      * @return string to image
      */
-    public String getAnimation() {
+    public BufferedImage getAnimation() {
     	if(position == 8) //TODO not hårdkodad
     		position = 0;
-    	return images.get(direction).get(position++);
-    	//return null;
+    	return gc.getNextImage(action, direction, position++);
     }
     /**
      * Returns the 
@@ -103,8 +103,8 @@ public abstract class Client extends Observable implements Runnable {
     public void setAnimationType(String type)  {
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
-    	if(!images.containsKey(type))
-    		throw new IllegalArgumentException("A non valid type was sent to setAnimationType for Client " + name);
+    	//if(!images.containsKey(type))
+    		//throw new IllegalArgumentException("A non valid type was sent to setAnimationType for Client " + name);
     	direction = type;
     }
     
@@ -189,6 +189,11 @@ public abstract class Client extends Observable implements Runnable {
     public void setDirection(String newDirection)
     {
     	direction=newDirection;
+    }
+    
+    public GameCharacter getGameCharacter()
+    {
+    	return gc;
     }
     
     /**
