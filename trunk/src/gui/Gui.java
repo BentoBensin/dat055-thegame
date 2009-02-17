@@ -257,10 +257,10 @@ public class Gui implements Observer {
 				if(currentList.get(client) == null) {
 					TranspContainer tnc = new TranspContainer(100, 100);
 					assert(myLayeredPane != null && tnc != null): "myLayeredPane eller tnc är Null i Gui.update()";
-					
+					tnc.initContainer();
 					try {
 						myLayeredPane.add(tnc, JLayeredPane.PALETTE_LAYER);
-						tnc.initContainer();
+						
 					}catch(NullPointerException e){
 						System.out.println("Nullpointer in Runner.run");
 						System.out.println(e.getMessage());
@@ -271,7 +271,6 @@ public class Gui implements Observer {
 					currentList.put(client, tnc);
 				}
 				currentList.get(client).setLocation(client.getPoint());
-				currentList.get(client).repaint();
 				System.out.println("Utför något med:" + currentList.size() + " Clienter");
 				System.out.println("Denna Client har ett namn (null om inte) " + client.getName() + " x,y: " + currentList.get(client).getLocation());
 				currentList.get(client).setImage(client.getAnimation());

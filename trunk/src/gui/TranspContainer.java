@@ -118,5 +118,13 @@ public class TranspContainer extends JPanel {
 		graphic.drawImage(currentimage, 0, 0, null);
 
 	}
-
+	public void setImage(BufferedImage bimg) {
+		Graphics2D graphic = getNewGraphics();
+		/*wrongtangle = new Rectangle(0, 0, 20, 20);
+		graphic.setColor(Color.BLACK);
+		graphic.fill(wrongtangle);
+		graphic.draw(wrongtangle);*/
+		repaint();
+		graphic.drawImage(bimg, 0, 0, null);
+	}
 }
