@@ -7,27 +7,25 @@ import java.io.IOException;
 import java.util.TreeMap;
 
 /**
+ * @file Maps.java
+ * @version 0.3
  * @author Josef Johansson, Teddie Heikkinen
  *
  */
-//TODO KOMMENTERA!!!!!!!
 public class Maps {
-    /**
-     * will be implemented later
-     */
     private TreeMap<String,MapPiece> map;
     public Maps()
     {
     	map = new TreeMap<String,MapPiece>();
     }
     /**
-     *
-     * @param z
-     * @param point
-     * @return
+     * Checks if a spot on the map is free to walk on
+     * @param v a field of ints {z,x,y}
+     * @return true if it's walkable, false if not
      */
     public boolean checkSpot(int [] v)
     {
+	return true;
         MapPiece piece = map.get((String)(v[0]+"-"+v[1]+"-"+v[2]));
         if (piece != null)
         {
@@ -38,7 +36,12 @@ public class Maps {
         }
         return false;
     }
-   
+    /**
+     * loads a map into the program
+     * @param String
+     * @return boolean true if succes false if not
+     * @throws IOException
+     */
     public boolean loadMap(String path) throws IOException
     {
         boolean isLoaded = false;
@@ -106,7 +109,8 @@ public class Maps {
                 }
                 if ( !isFail && name.length()>0 && map.containsKey(generateKey(z,y,x)))
                 {
-                    map.put((String)(z+"-"+x+"-"+y),new MapPiece(x,y,z,name,walkable));
+			MapPiece piece = new MapPiece(x,y,z,name,walkable);
+                    map.put(piece.toString(),piece);
                     isLoaded = true;
                 }
             }
@@ -114,23 +118,29 @@ public class Maps {
         return isLoaded;
     }
     /**
-     *
-     * @param map
-     * @return
+     * returns the current map
+     * @return TreeMap<String,MapPiece> The internal Map
      */
     public TreeMap<String,MapPiece> getMap()
     {
         return map;
     }
     /**
-     *
-     * @param v
-     * @return
+     * returns a mappiece at a certain position
+     * @param int a field of ints {z,x,y}
+     * @return MapPiece
      */
     public MapPiece getMapPiece(int[] v)
     {
         return map.get(generateKey(v[0],v[1],v[2]));
     }
+    /**
+     * generates the hashkey for our map-treemap
+     * @param int z 
+     * @param int x 
+     * @param int y
+     * @return String The hashkey
+     */
     private String generateKey(int z,int x,int y)
     {
         return (String)(z+"-"+x+"-"+y);
