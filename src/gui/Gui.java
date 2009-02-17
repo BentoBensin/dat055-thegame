@@ -25,6 +25,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
+import command.Commands;
+
 /**
  * Write a description of class Gui
  * 
@@ -222,21 +224,24 @@ public class Gui implements Observer {
 		public void keyPressed(KeyEvent e) {
 
 			if (e.getKeyCode() == KeyEvent.VK_W) {
+				player.setDirection(Commands.NORTH);
 				player.interpretCommand("north");
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_S) {
+				player.setDirection(Commands.SOUTH);
 				player.interpretCommand("south");
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_A) {
-				player.interpretCommand("west");
+				player.setDirection(Commands.WEST);
+				player.interpretCommand("east");
 
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_D) {
-
-				player.interpretCommand("east");
+				player.setDirection(Commands.EAST);
+				player.interpretCommand("west");
 			}
 
 			// Nedanstående kod för testsyften
@@ -257,7 +262,6 @@ public class Gui implements Observer {
 				if(currentList.get(client) == null) {
 					TranspContainer tnc = new TranspContainer(100, 100);
 					assert(myLayeredPane != null && tnc != null): "myLayeredPane eller tnc är Null i Gui.update()";
-					tnc.initContainer();
 					try {
 						myLayeredPane.add(tnc, JLayeredPane.PALETTE_LAYER);
 						
