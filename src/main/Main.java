@@ -1,11 +1,14 @@
 package main;
 
+import game.Engine;
+import game.IDGen;
+import game.Player;
+import gamecharacter.Warrior;
+import gui.Gui;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import game.*;
-import gui.*;
 /**
  * @file Main.java
  * @version 0.2
@@ -70,11 +73,12 @@ public class Main
     	anim.get("west").add("bin/images/warrior/walk/west/ww06.gif");
     	anim.get("west").add("bin/images/warrior/walk/west/ww07.gif");
     	
-    	Player p = new Player( IDGen.generateID() , new Point( 500,250 ), 100, "player",anim, e);
+    	Player p = new Player( IDGen.generateID() , new Point( 500,250 ), 100, "player",new Warrior(), e);
     	e.addClient( p);
-    	new Gui(p);
-    	e.createEnemies(1);
     	p.startThread();
+    	new Gui(p);
+    	//e.createEnemies(2);
+    	
     }
     
     public void init() {

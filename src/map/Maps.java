@@ -26,6 +26,7 @@ public class Maps {
     public boolean checkSpot(int [] v)
     {
 	return true;
+	/*
         MapPiece piece = map.get((String)(v[0]+"-"+v[1]+"-"+v[2]));
         if (piece != null)
         {
@@ -34,7 +35,7 @@ public class Maps {
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
     /**
      * loads a map into the program
