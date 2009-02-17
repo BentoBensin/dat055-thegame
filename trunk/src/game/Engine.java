@@ -1,5 +1,7 @@
 package game;
 
+import gamecharacter.Warrior;
+
 import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,7 +96,7 @@ public class Engine {
     	anim.get("west").add("bin/images/mushrooms/walk/west/ww06.bmp");
     	anim.get("west").add("bin/images/mushrooms/walk/west/ww07.bmp");
     	for( int i = 0 ; i < n ; i++ ) {
-    		monster = new Monster( IDGen.generateID() , new Point( 200, 100), 100, "Monster", anim, this);
+    		monster = new Monster( IDGen.generateID() , new Point( 200, 100), 100, "Monster", new Warrior(), this);
     		//TODO Clone av animeringen!!!
     		monster.addObserver( ai );
     		addClient(monster );
@@ -107,8 +109,14 @@ public class Engine {
      * @param radius
      * @return ArrayList of nearby clients
      */
+    public ArrayList<Client> nearbyClients( Client client, int radius){
+    	if( client == null || radius < 0)
+    		throw new IllegalArgumentException();
+    	return logicModel.nearbyClients(client, radius);
+    }
     public ArrayList<Client> nearbyClients( Point point, int radius){
-    	//System.out.println("nearbyClients");
+    	if( point == null || radius < 0)
+    		throw new IllegalArgumentException();
     	return logicModel.nearbyClients(point, radius);
     }
     /**
