@@ -23,6 +23,7 @@ public abstract class Client extends Observable implements Runnable {
     private HashMap<String,ArrayList<String>> images;
     private String direction;
     private int position;
+    private GameCharacter gc;
     
     /**
      * Constructor for Client object
@@ -32,7 +33,7 @@ public abstract class Client extends Observable implements Runnable {
      * @param HashMap<String,ArrayList<String>>
      * @param name
      */
-    public Client(int id, Point point, int health, String name, HashMap<String,ArrayList<String>> images, Engine engine){
+    public Client(int id, Point point, int health, String name, HashMap<String,ArrayList<String>> images, Engine engine, GameCharacter gc){
     	aktivitet = new Thread(this);
     	this.id = id;
         this.health = health;
@@ -43,6 +44,7 @@ public abstract class Client extends Observable implements Runnable {
         this.images = images;
         direction = "south";
         position = 0;
+        this.gc=gc;
     }
     /**
      * Run method that makes things happen
@@ -180,6 +182,24 @@ public abstract class Client extends Observable implements Runnable {
         return id;
     }
 
+    /**
+     * Sets the looking direction for the client
+     * @param newDirection
+     */
+    public void setDirection(String newDirection)
+    {
+    	direction=newDirection;
+    }
+    
+    /**
+     * Gets the direction of the client
+     * @return direction
+     */
+    public String getDirection()
+    {
+    	return direction;
+    }
+    
     /**
      * abstract methods
      */
