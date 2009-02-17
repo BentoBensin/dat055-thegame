@@ -12,8 +12,8 @@ import java.util.HashMap;
 //TODO KOMMENTERA!!!!!!!
 public class Player extends Client{
 
-	public Player(int id, Point point, int health, String name, HashMap<String,ArrayList<String>>images, Engine engine){
-		super(id, point, health, name,images, engine);
+	public Player(int id, Point point, int health, String name, HashMap<String,ArrayList<String>>images, Engine engine,GameCharacter gc){
+		super(id, point, health, name,images, engine,gc);
 	}
 	
 	public Player(Player p){	//TODO Animation not coppied...... BAD
