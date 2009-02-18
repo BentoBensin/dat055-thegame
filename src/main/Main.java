@@ -77,7 +77,7 @@ public class Main
     	e.addClient( p);
     	p.startThread();
     	new Gui(p);
-    	//e.createEnemies(2);
+    	e.createEnemies(1);
     	
     }
     

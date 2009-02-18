@@ -41,7 +41,7 @@ public class Commands
         private void initializeCommands(Engine engine)
         {
             commands.put("walk",new CommandMove(engine));
-  
+            commands.put("attack",new CommandAttack(engine));
         }
         /**
          * Returns all the commands we have.

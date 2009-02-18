@@ -53,6 +53,7 @@ public class Gui implements Observer {
 	public Gui(Player player) {
 		player.addObserver(this);
 		this.player = player;
+		started = false;
 		r = new Runner();
 		// Current list of clients visible to player
 		currentList = new HashMap<Client, TranspContainer>();
@@ -101,7 +102,7 @@ public class Gui implements Observer {
 	private void createMenu() {
 		JMenuBar menu = new JMenuBar();
 		JMenu Arkiv = new JMenu("Arkiv");
-		started = false;
+		
 
 		// JMenuitem start med anonym inre klass.
 		JMenuItem start = new JMenuItem("New Game");
@@ -132,9 +133,11 @@ public class Gui implements Observer {
 		Arkiv.add(quit);
 		menu.add(Arkiv);
 		frame.setJMenuBar(menu);
+		startGame();
 	}
 
 	private void startGame() {
+		started = true;
 	}
 
 	/**
@@ -160,7 +163,6 @@ public class Gui implements Observer {
 			currentList.get(client).setLocation(client.getPoint());
 			currentList.get(client).setImage(client.getAnimation());
 		}
-
 	}
 
 	/**
@@ -177,40 +179,15 @@ public class Gui implements Observer {
 	 */
 
 	public void update(Observable o, Object arg) {
-		//boolean updated = false;
-		if( arg == null) return;
+		if( arg == null || !started) return;
 		if (arg instanceof ArrayList) {
-			// TODO Fix this convertion safer
 			ArrayList<Client> temp = (ArrayList<Client>) arg;
 			for (Client client : temp) {
 				if (!currentList.keySet().contains(client)) {
 					currentList.put(client, null);
-					//updated = true;
-					/*
-					TranspContainer tnc = new TranspContainer(100, 100);
-					
-					//TODO kanske lägga i en hjälp class med invokeLater ??
-					assert(myLayeredPane != null && tnc != null): "myLayeredPane eller tnc är Null i Gui.update()";
-					try {
-						myLayeredPane.add(tnc, JLayeredPane.PALETTE_LAYER);
-					}catch(NullPointerException e){
-						System.out.println(e.getMessage());
-						e.printStackTrace();
-					}
-					tnc.initContainer();
-					// tnc.setImage();
-					tnc.setOpaque(false);
-					currentList.put(client, tnc);*/
 				}
 
 			}
-
-			/*for (Client client : currentList.keySet()) {
-				if (!temp.contains(client))
-					removeGraphic(currentList.remove(client));
-
-			}*/
-
 		}
 		SwingUtilities.invokeLater(r);
 	}
@@ -225,26 +202,24 @@ public class Gui implements Observer {
 
 			if (e.getKeyCode() == KeyEvent.VK_W) {
 				player.setDirection(Commands.NORTH);
-				player.interpretCommand("north");
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_S) {
 				player.setDirection(Commands.SOUTH);
-				player.interpretCommand("south");
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_A) {
 				player.setDirection(Commands.WEST);
-				player.interpretCommand("east");
-
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_D) {
 				player.setDirection(Commands.EAST);
-				player.interpretCommand("west");
 			}
-
-			// Nedanstående kod för testsyften
+			if (e.getKeyCode() == KeyEvent.VK_L) {
+				player.interpretCommand("attack");
+				return;
+			}
+			player.interpretCommand("walk");
 
 		}
 
@@ -264,7 +239,6 @@ public class Gui implements Observer {
 					assert(myLayeredPane != null && tnc != null): "myLayeredPane eller tnc är Null i Gui.update()";
 					try {
 						myLayeredPane.add(tnc, JLayeredPane.PALETTE_LAYER);
-						
 					}catch(NullPointerException e){
 						System.out.println("Nullpointer in Runner.run");
 						System.out.println(e.getMessage());
@@ -275,12 +249,10 @@ public class Gui implements Observer {
 					currentList.put(client, tnc);
 				}
 				currentList.get(client).setLocation(client.getPoint());
-				System.out.println("Utför något med:" + currentList.size() + " Clienter");
 				System.out.println("Denna Client har ett namn (null om inte) " + client.getName() + " x,y: " + currentList.get(client).getLocation());
 				currentList.get(client).setImage(client.getAnimation());
 			}
 		}
-		
 	}
 
 }
