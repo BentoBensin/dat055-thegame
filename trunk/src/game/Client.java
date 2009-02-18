@@ -90,7 +90,7 @@ public abstract class Client extends Observable implements Runnable {
      * @return
      */
     public String getAnimationType() {
-    	return direction;
+    	return action;
     }
     /**
      * Set's an new type of animation
@@ -103,9 +103,8 @@ public abstract class Client extends Observable implements Runnable {
     public void setAnimationType(String type)  {
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
-    	//if(!images.containsKey(type))
-    		//throw new IllegalArgumentException("A non valid type was sent to setAnimationType for Client " + name);
-    	direction = type;
+    	
+    	action = type;
     }
     
     /**

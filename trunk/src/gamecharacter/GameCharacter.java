@@ -23,6 +23,7 @@ public abstract class GameCharacter {
 	private int speed;
 	private int width;
 	private int height;
+	private int attackRange=50;   //TODO mecka en för varje gamecharachter
 	
 	public GameCharacter(int speed, int width, int height){
 		image = new HashMap<String,HashMap<String, ArrayList<BufferedImage>>>();
@@ -132,4 +133,14 @@ public abstract class GameCharacter {
 	public int getHeight(){
 		return height;
 	}
+	
+	/**
+	 * Returns the attackrange for the specifik character
+	 * @return distance
+	 */
+	public int getAttackRange()
+	{
+		return attackRange;
+	}
+	
 }
