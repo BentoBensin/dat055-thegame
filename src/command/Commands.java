@@ -40,12 +40,8 @@ public class Commands
          */
         private void initializeCommands(Engine engine)
         {
-            commands.put("north",new CommandMove(engine,0,NORTH));
-            commands.put("south",new CommandMove(engine,1,SOUTH));
-            commands.put("east",new CommandMove(engine,2,EAST));
-            commands.put("west",new CommandMove(engine,3,WEST));
-            commands.put("lookLeft",new CommandTurn(engine,0));
-            commands.put("lookRight",new CommandTurn(engine,1));
+            commands.put("move",new CommandMove(engine));
+  
         }
         /**
          * Returns all the commands we have.

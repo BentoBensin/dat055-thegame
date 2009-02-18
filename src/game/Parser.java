@@ -41,7 +41,7 @@ public class Parser
     {
         //String inputLine;   // will hold the full input line
         String word1 = null;
-        String word2 = null;
+        String word2 = null;  
 
         // Find up to two words on the line.
         Scanner tokenizer = new Scanner(inputLine);
