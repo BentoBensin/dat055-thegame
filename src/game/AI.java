@@ -31,8 +31,6 @@ public class AI implements GenericInterface, Observer
       */
     protected void decision(Client client, ArrayList nearbyClients)
     {
-    	
-    	
         Point position=client.getPoint();
         Client closest = null;
         double smallest=0;
@@ -47,7 +45,7 @@ public class AI implements GenericInterface, Observer
                 // pythagoras theorem provides the actual size to the nearest player.
                 temp=distance(position, (Player)c);
             }
-            if (temp>smallest) 
+            if (temp<smallest)  //<---- Meckat
             {
                 temp=smallest;
                 closest=(Player)c;
@@ -123,6 +121,6 @@ public class AI implements GenericInterface, Observer
      		if (!client.hasPattern())
      			client.setPattern();
  			client.decreaseRemaning();
- 			client.interpretCommand("move");
+ 			client.interpretCommand("walk");
     	}
 }  

@@ -40,7 +40,7 @@ public class Commands
          */
         private void initializeCommands(Engine engine)
         {
-            commands.put("move",new CommandMove(engine));
+            commands.put("walk",new CommandMove(engine));
   
         }
         /**
