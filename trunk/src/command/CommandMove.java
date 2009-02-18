@@ -33,7 +33,7 @@ public class CommandMove extends Command
     	if( client != null) {
     		int x = client.getPoint().x;
 		int y = client.getPoint().y;
-		int stepSize = globalStepSize * client.getGameCharacter().getSpeed();	
+		double stepSize = globalStepSize * client.getGameCharacter().getSpeed();	
            /* switch(client.getDirection())
             {
                 case "NORTH": y-=stepSize; break;

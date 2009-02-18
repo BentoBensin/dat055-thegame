@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 /**
  * This class contains information such as speed, height and width, about a character.
  * @file GameCharacter.java
- * @version 0.1
+ * @version 0.2
  * @author Teddie
  *
  */
@@ -20,16 +20,18 @@ public abstract class GameCharacter {
 	
 	private HashMap<String,HashMap<String, ArrayList<BufferedImage>>> image;
 	private LinkedList<MovePattern> patterns;
-	private int speed;
+	private double speed;
 	private int width;
 	private int height;
-	private int attackRange=50;   //TODO mecka en för varje gamecharachter
+	private int attackRange;   
 	
-	public GameCharacter(int speed, int width, int height){
+	public GameCharacter(double speed, int width, int height){
 		image = new HashMap<String,HashMap<String, ArrayList<BufferedImage>>>();
+		patterns = new LinkedList<MovePattern>();
 		this.speed = speed;
 		this.width = width;
 		this.height = height;
+		this.attackRange = 20;
 	}
 	
 	/**
@@ -67,16 +69,25 @@ public abstract class GameCharacter {
 	 */
 	public BufferedImage getNextImage(String action, String direction, int index){
 		if(action == null && direction == null){
+			System.out.println("NullPointer in getNextImage trying to get the i: " + index);
 			throw new NullPointerException();
 		}
 		
-		if((index < 0) || !(index < image.get(action).get(direction).size())){
+		if( (index < 0) || (index > image.get(action).get(direction).size())){
 			throw new IllegalArgumentException();
 		}
 		
 		return image.get(action).get(direction).get(index);
 	}
-
+	
+	public int getAnimationLength(String action, String direction){
+		if(action == null && direction == null){
+			throw new NullPointerException();
+		}
+		return image.get(action).get(direction).size();
+		
+	}
+	
 	/**
 	 * Finds next move pattern.
 	 * @param index
@@ -114,7 +125,7 @@ public abstract class GameCharacter {
 	 * Returns speed of character.
 	 * @return Speed of character.
 	 */
-	public int getSpeed(){
+	public double getSpeed(){
 		return speed;
 	}
 	

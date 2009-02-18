@@ -33,17 +33,14 @@ public class Monster extends Client {
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(300);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				System.out.print("InterruptedException in Monster.run().");
 			}
-			temp = engine.nearbyClients(this, 100); // antar att
-			System.out.println("Monster letar efter närliggande");												// detta funkar
-			//if (temp != null && !temp.isEmpty()) {
-				setChanged();
-				notifyObservers(temp);
-			//}
-			
+			temp = engine.nearbyClients(this, 100); 
+			System.out.println("Monster letar efter närliggande " + temp.size() );												// detta funkar
+			setChanged();
+			notifyObservers(temp);		
 		}
 	}
 
@@ -56,6 +53,7 @@ public class Monster extends Client {
 	 */
 	public void setPattern()
 	{
+		System.out.println("Monster.setPattern() is called");
 		if (patternIndex>=getGameCharacter().numberOfPatterns())
 			patternIndex=0;
 		currentPattern= getGameCharacter().getPattern(patternIndex++);	
@@ -70,7 +68,7 @@ public class Monster extends Client {
 	 */
 	public boolean hasPattern()
 	{
-		if (moveRemaining==0)
+		if (moveRemaining<=0)
 			return false;
 		return true; 
 	}

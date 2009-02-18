@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Observable;
 
 import command.Command;
+import command.CommandAttack;
 
 public abstract class Client extends Observable implements Runnable {
 
@@ -81,8 +82,11 @@ public abstract class Client extends Observable implements Runnable {
      * @return string to image
      */
     public BufferedImage getAnimation() {
-    	if(position == 8) //TODO not hårdkodad
+    	if(position == gc.getAnimationLength(action, direction)) {
     		position = 0;
+    		if( action.equals(CommandAttack.ATTACK) || action.equals("hit"))
+    			action = "walk";
+    	}
     	return gc.getNextImage(action, direction, position++);
     }
     /**
@@ -103,7 +107,7 @@ public abstract class Client extends Observable implements Runnable {
     public void setAnimationType(String type)  {
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
-    	
+    	position = 0;
     	action = type;
     }
     
@@ -113,8 +117,6 @@ public abstract class Client extends Observable implements Runnable {
      */
     public void updateCoordinates(Point point){
         this.point = (Point)point.clone();
-    	//setChanged();
-    	//notifyObservers();
     }
     /**
      * Return the objects Coordinates

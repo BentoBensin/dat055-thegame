@@ -54,7 +54,7 @@ public class LogicModel {
 				  x+b>cx-r
 				  y+h>cy-r
              */
-            if( tP.x > cx+r && tP.y < cy+r && tP.x+t.getGameCharacter().getWidth() > cx-r && tP.y+t.getGameCharacter().getHeight() > cy-r )
+            if(( tP.x < cx+r && tP.y < cy+r && ( (tP.x+t.getGameCharacter().getWidth()) > (cx-r) ) && ((tP.y+t.getGameCharacter().getHeight()) > (cy-r)) ))
                         clientList.add(t);
             }    
         return clientList;
@@ -63,7 +63,9 @@ public class LogicModel {
     public ArrayList<Client> nearbyClients( Point point, int radius) {
     	ArrayList<Client> clientList = new ArrayList<Client>();
         //TODO put the control in Cordinates object?
-        assert(point != null);   
+    	if( point == null)
+    		return clientList;
+    	
         double maxX = point.getX() + radius;
         double minX = point.getX() - radius;
         double maxY = point.getY() + radius;

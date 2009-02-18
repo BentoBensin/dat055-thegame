@@ -32,8 +32,8 @@ public class AI implements GenericInterface, Observer
     protected void decision(Client client, ArrayList nearbyClients)
     {
         Point position=client.getPoint();
-        Client closest = null;
-        double smallest=0;
+        Player closest = null;
+        double smallest= 1000;
         double temp = 0; 
         boolean containsPlayer=false;
         
@@ -44,29 +44,70 @@ public class AI implements GenericInterface, Observer
             	containsPlayer=true;
                 // pythagoras theorem provides the actual size to the nearest player.
                 temp=distance(position, (Player)c);
-            }
-            if (temp<smallest)  //<---- Meckat
-            {
-                temp=smallest;
-                closest=(Player)c;
+	            if (temp<smallest)  //<---- Meckat
+	            {
+	                temp=smallest;
+	                closest=(Player)c;
+	            }
             }
         }
         
         if ( !containsPlayer )// If no players are near-> move client along the pattern
+        {
             if (client instanceof Monster)
         	{
             	followPattern((Monster)client);
             	return;
         	}
-        	
-           
-        if (distance(position,closest)<=10) //TODO Fixa mecket RANGE i gamecharacters
-        { 
-            //client.interpretCommand("attack"); //TODO se till att fanskapet attackerar spelaren
-    	    return;
-        }   
+        }	
         
-        else if ((Math.abs(closest.getPoint().getX()-position.getX()))<=(Math.abs(closest.getPoint().getY()-position.getY())))
+        /**
+         * So let's se if the monster can attack anything
+         */
+        
+        // Direction EAST
+        if(closest != null && ((client.getPoint().x+client.getGameCharacter().getWidth())+(client.getGameCharacter().getAttackRange())) > closest.getPoint().x ){
+        	 client.setDirection(Commands.EAST);
+        	 client.interpretCommand("attack");
+        	 return;
+        }
+        // Direction WEST
+        if(closest != null && ((client.getPoint().x - client.getGameCharacter().getAttackRange()) < (closest.getPoint().x+closest.getGameCharacter().getWidth())) ){
+        	client.setDirection(Commands.WEST);
+       	 	client.interpretCommand("attack");
+       	 	return;
+        }
+        // Direction SOUTH
+        if( closest != null && ((client.getPoint().y+client.getGameCharacter().getHeight())+(client.getGameCharacter().getAttackRange())) > closest.getPoint().y ){
+        	client.setDirection(Commands.SOUTH);
+        	client.interpretCommand("attack");
+        	return;
+        }
+        // Direction NORTH
+        if( closest != null && ((client.getPoint().y - client.getGameCharacter().getAttackRange()) < (closest.getPoint().y+closest.getGameCharacter().getHeight())) ){
+        	client.setDirection(Commands.NORTH);
+   	 		client.interpretCommand("attack");
+   	 		return;
+    	}
+        /**
+         * Player not attackable
+         * Start walk towards player
+         */
+        if( (client.getPoint().x - closest.getPoint().x) > (client.getPoint().y - closest.getPoint().y) )
+        {
+        	if (closest.getPoint().getX()>client.getPoint().getX())
+                client.setDirection(Commands.EAST);
+            else
+                client.setDirection(Commands.WEST);	
+        }else {
+        	 if (closest.getPoint().getY()>client.getPoint().getY())
+                 client.setDirection(Commands.SOUTH);
+             else
+                 client.setDirection(Commands.NORTH);
+        }
+        
+        /*
+        if ((Math.abs(closest.getPoint().getX()-position.getX()))<=(Math.abs(closest.getPoint().getY()-position.getY())))
         {
             //if the nearest client is closer in vertical direction than horisontal, move the monster vertically
             if (closest.getPoint().getX()>position.getX())
@@ -81,8 +122,8 @@ public class AI implements GenericInterface, Observer
                 client.setDirection(Commands.SOUTH);
             else
                 client.setDirection(Commands.NORTH);
-        }  
-        client.interpretCommand("move");
+        }*/
+        client.interpretCommand("walk");
      }  
     
 
@@ -94,11 +135,14 @@ public class AI implements GenericInterface, Observer
       */
         public void update(Observable O, Object arg)
         {
-            System.out.println("monster skickar update");
-           
-            if( O instanceof Client && arg instanceof ArrayList)
-            	decision((Client)O,(ArrayList)arg);  //TODO fixa ett try-catch
-            	
+        	//followPattern((Monster)O);
+        	//return;
+        	if( O instanceof Client && arg instanceof ArrayList){
+            	if( ((ArrayList<Client>)arg).size() > 1 )
+            		decision((Client)O,(ArrayList)arg);  //TODO fixa ett try-catch
+            	else
+            		followPattern((Monster)O);
+        	}
         }
      
         /**
@@ -118,6 +162,7 @@ public class AI implements GenericInterface, Observer
           */
      	public void followPattern(Monster client)
     	{
+     		System.out.println("followPattern()");
      		if (!client.hasPattern())
      			client.setPattern();
  			client.decreaseRemaning();

@@ -24,7 +24,6 @@ public class Player extends Client{
 	public void run() {
 		ArrayList<Client> nc = null;
 		while (true) {
-			System.out.println("player kör");
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
