@@ -5,7 +5,7 @@ import game.Engine;
 
 import java.awt.Point;
 
-import javax.swing.SwingUtilities;
+
 
 /**
  * @file CommandMove.java
@@ -17,15 +17,11 @@ import javax.swing.SwingUtilities;
 // TODO KOMMENTERA!!!!!!!
 public class CommandMove extends Command
 {
-    private int direction;
-    private String dir;
-    private Client client;
-	private static final int globalStepSize = 3;
-    public CommandMove(Engine engine, int direction, String dir)
+  	private static final int globalStepSize = 3;
+    public CommandMove(Engine engine)
     {
         super(engine);
-        this.direction = direction;
-        this.dir = dir;
+        
     }
     
     /*
@@ -33,7 +29,7 @@ public class CommandMove extends Command
      */
     public void execute(Client client)
     {
-    	this.client = client;
+    //	this.client = client;
     	if( client != null) {
     		int x = client.getPoint().x;
 		int y = client.getPoint().y;

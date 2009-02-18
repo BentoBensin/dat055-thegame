@@ -1,20 +1,20 @@
-/**
- * @File    ai.java
- * @version 0.3
- * @author teddie
- *
- */
+
  
 package game;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
-
 import command.Commands;
 
-//TODO KOMMENTERA i engelska samt snygga till koden!
+/**
+ * AI is responsible for the monsters decisions; whether it is going to follow a
+ * given moving pattern or follow nearby clients to be able to attack them
+ * @File    ai.java
+ * @version 0.4
+ * @author Raul
+ *
+ */
 public class AI implements GenericInterface, Observer
 {
  
@@ -29,7 +29,7 @@ public class AI implements GenericInterface, Observer
       * @param position
       * @param nearbyClients
       */
-    protected void decision(Client client, ArrayList<Client> nearbyClients)
+    protected void decision(Client client, ArrayList nearbyClients)
     {
     	
     	
@@ -39,18 +39,18 @@ public class AI implements GenericInterface, Observer
         double temp = 0; 
         boolean containsPlayer=false;
         
-        for (Client c : nearbyClients)
+        for (Object c : nearbyClients)
         {
             if (c instanceof Player)
             {
             	containsPlayer=true;
                 // pythagoras theorem provides the actual size to the nearest player.
-                temp=distance(position, c);
+                temp=distance(position, (Player)c);
             }
             if (temp>smallest) 
             {
                 temp=smallest;
-                closest=c;
+                closest=(Player)c;
             }
         }
         
@@ -98,8 +98,8 @@ public class AI implements GenericInterface, Observer
         {
             System.out.println("monster skickar update");
            
-            if( O instanceof Client && arg instanceof ArrayList )
-            	decision((Client)O,(ArrayList<Client>)arg);  //TODO fixa ett try-catch
+            if( O instanceof Client && arg instanceof ArrayList)
+            	decision((Client)O,(ArrayList)arg);  //TODO fixa ett try-catch
             	
         }
      

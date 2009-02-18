@@ -20,7 +20,7 @@ public class Main
      * Constructor for objects of class Main
      */
 	private Engine engine;
-	private Gui gui;
+	
     public Main()
     {
     	init();

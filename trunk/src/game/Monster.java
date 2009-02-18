@@ -52,15 +52,15 @@ public class Monster extends Client {
 	}
 	
 	/**
-	 * Gets a new move pattern for the current monster
+	 * Sets a new moving pattern for the current monster.
 	 */
 	public void setPattern()
 	{
 		if (patternIndex>=getGameCharacter().numberOfPatterns())
 			patternIndex=0;
-		currentPattern= getGameCharacter().getPattern(patternIndex++);	// TODO HÄMTA från länkad lista
-		moveRemaining=currentPattern.length; 		 // antal steg att dra hämtas från den nya MovePattern
-		setDirection(currentPattern.direction); // Väderstrecket hämtas från den nya MovePattern
+		currentPattern= getGameCharacter().getPattern(patternIndex++);	
+		moveRemaining=currentPattern.length; 		
+		setDirection(currentPattern.direction);
 	}
 	
 	/**
