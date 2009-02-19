@@ -15,7 +15,7 @@ import java.awt.Point;
 
 public class CommandMove extends Command
 {
-  	private static final double globalStepSize = 3;
+  	private static final double globalStepSize = 10;
     public CommandMove(Engine engine)
     {
         super(engine);
@@ -28,6 +28,7 @@ public class CommandMove extends Command
      */
     public void execute(Client client)
     {
+    	System.out.println("försöker köra move för: " + client.getName());
     	if( client != null) {
     		int x = client.getPoint().x;
     		int y = client.getPoint().y;

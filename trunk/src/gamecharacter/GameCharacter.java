@@ -42,6 +42,7 @@ public abstract class GameCharacter extends TimerTask {
 		this.attackRange = 20;
 		stunTimer = new Timer();
 		isStunned = false;
+		
 	}
 	
 	/**
@@ -78,8 +79,8 @@ public abstract class GameCharacter extends TimerTask {
 	 * @return Next image in sequence.
 	 */
 	public BufferedImage getNextImage(String action, String direction, int index){
-		if(action == null && direction == null){
-			System.out.println("NullPointer in getNextImage trying to get the i: " + index);
+		if(action == null || direction == null || image.get(action) == null || image.get(action).get(direction) == null ){
+			System.out.println("NullPointer in getNextImage trying to get the i: " + index + " action: " + action + " direction " + direction);
 			throw new NullPointerException();
 		}
 		
@@ -91,11 +92,12 @@ public abstract class GameCharacter extends TimerTask {
 	}
 	
 	public int getAnimationLength(String action, String direction){
-		if(action == null && direction == null){
-			throw new NullPointerException();
+		if( image.get(action) != null && image.get(action).get(direction) != null ) {
+			System.out.println("Försöker hämta action : " + action + " direction: " + direction);
+			System.out.println("finns action? : " + image.containsKey(action) + " och direction? " + image.get(action).containsKey(direction) );
+			return image.get(action).get(direction).size();
 		}
-		return image.get(action).get(direction).size();
-		
+		return 1;
 	}
 	
 	/**
@@ -129,8 +131,10 @@ public abstract class GameCharacter extends TimerTask {
 	 * @param time
 	 */
 	public void stun( int time) {
-		isStunned = true;
-		stunTimer.schedule(this, time, time);
+		if( time > 0){
+			isStunned = true;
+			stunTimer.schedule(this, time);
+		}
 	}
 	/**
 	 * Checks if the GameCharacter is stunned
@@ -146,7 +150,7 @@ public abstract class GameCharacter extends TimerTask {
 	 */
 	public void run() {
 		isStunned = false;
-		stunTimer.cancel();
+		stunTimer.purge();
 	}
 	
 	/**

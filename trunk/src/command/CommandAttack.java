@@ -54,7 +54,7 @@ public class CommandAttack extends Command
                         // if there is no targets
                          targets.isEmpty()
                         // if weapon can't be used, like, there is cooldown or it's broken
-                         && !weapon.use()
+                         || !weapon.use()
                         // something more?
                          )
                          return;

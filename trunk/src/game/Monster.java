@@ -37,6 +37,7 @@ public class Monster extends Client {
 			} catch (InterruptedException e) {
 				System.out.print("InterruptedException in Monster.run().");
 			}
+			runActions();
 			temp = engine.nearbyClients(this, 100); 
 			System.out.println("Monster letar efter närliggande " + temp.size() );												// detta funkar
 			setChanged();

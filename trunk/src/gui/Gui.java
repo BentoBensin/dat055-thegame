@@ -225,7 +225,7 @@ public class Gui implements Observer {
 		}
 
 		public void keyReleased(KeyEvent e) {
-
+			player.addAction(strings.Still);
 			// Empty
 
 		}

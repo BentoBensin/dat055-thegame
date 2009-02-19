@@ -72,41 +72,41 @@ public class Warrior extends GameCharacter{
     	anim.get("hit").put("east", new ArrayList<String>());
     	anim.get("hit").put("west", new ArrayList<String>());
     	
-    	anim.get("hit").get("north").add("images/warrior/hit/north/nn00.bmp");
-    	anim.get("hit").get("north").add("images/warrior/hit/north/nn01.bmp");
-    	anim.get("hit").get("north").add("images/warrior/hit/north/nn02.bmp");
-    	anim.get("hit").get("north").add("images/warrior/hit/north/nn03.bmp");
-    	anim.get("hit").get("north").add("images/warrior/hit/north/nn04.bmp");
-    	anim.get("hit").get("north").add("images/warrior/hit/north/nn05.bmp");
-    	anim.get("hit").get("north").add("images/warrior/hit/north/nn06.bmp");
-    	anim.get("hit").get("north").add("images/warrior/hit/north/nn07.bmp");
+    	anim.get("hit").get("north").add("images/warrior/hit/north/nn00.gif");
+    	anim.get("hit").get("north").add("images/warrior/hit/north/nn01.gif");
+    	anim.get("hit").get("north").add("images/warrior/hit/north/nn02.gif");
+    	anim.get("hit").get("north").add("images/warrior/hit/north/nn03.gif");
+    	anim.get("hit").get("north").add("images/warrior/hit/north/nn04.gif");
+    	anim.get("hit").get("north").add("images/warrior/hit/north/nn05.gif");
+    	anim.get("hit").get("north").add("images/warrior/hit/north/nn06.gif");
+    	anim.get("hit").get("north").add("images/warrior/hit/north/nn07.gif");
     	
-    	anim.get("hit").get("south").add("images/warrior/hit/south/ss00.bmp");
-    	anim.get("hit").get("south").add("images/warrior/hit/south/ss01.bmp");
-    	anim.get("hit").get("south").add("images/warrior/hit/south/ss02.bmp");
-    	anim.get("hit").get("south").add("images/warrior/hit/south/ss03.bmp");
-    	anim.get("hit").get("south").add("images/warrior/hit/south/ss04.bmp");
-    	anim.get("hit").get("south").add("images/warrior/hit/south/ss05.bmp");
-    	anim.get("hit").get("south").add("images/warrior/hit/south/ss06.bmp");
-    	anim.get("hit").get("south").add("images/warrior/hit/south/ss07.bmp");
+    	anim.get("hit").get("south").add("images/warrior/hit/south/ss00.gif");
+    	anim.get("hit").get("south").add("images/warrior/hit/south/ss01.gif");
+    	anim.get("hit").get("south").add("images/warrior/hit/south/ss02.gif");
+    	anim.get("hit").get("south").add("images/warrior/hit/south/ss03.gif");
+    	anim.get("hit").get("south").add("images/warrior/hit/south/ss04.gif");
+    	anim.get("hit").get("south").add("images/warrior/hit/south/ss05.gif");
+    	anim.get("hit").get("south").add("images/warrior/hit/south/ss06.gif");
+    	anim.get("hit").get("south").add("images/warrior/hit/south/ss07.gif");
     	
-    	anim.get("hit").get("east").add("images/warrior/hit/east/ee00.bmp");
-    	anim.get("hit").get("east").add("images/warrior/hit/east/ee01.bmp");
-    	anim.get("hit").get("east").add("images/warrior/hit/east/ee02.bmp");
-    	anim.get("hit").get("east").add("images/warrior/hit/east/ee03.bmp");
-    	anim.get("hit").get("east").add("images/warrior/hit/east/ee04.bmp");
-    	anim.get("hit").get("east").add("images/warrior/hit/east/ee05.bmp");
-    	anim.get("hit").get("east").add("images/warrior/hit/east/ee06.bmp");
-    	anim.get("hit").get("east").add("images/warrior/hit/east/ee07.bmp");
+    	anim.get("hit").get("east").add("images/warrior/hit/east/ee00.gif");
+    	anim.get("hit").get("east").add("images/warrior/hit/east/ee01.gif");
+    	anim.get("hit").get("east").add("images/warrior/hit/east/ee02.gif");
+    	anim.get("hit").get("east").add("images/warrior/hit/east/ee03.gif");
+    	anim.get("hit").get("east").add("images/warrior/hit/east/ee04.gif");
+    	anim.get("hit").get("east").add("images/warrior/hit/east/ee05.gif");
+    	anim.get("hit").get("east").add("images/warrior/hit/east/ee06.gif");
+    	anim.get("hit").get("east").add("images/warrior/hit/east/ee07.gif");
     	
-    	anim.get("hit").get("west").add("images/warrior/hit/west/ww00.bmp");
-    	anim.get("hit").get("west").add("images/warrior/hit/west/ww01.bmp");
-    	anim.get("hit").get("west").add("images/warrior/hit/west/ww02.bmp");
-    	anim.get("hit").get("west").add("images/warrior/hit/west/ww03.bmp");
-    	anim.get("hit").get("west").add("images/warrior/hit/west/ww04.bmp");
-    	anim.get("hit").get("west").add("images/warrior/hit/west/ww05.bmp");
-    	anim.get("hit").get("west").add("images/warrior/hit/west/ww06.bmp");
-    	anim.get("hit").get("west").add("images/warrior/hit/west/ww07.bmp");
+    	anim.get("hit").get("west").add("images/warrior/hit/west/ww00.gif");
+    	anim.get("hit").get("west").add("images/warrior/hit/west/ww01.gif");
+    	anim.get("hit").get("west").add("images/warrior/hit/west/ww02.gif");
+    	anim.get("hit").get("west").add("images/warrior/hit/west/ww03.gif");
+    	anim.get("hit").get("west").add("images/warrior/hit/west/ww04.gif");
+    	anim.get("hit").get("west").add("images/warrior/hit/west/ww05.gif");
+    	anim.get("hit").get("west").add("images/warrior/hit/west/ww06.gif");
+    	anim.get("hit").get("west").add("images/warrior/hit/west/ww07.gif");
     	
     	anim.put("attack", new HashMap<String,ArrayList<String>>());
     	anim.get("attack").put("north", new ArrayList<String>());
@@ -114,7 +114,7 @@ public class Warrior extends GameCharacter{
     	anim.get("attack").put("east", new ArrayList<String>());
     	anim.get("attack").put("west", new ArrayList<String>());
     	
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn00.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn00.gif");
     	anim.get("attack").get("north").add("images/warrior/attack/north/nn01.gif");
     	anim.get("attack").get("north").add("images/warrior/attack/north/nn02.gif");
     	anim.get("attack").get("north").add("images/warrior/attack/north/nn03.gif");
@@ -125,6 +125,7 @@ public class Warrior extends GameCharacter{
     	anim.get("attack").get("north").add("images/warrior/attack/north/nn08.gif");
     	anim.get("attack").get("north").add("images/warrior/attack/north/nn09.gif");
     	anim.get("attack").get("north").add("images/warrior/attack/north/nn10.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn11.gif");
     	
     	anim.get("attack").get("south").add("images/warrior/attack/south/ss00.gif");
     	anim.get("attack").get("south").add("images/warrior/attack/south/ss01.gif");
@@ -137,6 +138,7 @@ public class Warrior extends GameCharacter{
     	anim.get("attack").get("south").add("images/warrior/attack/south/ss08.gif");
     	anim.get("attack").get("south").add("images/warrior/attack/south/ss09.gif");
     	anim.get("attack").get("south").add("images/warrior/attack/south/ss10.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss11.gif");
     	
     	anim.get("attack").get("east").add("images/warrior/attack/east/ee00.gif");
     	anim.get("attack").get("east").add("images/warrior/attack/east/ee01.gif");
@@ -149,6 +151,7 @@ public class Warrior extends GameCharacter{
     	anim.get("attack").get("east").add("images/warrior/attack/east/ee08.gif");
     	anim.get("attack").get("east").add("images/warrior/attack/east/ee09.gif");
     	anim.get("attack").get("east").add("images/warrior/attack/east/ee10.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee11.gif");
     	
     	anim.get("attack").get("west").add("images/warrior/attack/west/ww00.gif");
     	anim.get("attack").get("west").add("images/warrior/attack/west/ww01.gif");
@@ -161,7 +164,77 @@ public class Warrior extends GameCharacter{
     	anim.get("attack").get("west").add("images/warrior/attack/west/ww08.gif");
     	anim.get("attack").get("west").add("images/warrior/attack/west/ww09.gif");
     	anim.get("attack").get("west").add("images/warrior/attack/west/ww10.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww11.gif");
     	
+    	anim.put("die", new HashMap<String,ArrayList<String>>());
+    	anim.get("die").put("north", new ArrayList<String>());
+    	anim.get("die").put("south", new ArrayList<String>());
+    	anim.get("die").put("east", new ArrayList<String>());
+    	anim.get("die").put("west", new ArrayList<String>());
+    	
+    	anim.get("die").get("north").add("images/warrior/die/north/nn00.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn01.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn02.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn03.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn04.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn05.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn06.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn07.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn08.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn09.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn10.gif");
+    	anim.get("die").get("north").add("images/warrior/die/north/nn11.gif");
+    	
+    	anim.get("die").get("south").add("images/warrior/die/south/ss00.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss01.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss02.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss03.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss04.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss05.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss06.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss07.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss08.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss09.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss10.gif");
+    	anim.get("die").get("south").add("images/warrior/die/south/ss11.gif");
+    	
+    	anim.get("die").get("east").add("images/warrior/die/east/ee00.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee01.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee02.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee03.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee04.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee05.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee06.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee07.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee08.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee09.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee10.gif");
+    	anim.get("die").get("east").add("images/warrior/die/east/ee11.gif");
+    	
+    	anim.get("die").get("west").add("images/warrior/die/west/ww00.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww01.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww02.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww03.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww04.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww05.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww06.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww07.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww08.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww09.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww10.gif");
+    	anim.get("die").get("west").add("images/warrior/die/west/ww11.gif");
+    	
+    	anim.put("still", new HashMap<String,ArrayList<String>>());
+    	anim.get("still").put("north", new ArrayList<String>());
+    	anim.get("still").put("south", new ArrayList<String>());
+    	anim.get("still").put("east", new ArrayList<String>());
+    	anim.get("still").put("west", new ArrayList<String>());
+    	
+    	anim.get("still").get("north").add("images/warrior/still/north/nn00.gif");
+    	anim.get("still").get("south").add("images/warrior/still/south/ss00.gif");
+    	anim.get("still").get("east").add("images/warrior/still/east/ee00.gif");
+    	anim.get("still").get("west").add("images/warrior/still/west/ww00.gif");
+    		
     	loadImages(anim);
 	}
 	

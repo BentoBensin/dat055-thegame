@@ -16,6 +16,8 @@ public abstract class Item extends TimerTask {
 	{
 		cooldown=cd;
 		cdTimer=new Timer();
+		cdTimer.schedule(this,cooldown);
+		possible = true;
 		
 	}
 	public boolean isCooldown()
@@ -30,7 +32,6 @@ public abstract class Item extends TimerTask {
 	{
 		if (!isCooldown())
 		{
-			cdTimer.schedule(this,cooldown,cooldown);
 			possible=false;
 			return true;
 		}
@@ -40,7 +41,6 @@ public abstract class Item extends TimerTask {
 	public void run()
 	{
 		possible=true;
-		cdTimer.cancel();
 	}
 	
 }

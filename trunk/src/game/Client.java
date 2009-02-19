@@ -50,6 +50,7 @@ public abstract class Client extends Observable implements Runnable {
         this.point = point;
         this.engine = engine;
         direction = strings.West;
+        animation = strings.Still;
         position = 0;
         this.gc=gc;
         health = 100; // make it come from gc
@@ -83,10 +84,10 @@ public abstract class Client extends Observable implements Runnable {
      */
     public void addAction(String action) {  	
     	if( !actions.contains(action) ) {
-    		if( action.equals(strings.Attack))
+    		//if( action.equals(strings.Attack))
     			actions.addLast(action);
-    		if( actions.equals(strings.Move))
-    			actions.addFirst(action);
+    	//	if( actions.equals(strings.Move))
+    		//	actions.addFirst(action);
     	}		
     }
     
@@ -101,8 +102,8 @@ public abstract class Client extends Observable implements Runnable {
      */
     public void runActions() {
     	String tmp;
-    	if( actions.isEmpty() )
-    		setAnimationType(strings.Still);
+    	/*if( actions.isEmpty() )
+    		setAnimationType(strings.Still);*/
     	
     	for(int i=0; i < actions.size() ; i++) {
     		tmp = actions.remove();
@@ -127,7 +128,7 @@ public abstract class Client extends Observable implements Runnable {
      * @return string to image
      */
     public BufferedImage getAnimation() {
-    	if(position == gc.getAnimationLength(animation, direction)) {
+    	if(position >= gc.getAnimationLength(animation, direction)) {
     		position = 0;
     	}
     	return gc.getNextImage(animation, direction, position++);
