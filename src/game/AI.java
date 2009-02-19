@@ -106,25 +106,7 @@ public class AI implements GenericInterface, Observer
              else
                  client.setDirection(strings.North);
         }
-        
-        /*
-        if ((Math.abs(closest.getPoint().getX()-position.getX()))<=(Math.abs(closest.getPoint().getY()-position.getY())))
-        {
-            //if the nearest client is closer in vertical direction than horisontal, move the monster vertically
-            if (closest.getPoint().getX()>position.getX())
-                client.setDirection(Commands.EAST);
-            else
-                client.setDirection(Commands.WEST);
-        } 
-    
-        else    //same as above,
-        {
-            if (closest.getPoint().getY()>position.getY())
-                client.setDirection(Commands.SOUTH);
-            else
-                client.setDirection(Commands.NORTH);
-        }*/
-        client.addAction("walk");
+        client.addAction(strings.Move);
      }  
     
 
@@ -136,8 +118,6 @@ public class AI implements GenericInterface, Observer
       */
         public void update(Observable O, Object arg)
         {
-        	//followPattern((Monster)O);
-        	//return;
         	if( O instanceof Client && arg instanceof ArrayList){
             	if( ((ArrayList<Client>)arg).size() > 1 )
             		decision((Client)O,(ArrayList)arg);  //TODO fixa ett try-catch
@@ -167,6 +147,6 @@ public class AI implements GenericInterface, Observer
      		if (!client.hasPattern())
      			client.setPattern();
  			client.decreaseRemaning();
- 			client.addAction("walk");
+ 			client.addAction(strings.Move);
     	}
 }  

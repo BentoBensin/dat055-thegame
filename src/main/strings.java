@@ -14,7 +14,7 @@ public final class strings {
 	public static final String South = "south";
 	public static final String East = "east";
 	public static final String Attack = "attack";
-	public static final String Move = "move";
+	public static final String Move = "walk";
 	public static final String Still = "still";
 	//todo
 	//public static final EnumSet<String> Directions = new Enum(North,1);
