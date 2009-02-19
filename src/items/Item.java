@@ -1,30 +1,27 @@
-/**
- * 
- */
 package items;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.Timer;
+import java.util.TimerTask;
+
+import java.util.Timer;
 /**
  * @author bache
  *
  */
-public abstract class item {
+public abstract class Item extends TimerTask {
 
-	private boolean possible;
-	private int cooldown;
-	private Timer cdTimer;
 	
-	public item(int cd)
+	private long cooldown;
+	private Timer cdTimer;
+	private boolean possible;
+	public Item(int cd)
 	{
 		cooldown=cd;
-		cdTimer=new Timer(cooldown,startCooldown);
+		cdTimer=new Timer();
 		
 	}
 	public boolean isCooldown()
 	{
-		if (cdTimer.isRunning())
+		if (!possible)
 			return true;
 		return false;
 		
@@ -34,19 +31,17 @@ public abstract class item {
 	{
 		if (!isCooldown())
 		{
-			cdTimer.start();
+			cdTimer.schedule(this,cooldown,cooldown);
 			possible=false;
 			return true;
 		}
 		return false;
 	}
 	
-			
-	ActionListener startCooldown=new ActionListener	(){
-		 public void actionPerformed(ActionEvent evt) {
-			 possible=true;
-			 cdTimer.stop();			
-		 }
-	};
+	public void run()
+	{
+		possible=true;
+		cdTimer.cancel();
+	}
 	
 }
