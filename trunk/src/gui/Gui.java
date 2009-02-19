@@ -216,10 +216,10 @@ public class Gui implements Observer {
 				player.setDirection(Commands.EAST);
 			}
 			if (e.getKeyCode() == KeyEvent.VK_L) {
-				player.interpretCommand("attack");
+				player.addAction("attack");
 				return;
 			}
-			player.interpretCommand("walk");
+			player.addAction("walk");
 
 		}
 
