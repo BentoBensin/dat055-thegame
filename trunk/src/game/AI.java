@@ -68,25 +68,25 @@ public class AI implements GenericInterface, Observer
         // Direction EAST
         if(closest != null && ((client.getPoint().x+client.getGameCharacter().getWidth())+(client.getGameCharacter().getAttackRange())) > closest.getPoint().x ){
         	 client.setDirection(Commands.EAST);
-        	 client.interpretCommand("attack");
+        	 client.addAction("attack");
         	 return;
         }
         // Direction WEST
         if(closest != null && ((client.getPoint().x - client.getGameCharacter().getAttackRange()) < (closest.getPoint().x+closest.getGameCharacter().getWidth())) ){
         	client.setDirection(Commands.WEST);
-       	 	client.interpretCommand("attack");
+       	 	client.addAction("attack");
        	 	return;
         }
         // Direction SOUTH
         if( closest != null && ((client.getPoint().y+client.getGameCharacter().getHeight())+(client.getGameCharacter().getAttackRange())) > closest.getPoint().y ){
         	client.setDirection(Commands.SOUTH);
-        	client.interpretCommand("attack");
+        	client.addAction("attack");
         	return;
         }
         // Direction NORTH
         if( closest != null && ((client.getPoint().y - client.getGameCharacter().getAttackRange()) < (closest.getPoint().y+closest.getGameCharacter().getHeight())) ){
         	client.setDirection(Commands.NORTH);
-   	 		client.interpretCommand("attack");
+ 	 		client.addAction("attack");
    	 		return;
     	}
         /**
@@ -123,7 +123,7 @@ public class AI implements GenericInterface, Observer
             else
                 client.setDirection(Commands.NORTH);
         }*/
-        client.interpretCommand("walk");
+        client.addAction("walk");
      }  
     
 
@@ -166,6 +166,6 @@ public class AI implements GenericInterface, Observer
      		if (!client.hasPattern())
      			client.setPattern();
  			client.decreaseRemaning();
- 			client.interpretCommand("walk");
+ 			client.addAction("walk");
     	}
 }  

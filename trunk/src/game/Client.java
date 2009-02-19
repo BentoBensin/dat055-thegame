@@ -1,30 +1,33 @@
 package game;
 
-/**
- * @file Client.java
- * @version 0.2
- * @author Mattias Lögdberg
- */
-import gamecharacter.GameCharacter;
 
+import gamecharacter.GameCharacter;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Observable;
-
 import command.Command;
-import command.CommandAttack;
 
+/**
+ * Client is responsible for having all the connection
+ * with engine and other.
+ * 
+ * @file Client.java
+ * @version 0.3
+ * @author mathal
+ */
 public abstract class Client extends Observable implements Runnable {
 
 	private Thread aktivitet;
     protected Engine engine;
     private Point point;
-    private int health;
     private int id;
+    private int health;
     private String name;
     private String direction;
-    private String action;
+    private String animation;
+    private LinkedList<String> actions;
     private int position;
     private GameCharacter gc;
     
@@ -36,17 +39,16 @@ public abstract class Client extends Observable implements Runnable {
      * @param HashMap<String,ArrayList<String>>
      * @param name
      */
-    public Client(int id, Point point, int health, String name, GameCharacter gc, Engine engine){
+    public Client(int id, Point point, String name, GameCharacter gc, Engine engine){
     	aktivitet = new Thread(this);
     	this.id = id;
-        this.health = health;
         this.name = name;
         this.point = point;
         this.engine = engine;
         direction = "west";
-        action = "walk";
         position = 0;
         this.gc=gc;
+        health = 100; // make it come from gc
     }
     /**
      * Run method that makes things happen
@@ -65,9 +67,47 @@ public abstract class Client extends Observable implements Runnable {
      * adding this as target for the command
      * @param cmd
      */
-    public void interpretCommand(String cmd) {
-    	System.out.println("Interpret command körs för " + name);
-        engine.interpretCommand(cmd, this.id);
+    private void interpretCommand(String cmd) {
+    	if( !gc.isStunned() ) 
+    		engine.interpretCommand(cmd, this.id);
+    }
+    /**
+     * Adds an action to the action list
+     * This list is used to send actions
+     * @param action
+     */
+    public void addAction(String action) {  	
+    	if( !actions.contains(action) ) {
+    		if( action.equals("attack"))
+    			actions.addLast(action);
+    		if( actions.equals("walk"))
+    			actions.addFirst(action);
+    	}		
+    }
+    
+    public void addStunn( String stunn, int time) {
+    	gc.stunn(time);
+    	animation = "hit";
+    }
+    
+    /**
+     * Runns all actions and uses interpretCommand
+     * to send actions
+     */
+    public void runActions() {
+    	String tmp;
+    	if( actions.isEmpty() )
+    		setAnimationType("still");
+    	
+    	for(int i=0; i < actions.size() ; i++) {
+    		tmp = actions.remove();
+    		if ( !gc.isStunned() ){ 
+    			interpretCommand(tmp);
+    			setAnimationType(tmp);
+    		}else {
+    			animation = "still";
+    		}
+    	}
     }
     
     /**
@@ -82,20 +122,12 @@ public abstract class Client extends Observable implements Runnable {
      * @return string to image
      */
     public BufferedImage getAnimation() {
-    	if(position == gc.getAnimationLength(action, direction)) {
+    	if(position == gc.getAnimationLength(animation, direction)) {
     		position = 0;
-    		if( action.equals(CommandAttack.ATTACK) || action.equals("hit"))
-    			action = "walk";
     	}
-    	return gc.getNextImage(action, direction, position++);
+    	return gc.getNextImage(animation, direction, position++);
     }
-    /**
-     * Returns the 
-     * @return
-     */
-    public String getAnimationType() {
-    	return action;
-    }
+
     /**
      * Set's an new type of animation
      * Unvalid types will throw an IllegalArgumentException
@@ -104,11 +136,12 @@ public abstract class Client extends Observable implements Runnable {
      * @throws IllegalArgumentException
      * @throws NullPointerException
      */
-    public void setAnimationType(String type)  {
+    private void setAnimationType(String type)  {
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
-    	position = 0;
-    	action = type;
+    	if( !type.equals(animation))
+    		position = 0;
+    	animation = type;
     }
     
     /**
@@ -207,8 +240,23 @@ public abstract class Client extends Observable implements Runnable {
     }
     
     /**
+     * Can this client attack an specified client?
+     * Checks if this client can attack the incoming client
+     * @param c target
+     * @return	true if attable else false
+     */
+    public boolean isAttackble(Client c){
+    	if( this instanceof Monster && c instanceof Player)
+    		return true;
+    	if( c instanceof Player)
+    		return true;
+    	return false;
+    }
+    
+    /**
      * abstract methods
      */
     public abstract Object clone();
+    
 }
 

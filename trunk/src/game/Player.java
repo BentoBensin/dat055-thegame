@@ -14,11 +14,11 @@ import java.util.ArrayList;
 public class Player extends Client{
 
 	public Player(int id, Point point, int health, String name, GameCharacter gc, Engine engine){
-		super(id, point, health, name, gc, engine);
+		super(id, point, name, gc, engine);
 	}
 	
 	public Player(Player p){	//TODO Animation not coppied...... BAD
-		super(IDGen.generateID(), (Point)p.getPoint().clone(), p.getHealth(), p.getName(),p.getGameCharacter(), p.engine);
+		super(IDGen.generateID(), (Point)p.getPoint().clone(), p.getName(),p.getGameCharacter(), p.engine);
 	}
 	
 	public void run() {
@@ -29,6 +29,9 @@ public class Player extends Client{
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage() + " in Player.run()");
 			}
+			//runs the actions that's in the running queue
+			//changes the animation type that should be according to prio of the running queue
+			runActions();
 			try{
 				nc = engine.nearbyClients(this.getPoint(), 500); // korrekt radius?
 			}catch(NullPointerException e) {
