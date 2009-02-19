@@ -57,7 +57,6 @@ public class Engine {
     
     	for( int i = 0 ; i < n ; i++ ) {
     		monster = new Monster( IDGen.generateID() , new Point( 200, 100), 100, "Monster", new ShroomsMan(), this);
-    		//TODO Clone av animeringen!!!
     		monster.addObserver( ai );
     		addClient(monster );
     		monster.startThread();
@@ -65,19 +64,20 @@ public class Engine {
     }
     /**
      * Get's all the nearby clients of an point
+     * If nullpointer or other obj than Client or point
+     * returns an empty ArrayList<Client>
      * @param point
      * @param radius
      * @return ArrayList of nearby clients
      */
-    public ArrayList<Client> nearbyClients( Client client, int radius){
-    	if( client == null || radius < 0)
+    public ArrayList<Client> nearbyClients( Object obj , int radius){
+    	if( obj == null || radius < 0)
     		throw new IllegalArgumentException();
-    	return logicModel.nearbyClients(client, radius);
-    }
-    public ArrayList<Client> nearbyClients( Point point, int radius){
-    	if( point == null || radius < 0)
-    		throw new IllegalArgumentException();
-    	return logicModel.nearbyClients(point, radius);
+    	if( obj instanceof Client )
+    		return logicModel.nearbyClients( (Client) obj, radius);
+    	if( obj instanceof Point )
+    		return logicModel.nearbyClients((Point) obj , radius);
+    	return new ArrayList<Client>();
     }
     /**
      * loads a map into the memory from file, this is just a tunnel from client to Maps.
@@ -97,8 +97,6 @@ public class Engine {
      */
     public TreeMap<String,MapPiece> getMap(String map)
     {
-       /* if (maps.isMap(map))
-        return maps.getMap(map);*/
         return new TreeMap<String,MapPiece>();
     }
     /**
