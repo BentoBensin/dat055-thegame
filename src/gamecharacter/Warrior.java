@@ -14,7 +14,7 @@ public class Warrior extends GameCharacter{
 	
 	
 	public Warrior(){
-		super(1, 100, 100); //speed, width and height.
+		super(new Weapon(),1, 100, 100); //speed, width and height.
 		initImages();
 		newMovePattern();
 		
@@ -112,53 +112,53 @@ public class Warrior extends GameCharacter{
     	anim.get("attack").put("east", new ArrayList<String>());
     	anim.get("attack").put("west", new ArrayList<String>());
     	
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn00.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn01.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn02.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn03.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn04.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn05.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn06.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn07.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn08.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn09.bmp");
-    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn10.bmp");
+    	anim.get("attack").get("north").add("images/shroomsman/attack/north/nn00.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn01.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn02.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn03.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn04.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn05.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn06.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn07.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn08.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn09.gif");
+    	anim.get("attack").get("north").add("images/warrior/attack/north/nn10.gif");
     	
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss00.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss01.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss02.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss03.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss04.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss05.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss06.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss07.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss08.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss09.bmp");
-    	anim.get("attack").get("south").add("images/shroomsman/attack/south/ss10.bmp");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss00.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss01.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss02.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss03.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss04.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss05.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss06.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss07.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss08.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss09.gif");
+    	anim.get("attack").get("south").add("images/warrior/attack/south/ss10.gif");
     	
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee00.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee01.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee02.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee03.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee04.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee05.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee06.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee07.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee08.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee09.bmp");
-    	anim.get("attack").get("east").add("images/shroomsman/attack/east/ee10.bmp");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee00.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee01.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee02.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee03.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee04.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee05.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee06.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee07.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee08.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee09.gif");
+    	anim.get("attack").get("east").add("images/warrior/attack/east/ee10.gif");
     	
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww00.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww01.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww02.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww03.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww04.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww05.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww06.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww07.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww08.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww09.bmp");
-    	anim.get("attack").get("west").add("images/shroomsman/attack/west/ww10.bmp");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww00.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww01.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww02.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww03.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww04.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww05.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww06.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww07.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww08.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww09.gif");
+    	anim.get("attack").get("west").add("images/warrior/attack/west/ww10.gif");
     	
     	loadImages(anim);
 	}

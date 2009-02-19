@@ -14,7 +14,7 @@ import command.Commands;
 public class ShroomsMan extends GameCharacter {
 	
 	public ShroomsMan(){
-		super(0.5, 100, 100); //speed, width and height.
+		super(new Weapon(), 0.5, 100, 100,100); //speed, width and height.
 		initImages();
 		newMovePattern();
 	}

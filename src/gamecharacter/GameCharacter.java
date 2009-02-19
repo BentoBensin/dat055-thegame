@@ -6,17 +6,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 
 /**
  * This class contains information such as speed, height and width, about a character.
  * @file GameCharacter.java
- * @version 0.2
+ * @version 0.3
  * @author Teddie
  *
  */
-public abstract class GameCharacter {
+public abstract class GameCharacter extends TimerTask {
 	
 	private HashMap<String,HashMap<String, ArrayList<BufferedImage>>> image;
 	private LinkedList<MovePattern> patterns;
@@ -24,14 +26,20 @@ public abstract class GameCharacter {
 	private int width;
 	private int height;
 	private int attackRange;   
+	private Timer stunTimer;
+	private boolean isStunned;
+	private Item weapon;
 	
-	public GameCharacter(double speed, int width, int height){
+	public GameCharacter(Item weapon, double speed, int width, int height, int health){
 		image = new HashMap<String,HashMap<String, ArrayList<BufferedImage>>>();
 		patterns = new LinkedList<MovePattern>();
+		this.weapon = weapon;
 		this.speed = speed;
 		this.width = width;
 		this.height = height;
 		this.attackRange = 20;
+		stunTimer = new Timer();
+		isStunned = false;
 	}
 	
 	/**
@@ -114,6 +122,32 @@ public abstract class GameCharacter {
 	}
 	
 	/**
+	 * Adds an stunn to the GameCharacter
+	 * param is the stunn time in miliseconds
+	 * @param time
+	 */
+	public void stunn( int time) {
+		isStunned = true;
+		stunTimer.schedule(this, time, time);
+	}
+	/**
+	 * Checks if the GameCharacter is stunned
+	 * @return true if stunned
+	 */
+	public boolean isStunned() {
+		return isStunned;
+	}
+	
+	/**
+	 * Is called when the stunnTimer is done
+	 * removes stunn and cancels the timer
+	 */
+	public void run() {
+		isStunned = false;
+		stunTimer.cancel();
+	}
+	
+	/**
 	 * Returns number of patterns
 	 * @return Number of patterns.
 	 */
@@ -143,6 +177,10 @@ public abstract class GameCharacter {
 	 */
 	public int getHeight(){
 		return height;
+	}
+	
+	public Item getPrimary() {
+		return weapon;
 	}
 	
 	/**
