@@ -1,5 +1,7 @@
 package gamecharacter;
 
+import items.Weapon;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +30,9 @@ public abstract class GameCharacter extends TimerTask {
 	private int attackRange;   
 	private Timer stunTimer;
 	private boolean isStunned;
-	private Item weapon;
+	private Weapon weapon;
 	
-	public GameCharacter(Item weapon, double speed, int width, int height, int health){
+	public GameCharacter(Weapon weapon, double speed, int width, int height, int health){
 		image = new HashMap<String,HashMap<String, ArrayList<BufferedImage>>>();
 		patterns = new LinkedList<MovePattern>();
 		this.weapon = weapon;
@@ -122,11 +124,11 @@ public abstract class GameCharacter extends TimerTask {
 	}
 	
 	/**
-	 * Adds an stunn to the GameCharacter
-	 * param is the stunn time in miliseconds
+	 * Adds an stun to the GameCharacter
+	 * param is the stun time in milliseconds
 	 * @param time
 	 */
-	public void stunn( int time) {
+	public void stun( int time) {
 		isStunned = true;
 		stunTimer.schedule(this, time, time);
 	}
@@ -179,7 +181,7 @@ public abstract class GameCharacter extends TimerTask {
 		return height;
 	}
 	
-	public Item getPrimary() {
+	public Weapon getPrimary() {
 		return weapon;
 	}
 	

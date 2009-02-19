@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import command.Commands;
+import main.strings;
 
 /**
  * AI is responsible for the monsters decisions; whether it is going to follow a
@@ -67,25 +68,25 @@ public class AI implements GenericInterface, Observer
         
         // Direction EAST
         if(closest != null && ((client.getPoint().x+client.getGameCharacter().getWidth())+(client.getGameCharacter().getAttackRange())) > closest.getPoint().x ){
-        	 client.setDirection(Commands.EAST);
+        	 client.setDirection(strings.East);
         	 client.addAction("attack");
         	 return;
         }
         // Direction WEST
         if(closest != null && ((client.getPoint().x - client.getGameCharacter().getAttackRange()) < (closest.getPoint().x+closest.getGameCharacter().getWidth())) ){
-        	client.setDirection(Commands.WEST);
+        	client.setDirection(strings.West);
        	 	client.addAction("attack");
        	 	return;
         }
         // Direction SOUTH
         if( closest != null && ((client.getPoint().y+client.getGameCharacter().getHeight())+(client.getGameCharacter().getAttackRange())) > closest.getPoint().y ){
-        	client.setDirection(Commands.SOUTH);
+        	client.setDirection(strings.South);
         	client.addAction("attack");
         	return;
         }
         // Direction NORTH
         if( closest != null && ((client.getPoint().y - client.getGameCharacter().getAttackRange()) < (closest.getPoint().y+closest.getGameCharacter().getHeight())) ){
-        	client.setDirection(Commands.NORTH);
+        	client.setDirection(strings.North);
  	 		client.addAction("attack");
    	 		return;
     	}
@@ -96,14 +97,14 @@ public class AI implements GenericInterface, Observer
         if( (client.getPoint().x - closest.getPoint().x) > (client.getPoint().y - closest.getPoint().y) )
         {
         	if (closest.getPoint().getX()>client.getPoint().getX())
-                client.setDirection(Commands.EAST);
+                client.setDirection(strings.East);
             else
-                client.setDirection(Commands.WEST);	
+                client.setDirection(strings.West);	
         }else {
         	 if (closest.getPoint().getY()>client.getPoint().getY())
-                 client.setDirection(Commands.SOUTH);
+                 client.setDirection(strings.South);
              else
-                 client.setDirection(Commands.NORTH);
+                 client.setDirection(strings.North);
         }
         
         /*

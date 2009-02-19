@@ -2,43 +2,43 @@ package items;
 
 public class Weapon extends Item {
 
-	private int strength, stunnTime, range;
-	private String stunnType;
+	private int strength, stunTime, range;
+	private String stunType;
 	
-	public Weapon(int strength,int stunnTime,int range, String stunnType, int cd) 
+	public Weapon(int strength,int stunTime,int range, String stunType, int cd) 
 	{
 		super(cd);
 		this.strength=strength;
-		this.stunnTime=stunnTime;
+		this.stunTime=stunTime;
 		this.range=range;
-		this.stunnType=stunnType;
+		this.stunType=stunType;
 	}
 	
 	/**
 	 * Returns the strength of the current weapon
 	 * @return strength
 	 */
-	public int getStrenght()
+	public int getStrength()
 	{
 		return strength;
 	}
 	
 	/**
 	 * Returns the stuntype of the current weapon
-	 * @return stunn type
+	 * @return stun type
 	 */
-	public String getStuntype()
+	public String getStunType()
 	{
-		return stunnType;
+		return stunType;
 	}
 	
 	/**
 	 * Returns the stun time of the current weapon
-	 * @return stunn time
+	 * @return stun time
 	 */
-	public int getStuntime()
+	public int getStunTime()
 	{
-		return stunnTime;
+		return stunTime;
 	}
 	
 	/**

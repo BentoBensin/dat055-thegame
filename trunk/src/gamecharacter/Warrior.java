@@ -1,9 +1,11 @@
 package gamecharacter;
 
+import items.TreeSword;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import command.Commands;
+import main.strings;
 
 /**
  * @file Warrior.java
@@ -14,7 +16,7 @@ public class Warrior extends GameCharacter{
 	
 	
 	public Warrior(){
-		super(new Weapon(),1, 100, 100); //speed, width and height.
+		super(new TreeSword(),1.0, 100, 100, 100); //speed, width and height.
 		initImages();
 		newMovePattern();
 		
@@ -164,10 +166,9 @@ public class Warrior extends GameCharacter{
 	}
 	
 	public void newMovePattern(){
-		addPattern(new MovePattern(130, Commands.SOUTH));
-		addPattern(new MovePattern(100, Commands.EAST));
-		addPattern(new MovePattern(130, Commands.NORTH));
-		addPattern(new MovePattern(100, Commands.WEST));
-		
+		addPattern(new MovePattern(130, strings.South));
+		addPattern(new MovePattern(100, strings.East));
+		addPattern(new MovePattern(130, strings.North));
+		addPattern(new MovePattern(100, strings.West));
 	}
 }

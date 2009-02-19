@@ -1,15 +1,14 @@
 package items;
 
 import java.util.TimerTask;
-
 import java.util.Timer;
 /**
+ * 
  * @author bache
  *
  */
 public abstract class Item extends TimerTask {
 
-	
 	private long cooldown;
 	private Timer cdTimer;
 	private boolean possible;
