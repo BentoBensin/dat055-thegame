@@ -1,6 +1,6 @@
 package main;
 
-import java.lang.Enum;
+//import java.lang.Enum;
 /**
  * Every string in the whole application
  * @file strings.java
@@ -15,6 +15,7 @@ public final class strings {
 	public static final String East = "east";
 	public static final String Attack = "attack";
 	public static final String Move = "move";
+	public static final String Still = "still";
 	//todo
 	//public static final EnumSet<String> Directions = new Enum(North,1);
 	

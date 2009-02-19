@@ -2,11 +2,15 @@ package game;
 
 
 import gamecharacter.GameCharacter;
+
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Observable;
+
+import main.strings;
+
 import command.Command;
 
 /**
@@ -45,10 +49,11 @@ public abstract class Client extends Observable implements Runnable {
         this.name = name;
         this.point = point;
         this.engine = engine;
-        direction = "west";
+        direction = strings.West;
         position = 0;
         this.gc=gc;
         health = 100; // make it come from gc
+        actions = new LinkedList<String>();
     }
     /**
      * Run method that makes things happen
@@ -78,15 +83,15 @@ public abstract class Client extends Observable implements Runnable {
      */
     public void addAction(String action) {  	
     	if( !actions.contains(action) ) {
-    		if( action.equals("attack"))
+    		if( action.equals(strings.Attack))
     			actions.addLast(action);
-    		if( actions.equals("walk"))
+    		if( actions.equals(strings.Move))
     			actions.addFirst(action);
     	}		
     }
     
-    public void addStunn( String stunn, int time) {
-    	gc.stunn(time);
+    public void addStun( String stun, int time) {
+    	gc.stun(time);
     	animation = "hit";
     }
     
@@ -97,7 +102,7 @@ public abstract class Client extends Observable implements Runnable {
     public void runActions() {
     	String tmp;
     	if( actions.isEmpty() )
-    		setAnimationType("still");
+    		setAnimationType(strings.Still);
     	
     	for(int i=0; i < actions.size() ; i++) {
     		tmp = actions.remove();
@@ -105,14 +110,14 @@ public abstract class Client extends Observable implements Runnable {
     			interpretCommand(tmp);
     			setAnimationType(tmp);
     		}else {
-    			animation = "still";
+    			animation = strings.Still;
     		}
     	}
     }
     
     /**
      * Get all the commands that can be executed
-     * @return Hashmap with commands
+     * @return HashMap with commands
      */
     public HashMap<String, Command> getCommands() {
         return engine.getCommands();
@@ -245,7 +250,7 @@ public abstract class Client extends Observable implements Runnable {
      * @param c target
      * @return	true if attable else false
      */
-    public boolean isAttackble(Client c){
+    public boolean isAttackAble(Client c){
     	if( this instanceof Monster && c instanceof Player)
     		return true;
     	if( c instanceof Player)

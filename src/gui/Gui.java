@@ -4,6 +4,7 @@ package gui;
 
 import game.Client;
 import game.Player;
+import main.strings;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -201,25 +202,25 @@ public class Gui implements Observer {
 		public void keyPressed(KeyEvent e) {
 
 			if (e.getKeyCode() == KeyEvent.VK_W) {
-				player.setDirection(Commands.NORTH);
+				player.setDirection(strings.North);
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_S) {
-				player.setDirection(Commands.SOUTH);
+				player.setDirection(strings.South);
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_A) {
-				player.setDirection(Commands.WEST);
+				player.setDirection(strings.West);
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_D) {
-				player.setDirection(Commands.EAST);
+				player.setDirection(strings.East);
 			}
 			if (e.getKeyCode() == KeyEvent.VK_L) {
-				player.addAction("attack");
+				player.addAction(strings.Attack);
 				return;
 			}
-			player.addAction("walk");
+			player.addAction(strings.Move);
 
 		}
 
