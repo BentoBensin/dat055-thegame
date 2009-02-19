@@ -1,14 +1,23 @@
+
 package command;
 
 import game.Client;
 import game.Engine;
-
 import java.util.ArrayList;
-
-
+import gamecharacter.GameCharacter;
+/**
+ * In this class we check if we can attack nearby clients and if it's possible with the current weapon
+ * there is comments inside to use more functions like dexterity and intelligence.. now it's just affected by weapon.strength
+ * we check for stun and we add stun depending on weapon type
+ * @file CommandAttack.java
+ * @version 0.3
+ * @author Josef Johansson
+ */
 public class CommandAttack extends Command 
 {
-	public static final String ATTACK = "attack";
+	// client use this to send commands... good way?
+	// use import main.strings; (use Attack not ATTACK)
+	// public static final String ATTACK = "attack";
 	
 	public CommandAttack(Engine engine)
 	{
@@ -19,25 +28,57 @@ public class CommandAttack extends Command
 
 	/**
 	 * If any clients are within attack range while attacking they will decrease in health points
+	 * @param client the client that this is executed on
 	 */
 	 public void execute(Client client)
 	 {
-		 ArrayList<Client> targets=engine.nearbyClients(client, client.getGameCharacter().getAttackRange());
-		 if( !client.getAnimationType().equals(ATTACK))
-			 client.setAnimationType(ATTACK);
-		 if (targets.isEmpty())
+		 GameCharacter gc = client.getGameCharacter();
+		 Weapon weapon = gc.getPrimary();
+		 /*
+		  * return check number one..
+		  * Stupid checks, these are checked in Client.. just for failsafe
+		  */
+		 if( 
+		  //A client can't attack while stunned
+		  gc.isStunned()
+		  // something more ?
+		  )
 			 return;
-		 else
-			 for (Client c : targets)
+		 //
+		 ArrayList<Client> targets = engine.nearbyClients(client, weapon.range);
+		 /*
+		  * Return check number two..
+		  */
+		 if (
+			// if there is no targets
+			 targets.isEmpty()
+			// if weapon can't be used, like, there is cooldown or it's broken
+			 && !weapon.use()
+			// something more?
+			 )
+			 return;
+		 // We can attack, let's start..
+		 for (Client c : targets)
 			 {
-				 if( c != client){
-					 c.changeHealth(-10);
-					 if( !c.getAnimationType().equals("hit"))
-						 c.setAnimationType("hit");
+			 	// client ain't me or 
+				if( c != client && c.isAttackAble(client)){
+					 /*
+					  * int damage = (weapon.getStrength*gc.getDexterity*gc.getStrength
+					  * 				- gc.getDefense);
+					  * if (damage < 0 ) c.changeHealth(damage);
+					  * defense_skill (%)
+					  * strength_skill
+					  * 
+					  * strength
+					  * stamina (hälsa)
+					  * agility (smidighet
+					  * dexterity ( skill på vapnet ) 
+					  * intelligence (styrka på spells / mängd mana )
+					  */
+					 c.changeHealth(weapon.strength);
+					 // 100% hit each time, we implement stuff like that later
+					 c.addStun(weapon.stunType,weapon.stunTime);
 				 }
 			 }
-		 
-				 
-		 
 	 }
 }

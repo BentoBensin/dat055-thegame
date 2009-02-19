@@ -1,34 +1,26 @@
 package command;
 
 import game.Engine;
-
+import main.strings;
 import java.util.HashMap;
 
 
 /**
+ * This is the class that handles and creates all of the commands
+ * @file Commands.java
+ * @version 0.1
  * @author Josef Johansson
- *
  */
-
-//TODO KOMMENTERA!!!!!!!
 public class Commands
     {
         /**
          * This variable contains our commands
          */
-		public static final int FORWARD = 0;
-		public static final int BACK = 0;
-		public static final int STRAFELEFT = 0;
-		public static final int STRAFERIGHT = 0;
-		
-		public static final String NORTH = "north";
-		public static final String SOUTH = "south";
-		public static final String EAST = "east";
-		public static final String WEST = "west";
-		
-		public static enum DIRECTION  { NORTH, SOUTH, EAST, WEST };
-	
         private HashMap<String,Command> commands;
+        /**
+         * Constructor, runs inializeCommands
+         * @param engine
+         */
         public Commands(Engine engine)
         {
             commands = new HashMap<String,Command>();
@@ -40,8 +32,8 @@ public class Commands
          */
         private void initializeCommands(Engine engine)
         {
-            commands.put("walk",new CommandMove(engine));
-            commands.put("attack",new CommandAttack(engine));
+            commands.put(strings.Move,new CommandMove(engine));
+            commands.put(strings.Attack,new CommandAttack(engine));
         }
         /**
          * Returns all the commands we have.
@@ -66,6 +58,7 @@ public class Commands
         
        /**
         * Returns true if the key has an command.
+        * @param key the command we want to check if it exists
         * @return true if key in use
         */
        public boolean isCommand(String key)
@@ -75,6 +68,7 @@ public class Commands
        /**
         * Return's the command that is linked to the key.
         * @return Command
+        * @throws IllegalArgumentException
         */
        public Command getCommand(String key) throws IllegalArgumentException
        {
