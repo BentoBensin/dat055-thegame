@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Observable;
 
-import main.strings;
+import main.Strings;
 
 import command.Command;
 
@@ -49,8 +49,8 @@ public abstract class Client extends Observable implements Runnable {
         this.name = name;
         this.point = point;
         this.engine = engine;
-        direction = strings.West;
-        animation = strings.Still;
+        direction = Strings.West;
+        animation = Strings.Still;
         position = 0;
         this.gc=gc;
         health = 100; // make it come from gc
@@ -111,7 +111,7 @@ public abstract class Client extends Observable implements Runnable {
     			interpretCommand(tmp);
     			setAnimationType(tmp);
     		}else {
-    			animation = strings.Still;
+    			animation = Strings.Still;
     		}
     	}
     }

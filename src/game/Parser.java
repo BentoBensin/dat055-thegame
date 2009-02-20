@@ -1,7 +1,8 @@
 package game;
 
 import java.util.HashMap;
-import java.util.Scanner;
+// Not neccesary, doesn't work in later versions of jdk?
+//import java.util.Scanner;
 
 import command.Command;
 import command.Commands;
@@ -39,6 +40,7 @@ public class Parser
      */
     public Command getCommand(String inputLine) 
     {
+    	/* We don't use more than one word..
         //String inputLine;   // will hold the full input line
         String word1 = null;
         String word2 = null;  
@@ -52,7 +54,7 @@ public class Parser
                 // note: we just ignore the rest of the input line.
             }
         }
-
+    	 
         // Now check whether this word is known. If so, create a command
         // with it. If not, create a "null" command (for unknown command).
         if(commands.isCommand(word1)) {
@@ -62,7 +64,10 @@ public class Parser
         }
         else {
             return null; 
-        }
+        */
+    	if(commands.isCommand(inputLine))
+    		return commands.getCommand(inputLine);
+    	return null;
     }
 
     /**
