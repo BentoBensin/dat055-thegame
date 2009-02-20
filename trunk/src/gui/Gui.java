@@ -3,11 +3,14 @@
 package gui;
 
 import game.Client;
+import game.Engine;
+import game.IDGen;
 import game.Player;
-import main.strings;
+import gamecharacter.Warrior;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -26,7 +29,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
-import command.Commands;
+import main.Main;
+import main.Strings;
 
 /**
  * Write a description of class Gui
@@ -47,28 +51,36 @@ public class Gui implements Observer {
 	private Runner r;
 
 	/**
-	 * Konstruktorn gör framen och alla grafiska objekt, vill att dom skall
-	 * finnas när vi skapar GUIt
+	 * We start with a empty shell, when you click new game, engine will create everything for us!
 	 */
-	// Object nedan skall vara player/client
-	public Gui(Player player) {
-		player.addObserver(this);
-		this.player = player;
+	public Gui() {
+		
 		started = false;
-		r = new Runner();
-		// Current list of clients visible to player
-		currentList = new HashMap<Client, TranspContainer>();
-		currentList.put(player,null);
 		//thisDirection = new DirectionParser();
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createGUI();
 	}
-
 	/**
-	 * sätter att framen skall ha borderlayout lägger till canvasen i mitten på
-	 * layouten Vi har en lagerpanel där vi kan lägga till grafiska objekt i
-	 * olika lager. Det finns 5 fördefinierade lager, men man kan nog använda
+	 * starts the gamegui
+	 * @param player needs a player
+	 */
+	public void startGame() {
+    	Engine engine = new Engine();
+    	player = new Player( IDGen.generateID() , new Point( 500,250 ), 100, "player",new Warrior(), engine);
+		player.addObserver(this);
+		engine.addClient( player );
+    	player.startThread();    	
+    	engine.createEnemies(1);
+		r = new Runner();
+		// Current list of clients visible to player
+		currentList = new HashMap<Client, TranspContainer>();
+		currentList.put(player,null);
+	}
+	/**
+	 * stter att framen skall ha borderlayout lgger till canvasen i mitten p
+	 * layouten Vi har en lagerpanel dr vi kan lgga till grafiska objekt i
+	 * olika lager. Det finns 5 frdefinierade lager, men man kan nog anvnda
 	 * fler om man vill.
 	 */
 	private void createGUI() {
@@ -78,47 +90,45 @@ public class Gui implements Observer {
 		
 		//assert(WelcomeImage != null);
 		//myLayeredPane.add(WelcomeImage, JLayeredPane.DEFAULT_LAYER);
-		// Våran Lagerpanel kan inte vara genomskinlig
+		// Vran Lagerpanel kan inte vara genomskinlig
 		myLayeredPane.setOpaque(true);
 
 		frame.getContentPane().add(myLayeredPane, BorderLayout.CENTER);
 
 		frame.addKeyListener(kl);
 		frame.setPreferredSize(new Dimension(800, 600));
-		frame.pack();
 		createMenu();
+		frame.pack();
 		frame.setResizable(false);
-		// initContainer() måste alltid göras EFTER frame.pack()
+		//initContainer(); //must do this after frame.pack()
 
 		frame.setVisible(true);
 
 	}
 
 	/**
-	 * Skapar Menubar och lägger till en meny Arkiv, i arkiv lägger vi till två
-	 * menu items start och quit (som är lyssnare) Obs!! Buggar ur om man
-	 * trycker start mer än en gång.
+	 * Creates a Menubar and adds a menu Archive and inside archive we add start and quit
+	 * TODO Something wierd happens if you push start twice
 	 */
 
 	private void createMenu() {
 		JMenuBar menu = new JMenuBar();
 		JMenu Arkiv = new JMenu("Arkiv");
-		
-
-		// JMenuitem start med anonym inre klass.
+		/**
+		 * JMenuitem start with an anonymous inner class
+		 */ 
 		JMenuItem start = new JMenuItem("New Game");
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// När spelet startar skall vi skapa alla grafiska
-				// komponenter
-				startGame();
-				// Tar bort välkomstbilden, antar att repaint anropas när
-				// jag anropar setSize, kom inte på ett snyggare sätt
-				// att få bort bilden.
+				// When the game starts we are going to create the graphics
+				// startGame();
+				// TODO nicer way
+				// Takes away the welcomescreen, guess that repaint is called when I call setSize
 				if (!started) {
 					WelcomeImage.setSize(0, 0);
 					myLayeredPane.remove(myLayeredPane.getIndexOf(WelcomeImage));
 					WelcomeImage = null;
+					//startGame();
 					started = true;
 				}
 			}
@@ -134,11 +144,6 @@ public class Gui implements Observer {
 		Arkiv.add(quit);
 		menu.add(Arkiv);
 		frame.setJMenuBar(menu);
-		startGame();
-	}
-
-	private void startGame() {
-		started = true;
 	}
 
 	/**
@@ -160,6 +165,7 @@ public class Gui implements Observer {
 	 * 
 	 */
 	private void updateScreen() {
+		if (started)
 		for (Client client : currentList.keySet()) {
 			currentList.get(client).setLocation(client.getPoint());
 			currentList.get(client).setImage(client.getAnimation());
@@ -181,51 +187,50 @@ public class Gui implements Observer {
 
 	public void update(Observable o, Object arg) {
 		if( arg == null || !started) return;
-		if (arg instanceof ArrayList) {
-			ArrayList<Client> temp = (ArrayList<Client>) arg;
-			for (Client client : temp) {
-				if (!currentList.keySet().contains(client)) {
-					currentList.put(client, null);
-				}
-
-			}
-		}
+		if (arg instanceof ArrayList)
+			for (Object object : (ArrayList)arg)
+				if(object instanceof Client)
+					if (!currentList.keySet().contains((Client)object))
+						currentList.put((Client)object, null);
+		/*
+		 * Maybe a cleaner and safer way to accomplish the same thing? // Josef
+		 */
 		SwingUtilities.invokeLater(r);
 	}
 
 	/**
-	 * KeyListner är en lyssnare som vi skapar med hjälp av en hjälpklass med
-	 * anonym inre klass den utför saker beroende på vilken händelse (tangent)
-	 * den "hör"
+	 * KeyListner r en lyssnare som vi skapar med hjlp av en hjlpklass med
+	 * anonym inre klass den utfr saker beroende p vilken hndelse (tangent)
+	 * den "hr"
 	 */
 	KeyListener kl = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 
 			if (e.getKeyCode() == KeyEvent.VK_W) {
-				player.setDirection(strings.North);
+				player.setDirection(Strings.North);
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_S) {
-				player.setDirection(strings.South);
+				player.setDirection(Strings.South);
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_A) {
-				player.setDirection(strings.West);
+				player.setDirection(Strings.West);
 			}
 
 			if (e.getKeyCode() == KeyEvent.VK_D) {
-				player.setDirection(strings.East);
+				player.setDirection(Strings.East);
 			}
 			if (e.getKeyCode() == KeyEvent.VK_L) {
-				player.addAction(strings.Attack);
+				player.addAction(Strings.Attack);
 				return;
 			}
-			player.addAction(strings.Move);
+			player.addAction(Strings.Move);
 
 		}
 
 		public void keyReleased(KeyEvent e) {
-			player.addAction(strings.Still);
+			player.addAction(Strings.Still);
 			// Empty
 
 		}
@@ -237,7 +242,7 @@ public class Gui implements Observer {
 			for (Client client : currentList.keySet()) {
 				if(currentList.get(client) == null) {
 					TranspContainer tnc = new TranspContainer(100, 100);
-					assert(myLayeredPane != null && tnc != null): "myLayeredPane eller tnc är Null i Gui.update()";
+					assert(myLayeredPane != null && tnc != null): "myLayeredPane eller tnc r Null i Gui.update()";
 					try {
 						myLayeredPane.add(tnc, JLayeredPane.PALETTE_LAYER);
 					}catch(NullPointerException e){

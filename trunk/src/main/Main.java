@@ -1,12 +1,6 @@
 package main;
 
-import game.Engine;
-import game.IDGen;
-import game.Player;
-import gamecharacter.Warrior;
 import gui.Gui;
-
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
@@ -19,18 +13,8 @@ public class Main
     /**
      * Constructor for objects of class Main
      */
-	private Engine engine;
-	
-    public Main()
-    {
-    	init();
-    }
     public static void main(String [] args )
     {
-    	Engine e;
-    	
-    	e = new Engine();
-    	
     	HashMap<String,ArrayList<String>> anim = new HashMap<String,ArrayList<String>>();
     	anim.put("north", new ArrayList<String>());
     	anim.put("south", new ArrayList<String>());
@@ -73,18 +57,6 @@ public class Main
     	anim.get("west").add("bin/images/warrior/walk/west/ww06.gif");
     	anim.get("west").add("bin/images/warrior/walk/west/ww07.gif");
     	
-    	Player p = new Player( IDGen.generateID() , new Point( 500,250 ), 100, "player",new Warrior(), e);
-    	e.addClient( p);
-    	p.startThread();
-    	new Gui(p);
-    	e.createEnemies(1);
-    	
+    	new Gui();
     }
-    
-    public void init() {
-    	engine = new Engine();
-        engine.createEnemies(2);
-        
-    }
- 
 }

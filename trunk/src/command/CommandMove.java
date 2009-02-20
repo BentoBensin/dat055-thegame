@@ -2,7 +2,7 @@ package command;
 
 import game.Client;
 import game.Engine;
-import main.strings;
+import main.Strings;
 import java.awt.Point;
 
 /**
@@ -28,7 +28,7 @@ public class CommandMove extends Command
      */
     public void execute(Client client)
     {
-    	System.out.println("försöker köra move för: " + client.getName());
+    	System.out.println("frsker kra move fr: " + client.getName());
     	if( client != null) {
     		int x = client.getPoint().x;
     		int y = client.getPoint().y;
@@ -41,14 +41,14 @@ public class CommandMove extends Command
                 case "EAST": x+=stepSize; break;
                 case "WEST": x-=stepSize; break;
             }*/
-			if(client.getDirection().equals(strings.North)) y-=stepSize;
-			if(client.getDirection().equals(strings.South)) y+=stepSize;
-			if(client.getDirection().equals(strings.East)) x+=stepSize;
-			if(client.getDirection().equals(strings.West)) x-=stepSize;
+			if(client.getDirection().equals(Strings.North)) y-=stepSize;
+			if(client.getDirection().equals(Strings.South)) y+=stepSize;
+			if(client.getDirection().equals(Strings.East)) x+=stepSize;
+			if(client.getDirection().equals(Strings.West)) x-=stepSize;
 			int[] u = {0,x,y}, v = { 1,x,y};
             if (engine.checkSpot( u ) && engine.checkSpot( v ))
             {
-            	System.out.println("Position ändras. Från " + client.getPoint() + " till " + new Point(x,y));
+            	System.out.println("Position ndras. Frn " + client.getPoint() + " till " + new Point(x,y));
                 client.updateCoordinates(new Point(x,y));
             }
     	}
