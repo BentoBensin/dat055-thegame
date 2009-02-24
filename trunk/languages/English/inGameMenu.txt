@@ -1,0 +1,5 @@
+Start game
+Settings
+Load game
+Save game
+Exit
