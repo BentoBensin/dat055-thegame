@@ -30,14 +30,12 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
@@ -413,3 +411,4 @@ public class Gui implements Observer, ActionListener {
 	}
 
 }
+
