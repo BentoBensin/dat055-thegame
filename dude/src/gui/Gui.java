@@ -10,7 +10,11 @@ import gamecharacter.Warrior;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.DisplayMode;
 import java.awt.FlowLayout;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Panel;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
 import main.strings;
@@ -52,6 +57,11 @@ public class Gui implements Observer, ActionListener {
 	private HashMap<Client, TranspContainer> currentList;
 	private ArrayList<Client> removeList;
 	
+	private GraphicsEnvironment ge;
+	private GraphicsDevice gd;
+	private DisplayMode dmode;
+	private JWindow win;
+	
 	private Runner r;
 
 	/**
@@ -68,7 +78,19 @@ public class Gui implements Observer, ActionListener {
 		//thisDirection = new DirectionParser();
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		createGUI();
+		
+		ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		gd = ge.getDefaultScreenDevice();
+		dmode = new DisplayMode(800, 600, 16, DisplayMode.REFRESH_RATE_UNKNOWN); //sista arg DisplayMode.REFRESH_RATE_UNKNOWN
+		    
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		win = new JWindow(frame,gd.getDefaultConfiguration());
+		
+		String[] a = {"Fullskärmsläge", "Fönsterläge"};
+        int x = JOptionPane.showOptionDialog(null, "Välj ett alternativ", "Grafikläge", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,a,a[1]);
+        if(x==0) createFullGUI();
+        else createGUI();
 		
 	}
 	
@@ -112,6 +134,37 @@ public class Gui implements Observer, ActionListener {
 		frame.setVisible(true);
 
 	}
+	
+	private void createFullGUI()
+	{
+		frame.setTitle("Spel");
+		frame.validate();
+		frame.setVisible(true);
+		
+		myLayeredPane = new JLayeredPane();
+		myLayeredPane.setOpaque(true);
+			
+		win.getContentPane().add(myLayeredPane, BorderLayout.CENTER);
+		//////////////////
+		JPanel tmp = new JPanel();
+		tmp.setBackground( new Color(1,107,6));
+		myLayeredPane.add(tmp, JLayeredPane.DEFAULT_LAYER);
+		
+		tmp.setSize(800,600);
+		menu = createIngameMenu();
+		myLayeredPane.add( menu, JLayeredPane.POPUP_LAYER );
+		//////////////////
+	      	win.addKeyListener(kl);
+	      	win.validate();
+	      	win.setFocusable(true);
+	      	gd.setFullScreenWindow(win);
+	      	gd.setDisplayMode(dmode);
+	      	win.requestFocus();
+		
+
+	}
+	
+
 
 	public JPanel createIngameMenu(){
 		BufferedReader reader = null;
@@ -159,6 +212,7 @@ public class Gui implements Observer, ActionListener {
 	public void startgame() {
 		menu.setVisible(false);
 		String tmp = (String) JOptionPane.showInputDialog(frame,"Ange Spelarnamn","Spelarnamn",JOptionPane.ERROR_MESSAGE);
+		
 		if( tmp != null){
 			setPlayer(new Player( IDGen.generateID(), tmp, new Warrior() ));
 		}else{
@@ -242,7 +296,7 @@ public class Gui implements Observer, ActionListener {
 					return;
 				}
 			}
-			if (e.getKeyCode() == KeyEvent.VK_P) {
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				player.addAction("pause");
 				if( menu.isVisible() ) {
 					menu.setVisible(false);
