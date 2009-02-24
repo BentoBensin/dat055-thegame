@@ -1,0 +1,5 @@
+Starta spelet
+Inställningar
+Ladda spel
+Spara spel
+Avsluta
