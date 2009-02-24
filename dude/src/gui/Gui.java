@@ -14,7 +14,6 @@ import java.awt.DisplayMode;
 import java.awt.FlowLayout;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Panel;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -222,6 +221,7 @@ public class Gui implements Observer, ActionListener {
 			menu.setVisible(true);
 		}
 	}
+	
 	public void settings() {
 		menu.setVisible(false);
 		 Object[] possibleValues = { "English", "Svenska"};
@@ -236,10 +236,8 @@ public class Gui implements Observer, ActionListener {
 		 myLayeredPane.remove(myLayeredPane.getIndexOf(menu));
 		 menu=createIngameMenu();
 		 myLayeredPane.add( menu, JLayeredPane.POPUP_LAYER );
-
-
-		//System.out.println("Settings");
 	}
+	
 	public void loadgame() {
 		System.out.println("Load knapp");
 	}
