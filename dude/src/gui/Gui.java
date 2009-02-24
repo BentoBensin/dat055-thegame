@@ -30,12 +30,14 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
@@ -61,7 +63,7 @@ public class Gui implements Observer, ActionListener {
 	private GraphicsDevice gd;
 	private DisplayMode dmode;
 	private JWindow win;
-	
+	private String lang;
 	private Runner r;
 
 	/**
@@ -86,6 +88,9 @@ public class Gui implements Observer, ActionListener {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win = new JWindow(frame,gd.getDefaultConfiguration());
+
+		//set default language
+		lang="Svenska";
 		
 		String[] a = {"Fullskärmsläge", "Fönsterläge"};
         int x = JOptionPane.showOptionDialog(null, "Välj ett alternativ", "Grafikläge", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,a,a[1]);
@@ -172,7 +177,7 @@ public class Gui implements Observer, ActionListener {
 		menu.setLayout( new FlowLayout());
 		menu.setBackground( new Color(1,107,6));
 		try{
-			reader =  new BufferedReader( new FileReader("languages/English/inGameMenu.txt"));
+			reader =  new BufferedReader( new FileReader("languages/"+lang+"/inGameMenu.txt"));
 		}catch( IOException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -220,7 +225,22 @@ public class Gui implements Observer, ActionListener {
 		}
 	}
 	public void settings() {
-		System.out.println("Settings");
+		menu.setVisible(false);
+		 Object[] possibleValues = { "English", "Svenska"};
+		 lang = (String)JOptionPane.showInputDialog(frame,
+
+		            "Choose one", "Input",
+
+		            JOptionPane.INFORMATION_MESSAGE, null,
+
+		            possibleValues, possibleValues[0]);
+
+		 myLayeredPane.remove(myLayeredPane.getIndexOf(menu));
+		 menu=createIngameMenu();
+		 myLayeredPane.add( menu, JLayeredPane.POPUP_LAYER );
+
+
+		//System.out.println("Settings");
 	}
 	public void loadgame() {
 		System.out.println("Load knapp");
@@ -229,10 +249,15 @@ public class Gui implements Observer, ActionListener {
 		System.out.println("Save knapp");
 	}
 	public void exitgame() {
-		System.exit(0);
+		int choice=(int)JOptionPane.showConfirmDialog(frame,
+
+	            "Wanna quit, sir?", "Vill du avsluta?", JOptionPane.YES_NO_OPTION);
+		if (choice==0)
+			System.exit(0);
+		else return;
 	}
 
-	
+
 	/**
 	 * update updates our currentList of clients it goes through each client in
 	 * our currentlist and compares it with arg list, it adds a new client for
