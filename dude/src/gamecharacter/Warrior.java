@@ -1,12 +1,8 @@
 package gamecharacter;
 
 import items.TreeSword;
-
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import main.strings;
+import main.Strings;
 
 /**
  * @file Warrior.java
@@ -23,9 +19,9 @@ public class Warrior extends GameCharacter{
 	}
 	
 	public void newMovePattern(){
-		addPattern(new MovePattern(130, strings.South));
-		addPattern(new MovePattern(100, strings.East));
-		addPattern(new MovePattern(130, strings.North));
-		addPattern(new MovePattern(100, strings.West));
+		addPattern(new MovePattern(130, Strings.South));
+		addPattern(new MovePattern(100, Strings.East));
+		addPattern(new MovePattern(130, Strings.North));
+		addPattern(new MovePattern(100, Strings.West));
 	}
 }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class CommandAttack extends Command 
 {
         // client use this to send commands... good way?
-        // use import main.strings; (use Attack not ATTACK)
+        // use import main.Strings; (use Attack not ATTACK)
         // public static final String ATTACK = "attack";
         
         public CommandAttack(Engine engine)
@@ -46,7 +46,7 @@ public class CommandAttack extends Command
                   )
                          return;
                  //
-                 ArrayList<Client> targets = engine.nearbyClients(client, weapon.getRange());
+                 ArrayList<GameCharacter> targets = engine.nearbyClients(client, weapon.getRange());
                  /*
                   * Return check number two..
                   */
@@ -54,17 +54,18 @@ public class CommandAttack extends Command
                         // if there is no targets
                          targets.isEmpty()
                         // if weapon can't be used, like, there is cooldown or it's broken
-                         || client.hasCoolDown( client.getGameCharacter().getPrimary() )
+                         || gc.hasCoolDown( gc.getPrimary() )
                         // something more?
                         ){
                 	 return;
                  }
+                 
                  System.out.println("******************************************* nu attackerar jag");    
                  // We can attack, let's start..
-                 for (Client c : targets)
+                 for (GameCharacter gc : targets)
                          {
                                 // client ain't me or 
-                                if( c != client && c.isAttackAble(client)){
+                                if( gc != client.getGameCharacter() && (gc.isPlayer() && client.getGameCharacter().isPlayer())  ){
                                          /*
                                           * int damage = (weapon.getStrength*gc.getDexterity*gc.getStrength
                                           *                             - gc.getDefense);
@@ -78,10 +79,10 @@ public class CommandAttack extends Command
                                           * dexterity ( skill på vapnet ) 
                                           * intelligence (styrka på spells / mängd mana )
                                           */
-                                         c.getGameCharacter().changeHealth( -weapon.getStrength() );
+                                         gc.changeHealth( -weapon.getStrength() );
                                          client.addCoolDown(client.getGameCharacter().getPrimary(),client.getGameCharacter().getPrimary().getCoolDown()) ;
                                          // 100% hit each time, we implement stuff like that later
-                                         c.addStun(weapon.getStunType(),weapon.getStunTime());
+                                         gc.addStun(weapon.getStunType(),weapon.getStunTime());
                                  }
                          }
          }

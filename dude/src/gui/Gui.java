@@ -38,7 +38,7 @@ import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-import main.strings;
+import main.Strings;
 
 /**
  * Write a description of class Gui
@@ -296,26 +296,26 @@ public class Gui implements Observer, ActionListener {
 
 			if( !Client.paused) {
 				if (e.getKeyCode() == KeyEvent.VK_W) {
-					player.setDirection(strings.North);
-					player.addAction(strings.Move);
+					player.setDirection(Strings.North);
+					player.addAction(Strings.Move);
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_S) {
-					player.setDirection(strings.South);
-					player.addAction(strings.Move);
+					player.setDirection(Strings.South);
+					player.addAction(Strings.Move);
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_A) {
-					player.setDirection(strings.West);
-					player.addAction(strings.Move);
+					player.setDirection(Strings.West);
+					player.addAction(Strings.Move);
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_D) {
-					player.setDirection(strings.East);
-					player.addAction(strings.Move);
+					player.setDirection(Strings.East);
+					player.addAction(Strings.Move);
 				}
 				if (e.getKeyCode() == KeyEvent.VK_L) {
-					player.addAction(strings.Attack);
+					player.addAction(Strings.Attack);
 					return;
 				}
 			}
@@ -330,7 +330,7 @@ public class Gui implements Observer, ActionListener {
 		}
 
 		public void keyReleased(KeyEvent e) {
-			player.addAction(strings.Still);
+			player.addAction(Strings.Still);
 		}
 
 	};

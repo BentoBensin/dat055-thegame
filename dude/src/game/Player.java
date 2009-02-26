@@ -5,7 +5,7 @@ import gamecharacter.GameCharacter;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import main.strings;
+import main.Strings;
 
 /**
  * @file Player.java
@@ -14,7 +14,8 @@ import main.strings;
  */
 //TODO KOMMENTERA!!!!!!!
 public class Player extends Client{
-
+	
+	static final long serialVersionUID = 00001234567; 
 	private int intervall;
 	private int ressurectionIntervall;
 	private long ressurectionTime;
@@ -47,7 +48,7 @@ public class Player extends Client{
 	}
 	
 	public void run() {
-		ArrayList<Client> nc = null;
+		ArrayList<GameCharacter> gc = null;
 		while (true) {
 			System.out.println("kör");
 			try {
@@ -74,7 +75,7 @@ public class Player extends Client{
 				e.printStackTrace();
 			}
 			setChanged();
-			notifyObservers(nc);
+			notifyObservers(gc);
 		}
 	}
 	

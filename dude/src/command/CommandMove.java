@@ -2,7 +2,7 @@ package command;
 
 import game.Client;
 import game.Engine;
-import main.strings;
+import main.Strings;
 import java.awt.Point;
 
 /**
@@ -42,10 +42,10 @@ public class CommandMove extends Command
                 case "EAST": x+=stepSize; break;
                 case "WEST": x-=stepSize; break;
             }*/
-			if(client.getDirection().equals(strings.North)) y-=stepSize;
-			if(client.getDirection().equals(strings.South)) y+=stepSize;
-			if(client.getDirection().equals(strings.East)) x+=stepSize;
-			if(client.getDirection().equals(strings.West)) x-=stepSize;
+			if(client.getDirection().equals(Strings.North)) y-=stepSize;
+			if(client.getDirection().equals(Strings.South)) y+=stepSize;
+			if(client.getDirection().equals(Strings.East)) x+=stepSize;
+			if(client.getDirection().equals(Strings.West)) x-=stepSize;
 			int[] u = {0,x,y}, v = { 1,x,y};
             if (engine.checkSpot( u ) && engine.checkSpot( v ))
             {

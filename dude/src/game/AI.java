@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import main.strings;
+import main.Strings;
 /**
  * AI is responsible for the monsters decisions; whether it is going to follow a
  * given moving pattern or follow nearby clients to be able to attack them
@@ -84,21 +84,21 @@ public class AI implements GenericInterface, Observer
         int enY = closest.getPoint().y;
         int enX2 = enX + closest.getGameCharacter().getWidth();
         int enY2 = enY + closest.getGameCharacter().getHeight();
-        if( clPos.x > enX && clPos.x < enX2 && clPos.y<enY) direction = strings.North;
-        if( clPos.x > enX && clPos.x < enX2 && clPos.y>enY) direction = strings.South;
-        if( clPos.y > enY && clPos.y < enY2 && clPos.x<enX) direction = strings.East;
-        if( clPos.y > enY && clPos.y < enY2 && clPos.x>enX) direction = strings.West;
+        if( clPos.x > enX && clPos.x < enX2 && clPos.y<enY) direction = Strings.North;
+        if( clPos.x > enX && clPos.x < enX2 && clPos.y>enY) direction = Strings.South;
+        if( clPos.y > enY && clPos.y < enY2 && clPos.x<enX) direction = Strings.East;
+        if( clPos.y > enY && clPos.y < enY2 && clPos.x>enX) direction = Strings.West;
         if (direction == null) {
         	double dx = enX - clPos.x;
         	double dy = enY - clPos.y;
         	if( Math.sqrt(Math.pow(dx, 2)) < Math.sqrt(Math.pow(dy, 2))){
-        		if (dx>0) direction = strings.West;
-        		if (dx<0) direction = strings.East;
-        		if (dx==0) direction = strings.East;
+        		if (dx>0) direction = Strings.West;
+        		if (dx<0) direction = Strings.East;
+        		if (dx==0) direction = Strings.East;
         	} else {
-        		if (dy>0) direction = strings.South;
-        		if (dy<0) direction = strings.North;
-        		if (dy==0) direction = strings.North;
+        		if (dy>0) direction = Strings.South;
+        		if (dy<0) direction = Strings.North;
+        		if (dy==0) direction = Strings.North;
         	}
         }else {
         	// attakera?
@@ -107,12 +107,12 @@ public class AI implements GenericInterface, Observer
         	double ex = enX+(enX2-enX)/2;
         	double ey = enY+(enY2-enY)/2;
         	if( Point.distance(cx, cy, ex, ey) <= clWeapon.getRange() ){
-        		action = strings.Attack;
+        		action = Strings.Attack;
         	}
         	// we are at the same position as the enemy! 
         }	
         if (action == null) {
-        	action = strings.Move;
+        	action = Strings.Move;
         }
         
         client.getGameCharacter().setDirection(direction);
@@ -129,13 +129,14 @@ public class AI implements GenericInterface, Observer
       * @param O
       * @param arg
       */
-        public void update(Observable o, Object arg)
+    @SuppressWarnings("unchecked")
+        public void update(Observable o, Object arg) 
         {
         	if( o instanceof Client && arg instanceof ArrayList){
         		ArrayList<Client> argC = new ArrayList<Client>();
         		for(Object a : (ArrayList<Object>)arg)
         			if (a instanceof Client) argC.add((Client)a);
-            	if(argC.size()>1) decision((Client)o,argC);  //TODO fixa ett try-catch -- tog bort <Client> i typomvandlingen på andra stället med.. //josef
+            	if(argC.size()>1) decision((Client)o,argC);  
             	else
             		followPattern((Monster)o);
         	}
@@ -152,6 +153,6 @@ public class AI implements GenericInterface, Observer
      		if (!client.hasPattern())
      			client.setPattern();
  			client.decreaseRemaning();
- 			client.addAction(strings.Move);
+ 			client.addAction(Strings.Move);
     	}
 }  

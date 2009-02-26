@@ -1,5 +1,4 @@
 package command;
-import game.Client;
 import game.Engine;
 
 /**
@@ -10,12 +9,13 @@ import game.Engine;
  *
  */
 
-public abstract class Command
+public abstract class Command implements CommandInterf
 {
 	/**
 	 * a shortcut to the engine
 	 */
 	protected Engine engine;
+	protected String param;
     
 	/**
 	 * Constructor
@@ -25,11 +25,12 @@ public abstract class Command
     {
         this.engine = engine;
     }
-    
     /**
-     * executes the command
-     * @param client the client that the command is executed on
+     * Adds an parameter
+     * @param param
      */
-    public abstract void execute(Client client);
+    public void setParam(String param){
+    	this.param = param;
+    }
 }
 

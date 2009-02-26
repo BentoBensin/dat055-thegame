@@ -1,5 +1,6 @@
 package game;
 
+import gamecharacter.GameCharacter;
 import gamecharacter.ShroomsMan;
 
 import java.awt.Point;
@@ -70,14 +71,14 @@ public class Engine {
      * @param radius
      * @return ArrayList of nearby clients
      */
-    public ArrayList<Client> nearbyClients( Object obj , int radius){
+    public ArrayList<GameCharacter> nearbyClients( Object obj , int radius){
     	if( obj == null || radius < 0)
     		throw new IllegalArgumentException();
     	if( obj instanceof Client )
     		return logicModel.nearbyClients( (Client) obj, radius);
     	if( obj instanceof Point )
     		return logicModel.nearbyClients((Point) obj , radius);
-    	return new ArrayList<Client>();
+    	return new ArrayList<GameCharacter>();
     }
     
     public ArrayList<Client> getAllClients() {

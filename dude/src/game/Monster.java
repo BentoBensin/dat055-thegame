@@ -8,12 +8,12 @@ Meddela observers om ändring ska göras */
 //TODO KOMMENTERA!!!!!!!
 import gamecharacter.GameCharacter;
 import gamecharacter.MovePattern;
-import main.strings;
+import main.Strings;
 import java.awt.Point;
 import java.util.ArrayList;
 
 public class Monster extends Client {
-	private ArrayList<Client> temp;
+	private ArrayList<GameCharacter> temp;
 	private int moveRemaining;
 	private MovePattern currentPattern;
 	private int patternIndex;
@@ -54,12 +54,13 @@ public class Monster extends Client {
 			}
 			if( !this.getGameCharacter().isAlive() && ress ) {
 				this.getGameCharacter().changeHealth(100);
-				getGameCharacter().setSuperAnimationType(strings.Still);
+				getGameCharacter().setSuperAnimationType(Strings.Still);
 				ress = false;
 			}
 			runActions();
-			temp = engine.nearbyClients(this, 100); 
-			System.out.println("Monster letar efter närliggande " + temp.size() );												// detta funkar
+			temp = engine.nearbyClients(this, 100);
+			if( temp != null)
+				System.out.println("Monster letar efter närliggande " + temp.size() );												// detta funkar
 			setChanged();
 			notifyObservers(temp);
 		}

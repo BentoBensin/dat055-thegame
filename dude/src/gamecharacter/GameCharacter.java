@@ -2,18 +2,11 @@ package gamecharacter;
 
 import items.Item;
 import items.Weapon;
-
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-
-import javax.imageio.ImageIO;
-
-import main.strings;
+import main.Strings;
 
 /**
  * This class contains information such as speed, height and width, about a character.
@@ -56,8 +49,8 @@ public abstract class GameCharacter {
 		this.isPlayer = isPlayer;
 		this.name = name;
         this.point = point;
-        direction = strings.South;
-        animation = strings.Still;
+        direction = Strings.South;
+        animation = Strings.Still;
         position = 0;
         cooldowns = new HashMap<Item, Long >();
         actions = new LinkedList<String>();
@@ -269,8 +262,8 @@ public abstract class GameCharacter {
     public void addAction(String action) { 
     	if(isAlive()) {
 	    	if( !actions.contains(action) ) {
-	    		if( action.equals(strings.Attack))
-	    			setSuperAnimationType(strings.Attack);
+	    		if( action.equals(Strings.Attack))
+	    			setSuperAnimationType(Strings.Attack);
 	    		actions.addFirst(action);
 	    	}	
     	}else {
@@ -292,11 +285,11 @@ public abstract class GameCharacter {
      * Runs all actions and uses interpretCommand
      * to send actions
      */
-    public ArrayList runActions() {
+    public ArrayList<String> runActions() {
     	String tmp;
     	ArrayList<String> tmpList = new ArrayList<String>();
     	if( actions.isEmpty() && superAnimation.equals(""))
-    		setAnimationType(strings.Still);
+    		setAnimationType(Strings.Still);
     	
     	for(int i=0; i < actions.size() ; i++) {
     		tmp = actions.remove();
@@ -306,7 +299,7 @@ public abstract class GameCharacter {
     			if( !tmp.equals("pause"))
     				setAnimationType(tmp);
     		}else {
-    			animation = strings.Still;
+    			animation = Strings.Still;
     		}
     	}
     	return tmpList;

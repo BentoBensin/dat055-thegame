@@ -10,6 +10,8 @@ package game;
  * @author Mattias Lögdberg
  */
 
+import gamecharacter.GameCharacter;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -32,7 +34,7 @@ public class LogicModel {
      * @param int the radius of the search
      * @return ArrayList with nearby Clients, empty if no one is there
      */
-    public ArrayList<Client> nearbyClients( Client c, int r) {
+    public ArrayList<GameCharacter> nearbyClients( Client c, int r) {
         Point p = c.getGameCharacter().getPoint();
         return nearbyClients( new Point(p.x + c.getGameCharacter().getWidth()/2,
                                         p.y + c.getGameCharacter().getHeight()/2),
@@ -44,8 +46,8 @@ public class LogicModel {
      * @param r radius
      * @return ArrayList<Client> the list of nearby clients
      */
-    public ArrayList<Client> nearbyClients( Point p, int r) {
-        ArrayList<Client> clientList = new ArrayList<Client>();
+    public ArrayList<GameCharacter> nearbyClients( Point p, int r) {
+        ArrayList<GameCharacter> clientList = new ArrayList<GameCharacter>();
         for( Client t : tm.values() ) {
             Point tP = t.getGameCharacter().getPoint();
             /*
@@ -66,7 +68,7 @@ public class LogicModel {
                     tP.y < p.y+r &&
                     ((tP.x+t.getGameCharacter().getWidth()) > (p.x-r) ) &&
                     ((tP.y+t.getGameCharacter().getHeight()) > (p.y-r)) ))
-                        clientList.add(t);
+                        clientList.add(t.getGameCharacter());
             }   
         return clientList;
     }
