@@ -125,6 +125,12 @@ public class Engine {
     {
         return parser.getAllCommands();
     }
+    
+    public void reset()
+    {
+    	logicModel.clear();
+    }
+    
 }
 
 

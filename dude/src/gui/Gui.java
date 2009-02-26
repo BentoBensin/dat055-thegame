@@ -239,9 +239,10 @@ public class Gui implements Observer, ActionListener {
 	}
 	
 	public void loadgame() {
-		System.out.println("Load knapp");
+
 	}
 	public void savegame() {
+		player.addAction("save");
 		System.out.println("Save knapp");
 	}
 	public void exitgame() {

@@ -1,5 +1,5 @@
 package game;
-
+import java.io.Serializable;
 
 import gamecharacter.GameCharacter;
 import items.Item;
@@ -22,7 +22,7 @@ import command.Command;
  * @version 0.3
  * @author mathal
  */
-public abstract class Client extends Observable implements Runnable {
+public abstract class Client extends Observable implements Runnable, Serializable {
 
 	private Thread aktivitet;
     protected Engine engine;

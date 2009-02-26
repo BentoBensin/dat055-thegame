@@ -116,4 +116,9 @@ public class LogicModel {
         return true;
     }
    
+   public void clear()
+   {
+	   tm.clear();
+   }
+   
 }
