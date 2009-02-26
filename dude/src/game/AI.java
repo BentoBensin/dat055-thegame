@@ -137,17 +137,7 @@ public class AI implements GenericInterface, Observer
         	}
         }
      
-        /**
-         * Distance between client
-         * @param the clients whose distance is measured
-         * @return distance in pixels
-         */
-         private double distance(Point position, Client c)
-         {
-             return (Math.sqrt((Math.pow((position.getX()-c.getPoint().getX()), 2))+
-                               Math.pow((position.getY()-c.getPoint().getY()),2)));
-         }
-         
+        
          /**
           * Makes the monster follow the monster specific moving pattern
           * @param client

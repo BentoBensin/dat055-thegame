@@ -32,8 +32,8 @@ public class Monster extends Client {
 	}
 
 	public Monster(Monster monster) { //TODO Animation not coppied...... BAD
-		super(IDGen.generateID(), (Point) monster.getPoint().clone(),
-				monster.getName(), monster.getGameCharacter(), monster.engine);
+		super(IDGen.generateID(), (Point) monster.getGameCharacter().getPoint().clone(),
+				monster.getGameCharacter().getName(), monster.getGameCharacter(), monster.engine);
 	}
 
 	public void run() {
@@ -54,7 +54,7 @@ public class Monster extends Client {
 			}
 			if( !this.getGameCharacter().isAlive() && ress ) {
 				this.getGameCharacter().changeHealth(100);
-				setSuperAnimationType(strings.Still);
+				getGameCharacter().setSuperAnimationType(strings.Still);
 				ress = false;
 			}
 			runActions();
@@ -79,7 +79,7 @@ public class Monster extends Client {
 			patternIndex=0;
 		currentPattern= getGameCharacter().getPattern(patternIndex++);	
 		moveRemaining=currentPattern.length; 		
-		setDirection(currentPattern.direction);
+		getGameCharacter().setDirection(currentPattern.direction);
 	}
 	
 	/**

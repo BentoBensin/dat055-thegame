@@ -33,7 +33,7 @@ public class LogicModel {
      * @return ArrayList with nearby Clients, empty if no one is there
      */
     public ArrayList<Client> nearbyClients( Client c, int r) {
-        Point p = c.getPoint();
+        Point p = c.getGameCharacter().getPoint();
         return nearbyClients( new Point(p.x + c.getGameCharacter().getWidth()/2,
                                         p.y + c.getGameCharacter().getHeight()/2),
                                         r);
@@ -47,7 +47,7 @@ public class LogicModel {
     public ArrayList<Client> nearbyClients( Point p, int r) {
         ArrayList<Client> clientList = new ArrayList<Client>();
         for( Client t : tm.values() ) {
-            Point tP = t.getPoint();
+            Point tP = t.getGameCharacter().getPoint();
             /*
                 *******************
                 *  _|t |_____ | |
@@ -109,7 +109,7 @@ public class LogicModel {
      */
     public boolean checkSpot(Point point){
         for( Client client : tm.values() ){
-            if(client.getPoint().equals(point)){
+            if(client.getGameCharacter().getPoint().equals(point)){
                 return false;
             }
         }

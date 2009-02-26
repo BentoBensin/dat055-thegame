@@ -28,6 +28,10 @@ public class Player extends Client{
 		super(id,new Point(500,300),name,gc, new Engine());
 		init();
 	}
+	public Player(int id, String name, GameCharacter gc, String host, Integer port){
+		super(id, new Point(500,300), name, gc);		
+		init();
+	}	
 	
 	private void init(){
 		intervall = 50;
@@ -39,7 +43,7 @@ public class Player extends Client{
 	}
 	
 	public Player(Player p){	//TODO Animation not coppied...... BAD
-		super(IDGen.generateID(), (Point)p.getPoint().clone(), p.getName(),p.getGameCharacter(), p.engine);
+		super(IDGen.generateID(), (Point)p.getGameCharacter().getPoint().clone(), p.getGameCharacter().getName(),p.getGameCharacter(), p.engine);
 	}
 	
 	public void run() {
@@ -57,14 +61,14 @@ public class Player extends Client{
 			}
 			if( !this.getGameCharacter().isAlive() && ress && (System.currentTimeMillis() >ressurectionTime)) {
 				this.getGameCharacter().changeHealth(100);
-				setSuperAnimationType(strings.Still);
+				getGameCharacter().setSuperAnimationType(strings.Still);
 				ress = false;
 			}
 			//runs the actions that's in the running queue
 			//changes the animation type that should be according to prio of the running queue
 			runActions();
 			try{
-				nc = engine.nearbyClients(this.getPoint(), 500); // korrekt radius?
+				nc = engine.nearbyClients(this.getGameCharacter().getPoint(), 500); // korrekt radius?
 			}catch(NullPointerException e) {
 				System.out.println(e.getMessage() + " in Player.run() trying engine.nearbyClients");
 				e.printStackTrace();

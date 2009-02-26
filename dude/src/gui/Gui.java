@@ -399,6 +399,7 @@ public class Gui implements Observer, ActionListener {
 						tmp = new Point(350,250);
 					}
 				BufferedImage bimg = client.getAnimation();
+				// animeringsmotor .getAnimation( gc );
 				if( bimg.getHeight() > 100 ) {
 					tmp.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 				}
