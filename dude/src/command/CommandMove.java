@@ -48,16 +48,16 @@ public class CommandMove extends Command
 			if(client.getGameCharacter().equals(Strings.East)) x+=stepSize;
 			if(client.getGameCharacter().equals(Strings.West)) x-=stepSize;
 
-			if(client.getDirection().equals(Strings.North)) y-=stepSize;
-			if(client.getDirection().equals(Strings.South)) y+=stepSize;
-			if(client.getDirection().equals(Strings.East)) x+=stepSize;
-			if(client.getDirection().equals(Strings.West)) x-=stepSize;
+			if(client.getGameCharacter().getDirection().equals(Strings.North)) y-=stepSize;
+			if(client.getGameCharacter().getDirection().equals(Strings.South)) y+=stepSize;
+			if(client.getGameCharacter().getDirection().equals(Strings.East)) x+=stepSize;
+			if(client.getGameCharacter().getDirection().equals(Strings.West)) x-=stepSize;
 
 			int[] u = {0,x,y}, v = { 1,x,y};
             if (engine.checkSpot( u ) && engine.checkSpot( v ))
             {
             	System.out.println("Position ändras. Från " + client.getGameCharacter().getPoint() + " till " + new Point(x,y));
-                client.updateCoordinates(new Point(x,y));
+                client.getGameCharacter().updateCoordinates(new Point(x,y));
             }
     	}
     		

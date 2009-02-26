@@ -300,8 +300,8 @@ public class Gui implements Observer, ActionListener {
 					player.getGameCharacter().setDirection(Strings.North);
 					player.getGameCharacter().addAction(Strings.Move);
 
-					player.setDirection(Strings.North);
-					player.addAction(Strings.Move);
+					player.getGameCharacter().setDirection(Strings.North);
+					player.getGameCharacter().addAction(Strings.Move);
 
 				}
 	
@@ -310,8 +310,8 @@ public class Gui implements Observer, ActionListener {
 					player.getGameCharacter().setDirection(Strings.South);
 					player.getGameCharacter().addAction(Strings.Move);
 
-					player.setDirection(Strings.South);
-					player.addAction(Strings.Move);
+					player.getGameCharacter().setDirection(Strings.South);
+					player.getGameCharacter().addAction(Strings.Move);
 
 				}
 	
@@ -320,8 +320,8 @@ public class Gui implements Observer, ActionListener {
 					player.getGameCharacter().setDirection(Strings.West);
 					player.getGameCharacter().addAction(Strings.Move);
 
-					player.setDirection(Strings.West);
-					player.addAction(Strings.Move);
+					player.getGameCharacter().setDirection(Strings.West);
+					player.getGameCharacter().addAction(Strings.Move);
 
 				}
 	
@@ -330,15 +330,15 @@ public class Gui implements Observer, ActionListener {
 					player.getGameCharacter().setDirection(Strings.East);
 					player.getGameCharacter().addAction(Strings.Move);
 
-					player.setDirection(Strings.East);
-					player.addAction(Strings.Move);
+					player.getGameCharacter().setDirection(Strings.East);
+					player.getGameCharacter().addAction(Strings.Move);
 
 				}
 				if (e.getKeyCode() == KeyEvent.VK_L) {
 
 					player.getGameCharacter().addAction(Strings.Attack);
 
-					player.addAction(Strings.Attack);
+					player.getGameCharacter().addAction(Strings.Attack);
 
 					return;
 				}
@@ -357,7 +357,7 @@ public class Gui implements Observer, ActionListener {
 
 			player.getGameCharacter().addAction(Strings.Still);
 
-			player.addAction(Strings.Still);
+			player.getGameCharacter().addAction(Strings.Still);
 
 		}
 
@@ -421,9 +421,9 @@ public class Gui implements Observer, ActionListener {
 		 */
 		private void updateGraphic(Client client) {
 			if( client != null && currentList.containsKey(client)){
-				Point tmp = (Point)client.getPoint().clone();
+				Point tmp = (Point)client.getGameCharacter().getPoint().clone();
 					if( !(client instanceof Player) ){
-						tmp.translate( (350 - player.getPoint().x), (250 - player.getPoint().y));
+						tmp.translate( (350 - player.getGameCharacter().getPoint().x), (250 - player.getGameCharacter().getPoint().y));
 					}else{
 						tmp = new Point(350,250);
 					}
@@ -432,7 +432,7 @@ public class Gui implements Observer, ActionListener {
 				if( bimg.getHeight() > 100 ) {
 					tmp.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 				}
-				currentList.get(client).setImage(client.getAnimation());
+				currentList.get(client).setImage(client.getGameCharacter().getAnimation());
 				currentList.get(client).setLocation(tmp);
 			}
 		}

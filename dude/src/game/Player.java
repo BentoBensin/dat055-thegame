@@ -69,7 +69,7 @@ public class Player extends Client{
 			//changes the animation type that should be according to prio of the running queue
 			runActions();
 			try{
-				nc = engine.nearbyClients(this.getGameCharacter().getPoint(), 500); // korrekt radius?
+				gc = engine.nearbyClients(this.getGameCharacter().getPoint(), 500); // korrekt radius?
 			}catch(NullPointerException e) {
 				System.out.println(e.getMessage() + " in Player.run() trying engine.nearbyClients");
 				e.printStackTrace();
