@@ -296,50 +296,50 @@ public class Gui implements Observer, ActionListener {
 
 			if( !Client.paused) {
 				if (e.getKeyCode() == KeyEvent.VK_W) {
-<<<<<<< .mine
-					player.getGameCharacter().setDirection(strings.North);
-					player.getGameCharacter().addAction(strings.Move);
-=======
+
+					player.getGameCharacter().setDirection(Strings.North);
+					player.getGameCharacter().addAction(Strings.Move);
+
 					player.setDirection(Strings.North);
 					player.addAction(Strings.Move);
->>>>>>> .r38
+
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_S) {
-<<<<<<< .mine
-					player.getGameCharacter().setDirection(strings.South);
-					player.getGameCharacter().addAction(strings.Move);
-=======
+
+					player.getGameCharacter().setDirection(Strings.South);
+					player.getGameCharacter().addAction(Strings.Move);
+
 					player.setDirection(Strings.South);
 					player.addAction(Strings.Move);
->>>>>>> .r38
+
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_A) {
-<<<<<<< .mine
-					player.getGameCharacter().setDirection(strings.West);
-					player.getGameCharacter().addAction(strings.Move);
-=======
+
+					player.getGameCharacter().setDirection(Strings.West);
+					player.getGameCharacter().addAction(Strings.Move);
+
 					player.setDirection(Strings.West);
 					player.addAction(Strings.Move);
->>>>>>> .r38
+
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_D) {
-<<<<<<< .mine
-					player.getGameCharacter().setDirection(strings.East);
-					player.getGameCharacter().addAction(strings.Move);
-=======
+
+					player.getGameCharacter().setDirection(Strings.East);
+					player.getGameCharacter().addAction(Strings.Move);
+
 					player.setDirection(Strings.East);
 					player.addAction(Strings.Move);
->>>>>>> .r38
+
 				}
 				if (e.getKeyCode() == KeyEvent.VK_L) {
-<<<<<<< .mine
-					player.getGameCharacter().addAction(strings.Attack);
-=======
+
+					player.getGameCharacter().addAction(Strings.Attack);
+
 					player.addAction(Strings.Attack);
->>>>>>> .r38
+
 					return;
 				}
 			}
@@ -354,11 +354,11 @@ public class Gui implements Observer, ActionListener {
 		}
 
 		public void keyReleased(KeyEvent e) {
-<<<<<<< .mine
-			player.getGameCharacter().addAction(strings.Still);
-=======
+
+			player.getGameCharacter().addAction(Strings.Still);
+
 			player.addAction(Strings.Still);
->>>>>>> .r38
+
 		}
 
 	};

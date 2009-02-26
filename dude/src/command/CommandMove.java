@@ -43,10 +43,10 @@ public class CommandMove extends Command
                 case "WEST": x-=stepSize; break;
             }*/
 
-			if(client.getGameCharacter().getDirection().equals(strings.North)) y-=stepSize;
-			if(client.getGameCharacter().equals(strings.South)) y+=stepSize;
-			if(client.getGameCharacter().equals(strings.East)) x+=stepSize;
-			if(client.getGameCharacter().equals(strings.West)) x-=stepSize;
+			if(client.getGameCharacter().getDirection().equals(Strings.North)) y-=stepSize;
+			if(client.getGameCharacter().equals(Strings.South)) y+=stepSize;
+			if(client.getGameCharacter().equals(Strings.East)) x+=stepSize;
+			if(client.getGameCharacter().equals(Strings.West)) x-=stepSize;
 
 			if(client.getDirection().equals(Strings.North)) y-=stepSize;
 			if(client.getDirection().equals(Strings.South)) y+=stepSize;

@@ -62,7 +62,7 @@ public class Player extends Client{
 			}
 			if( !this.getGameCharacter().isAlive() && ress && (System.currentTimeMillis() >ressurectionTime)) {
 				this.getGameCharacter().changeHealth(100);
-				getGameCharacter().setSuperAnimationType(strings.Still);
+				getGameCharacter().setSuperAnimationType(Strings.Still);
 				ress = false;
 			}
 			//runs the actions that's in the running queue

@@ -347,5 +347,14 @@ public abstract class GameCharacter {
     public boolean isPlayer() {
     	return isPlayer;
     }
+    /**
+	 * Decreases the remaining steps for the current move pattern
+	 */
+	public void decreaseRemaning()
+	{
+		moveRemaining--;
+	}
+
+    
 
 }

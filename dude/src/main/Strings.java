@@ -8,7 +8,7 @@ package main;
  * @author Josef Johansson
  *
  */
-public final class strings {
+public final class Strings {
 	public static final String North = "north";
 	public static final String West = "west";
 	public static final String South = "south";
@@ -19,6 +19,6 @@ public final class strings {
 	//todo
 	//public static final EnumSet<String> Directions = new Enum(North,1);
 	
-	public strings(){}
+	public Strings(){}
 	 
 }
