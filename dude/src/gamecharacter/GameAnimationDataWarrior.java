@@ -14,7 +14,7 @@ import main.Strings;
  */
 public class GameAnimationDataWarrior extends GameAnimationData {
 	
-	private void initImages(){
+	public void initImages(){
 		HashMap<String,HashMap<String,ArrayList<String>>> anim = new HashMap<String,HashMap<String,ArrayList<String>>>(); 
 		anim.put("walk", new HashMap<String,ArrayList<String>>());
     	anim.get("walk").put("north", new ArrayList<String>());

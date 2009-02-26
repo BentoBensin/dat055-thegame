@@ -33,6 +33,7 @@ public abstract class GameCharacter {
 	private String superAnimation;
 	private LinkedList<String> actions;
 	private int position;
+	private int moveRemaining;
 	private HashMap<Item, Long > cooldowns;
 	
 	public GameCharacter(Weapon weapon, double speed, int width, int height, 
@@ -55,7 +56,7 @@ public abstract class GameCharacter {
         cooldowns = new HashMap<Item, Long >();
         actions = new LinkedList<String>();
         superAnimation = "";
-    
+        moveRemaining = 0;
 	}
 
 	// hålla koll på animeringsstyp
@@ -67,13 +68,15 @@ public abstract class GameCharacter {
 	 * @param index
 	 * @return Next move pattern.
 	 */
-	public MovePattern getPattern(int index){
-		
-		if((index < 0) || !(index < patterns.size())){
-			throw new IllegalArgumentException();
+	public void followPattern(){
+		if( moveRemaining-- != 0 )
+			return;
+		else{
+			MovePattern tmp = patterns.pop();
+			direction = tmp.direction;
+			moveRemaining = tmp.length;
+			patterns.addLast(tmp);
 		}
-		
-		return patterns.get(index);
 	}
 
 	/**
@@ -103,15 +106,6 @@ public abstract class GameCharacter {
 	 */
 	public boolean isStunned() {
 		return isStunned;
-	}
-	
-	
-	/**
-	 * Returns number of patterns
-	 * @return Number of patterns.
-	 */
-	public int numberOfPatterns(){
-		return patterns.size();
 	}
 	
 	/**

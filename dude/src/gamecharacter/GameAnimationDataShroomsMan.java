@@ -210,4 +210,5 @@ public class GameAnimationDataShroomsMan extends GameAnimationData {
     	} catch (NullPointerException e){
     		if ( Strings.Debug ) System.out.println("Error: "+e);
     	}
+	}
 }

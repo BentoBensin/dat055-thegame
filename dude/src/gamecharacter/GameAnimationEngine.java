@@ -1,18 +1,25 @@
 package gamecharacter;
-public class GameAnimationEngine()
+
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+
+public class GameAnimationEngine
 {
-	private GameAnimationEngine instance = null;
+	private static GameAnimationEngine instance = null;
 	private HashMap<String,GameAnimationData> data;
 	private GameAnimationEngine()
 	{
 		data = new HashMap<String,GameAnimationData>();
-		data.put("ShroomsMan",new GameAnimationData("ShroomsMan"));
-		data.put("Warrior",new GameAnimationData("Warrior"));
+		data.put("ShroomsMan",new GameAnimationDataShroomsMan());
+		data.put("Warrior",new GameAnimationDataWarrior());
+	}
+	public static GameAnimationEngine getInstance(){
+		if (instance == null)
+			instance = new GameAnimationEngine();
+		return instance;
 	}
 	public BufferedImage getImage(GameCharacter gc)
 	{
-		if (instance == null)
-			instance = new GameAnimationEngine();
 		String direction,action,skin;
 		BufferedImage retImg;
 		int index;

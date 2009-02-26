@@ -216,7 +216,7 @@ public class Gui implements Observer, ActionListener {
 		String tmp = (String) JOptionPane.showInputDialog(frame,"Ange Spelarnamn","Spelarnamn",JOptionPane.ERROR_MESSAGE);
 		
 		if( tmp != null){
-			setPlayer(new Player( IDGen.generateID(), tmp, new Warrior() ));
+			setPlayer(new Player( IDGen.generateID(), new Warrior(tmp, new Point(100,100), true) ) );
 		}else{
 			menu.setVisible(true);
 		}
@@ -427,12 +427,12 @@ public class Gui implements Observer, ActionListener {
 					}else{
 						tmp = new Point(350,250);
 					}
-				BufferedImage bimg = client.getAnimation();
+				/*BufferedImage bimg = client.getAnimation();
 				// animeringsmotor .getAnimation( gc );
 				if( bimg.getHeight() > 100 ) {
 					tmp.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 				}
-				currentList.get(client).setImage(client.getGameCharacter().getAnimation());
+				currentList.get(client).setImage(client.getGameCharacter().getAnimation());*/
 				currentList.get(client).setLocation(tmp);
 			}
 		}

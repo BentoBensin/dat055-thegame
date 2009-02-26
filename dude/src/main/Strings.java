@@ -16,6 +16,8 @@ public final class Strings {
 	public static final String Attack = "attack";
 	public static final String Move = "walk";
 	public static final String Still = "still";
+	
+	public static final boolean Debug = true; 
 	//todo
 	//public static final EnumSet<String> Directions = new Enum(North,1);
 	
