@@ -154,10 +154,6 @@ public class AI implements GenericInterface, Observer
           */
      	public void followPattern(Monster client)
     	{
-     		System.out.println("followPattern()");
-     		if (!client.hasPattern())
-     			client.setPattern();
- 			client.getGameCharacter().decreaseRemaning();
- 			client.getGameCharacter().addAction(Strings.Move);
+     		client.getGameCharacter().followPattern();
     	}
 }  

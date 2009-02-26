@@ -71,31 +71,6 @@ public class Monster extends Client {
 	}
 	
 	/**
-	 * Sets a new moving pattern for the current monster.
-	 */
-	public void setPattern()
-	{
-		System.out.println("Monster.setPattern() is called");
-		if (patternIndex>=getGameCharacter().numberOfPatterns())
-			patternIndex=0;
-		currentPattern= getGameCharacter().getPattern(patternIndex++);	
-		moveRemaining=currentPattern.length; 		
-		getGameCharacter().setDirection(currentPattern.direction);
-	}
-	
-	/**
-	 * Checks whether there are more steps in the current move pattern
-	 * @return true if yes
-	 * @return false if no
-	 */
-	public boolean hasPattern()
-	{
-		if (moveRemaining<=0)
-			return false;
-		return true; 
-	}
-	
-	/**
 	 * Decreases the remaining steps for the current move pattern
 	 */
 	public void decreaseRemaning()
