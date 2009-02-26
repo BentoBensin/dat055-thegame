@@ -14,6 +14,7 @@ public class GameAnimationEngine()
 		if (instance == null)
 			instance = new GameAnimationEngine();
 		String direction,action,skin;
+		BufferedImage retImg;
 		int index;
 		if (gc != null
 			&& (direction = gc.getDirection()) != null
@@ -21,8 +22,11 @@ public class GameAnimationEngine()
 			&& (index = gc.getAnimationIndex()) != null
 			&& (skin = gc.getSkin()) != null
 		)
-			return data.get(skin).getNextImage(action,direction,index);
-		return null;
+			retImg = data.get(skin).getNextImage(action,direction,index);
+		if (retImg != null) index = data.get(skin).getNextIndex(action,direction,index);
+		else index = 0;
+		gc.setAnimationIndex(index);
+		return retImg;
 	}
 
 }
