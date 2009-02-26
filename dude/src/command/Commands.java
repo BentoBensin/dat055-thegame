@@ -1,7 +1,7 @@
 package command;
 
 import game.Engine;
-import main.strings;
+import main.Strings;
 import java.util.HashMap;
 
 
@@ -32,8 +32,8 @@ public class Commands
          */
         private void initializeCommands(Engine engine)
         {
-            commands.put(strings.Move,new CommandMove(engine));
-            commands.put(strings.Attack,new CommandAttack(engine));
+            commands.put(Strings.Move,new CommandMove(engine));
+            commands.put(Strings.Attack,new CommandAttack(engine));
             commands.put("pause",new CommandPauseToggle(engine));
             commands.put("save", new CommandSave(engine));
             commands.put("load", new CommandLoad(engine));

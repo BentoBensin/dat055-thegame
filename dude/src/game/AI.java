@@ -32,23 +32,26 @@ public class AI implements GenericInterface, Observer
       * @param position
       * @param nearbyClients
       */
-    protected void decision(Client client, ArrayList<Client> nearbyClients)
+    protected void decision(Client client, ArrayList<GameCharacter> nearbyClients)
     {
-    	Point clPos=client.getPoint();
-        GameCharacter clGC = client.getGameCharacter();
+    	if( client == null || client.getGameCharacter() == null) {
+    		return;
+    	}
+    	GameCharacter clGC = client.getGameCharacter();
+    	Point clPos= clGC.getPoint();
         Weapon clWeapon = clGC.getPrimary();
-        Player closest = null;
+        GameCharacter closest = null;
         double rangeTagEnemy = 1000;
         String action = null;
         String direction = null; 
 
         
-        for (Client c : nearbyClients)
-            if (c instanceof Player && c.getGameCharacter().isAlive()){
-            	double i = clPos.distance(c.getPoint());
+        for (GameCharacter gc : nearbyClients)
+            if (gc.isPlayer() && gc.isAlive()){
+            	double i = clPos.distance(gc.getPoint());
 	            if (i<rangeTagEnemy){
 	            	rangeTagEnemy = i;
-	            	closest=(Player)c;
+	            	closest=gc;
 	            }
             }
     	if ( nearbyClients.size() == 0 || closest == null) // If no players are near-> move client along the pattern
@@ -82,8 +85,8 @@ public class AI implements GenericInterface, Observer
          */        
         int enX = closest.getPoint().x;
         int enY = closest.getPoint().y;
-        int enX2 = enX + closest.getGameCharacter().getWidth();
-        int enY2 = enY + closest.getGameCharacter().getHeight();
+        int enX2 = enX + closest.getWidth();
+        int enY2 = enY + closest.getHeight();
         if( clPos.x > enX && clPos.x < enX2 && clPos.y<enY) direction = Strings.North;
         if( clPos.x > enX && clPos.x < enX2 && clPos.y>enY) direction = Strings.South;
         if( clPos.y > enY && clPos.y < enY2 && clPos.x<enX) direction = Strings.East;
@@ -115,8 +118,8 @@ public class AI implements GenericInterface, Observer
         	action = Strings.Move;
         }
         
-        client.getGameCharacter().setDirection(direction);
-        client.getGameCharacter().addAction(action);
+        clGC.setDirection(direction);
+        clGC.addAction(action);
         
         
         
@@ -133,9 +136,11 @@ public class AI implements GenericInterface, Observer
         public void update(Observable o, Object arg) 
         {
         	if( o instanceof Client && arg instanceof ArrayList){
-        		ArrayList<Client> argC = new ArrayList<Client>();
+        		ArrayList<GameCharacter> argC = new ArrayList<GameCharacter>();
         		for(Object a : (ArrayList<Object>)arg)
-        			if (a instanceof Client) argC.add((Client)a);
+        			if (a instanceof GameCharacter){
+        				argC.add((GameCharacter)a);
+        			}
             	if(argC.size()>1) decision((Client)o,argC);  
             	else
             		followPattern((Monster)o);
@@ -152,7 +157,7 @@ public class AI implements GenericInterface, Observer
      		System.out.println("followPattern()");
      		if (!client.hasPattern())
      			client.setPattern();
- 			client.decreaseRemaning();
- 			client.addAction(Strings.Move);
+ 			client.getGameCharacter().decreaseRemaning();
+ 			client.getGameCharacter().addAction(Strings.Move);
     	}
 }  

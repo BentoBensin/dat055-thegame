@@ -24,8 +24,6 @@ public class CommandAttack extends Command
         {
                  super(engine);
         }
-        
-        
 
         /**
          * If any clients are within attack range while attacking they will decrease in health points
@@ -54,7 +52,6 @@ public class CommandAttack extends Command
                         // if there is no targets
                          targets.isEmpty()
                         // if weapon can't be used, like, there is cooldown or it's broken
-                         || client.getGameCharacter().hasCoolDown( client.getGameCharacter().getPrimary() )
                          || gc.hasCoolDown( gc.getPrimary() )
                         // something more?
                         ){
@@ -63,10 +60,10 @@ public class CommandAttack extends Command
                  
                  System.out.println("******************************************* nu attackerar jag");    
                  // We can attack, let's start..
-                 for (GameCharacter gc : targets)
+                 for (GameCharacter gamechar : targets)
                          {
                                 // client ain't me or 
-                                if( gc != client.getGameCharacter() && (gc.isPlayer() && client.getGameCharacter().isPlayer())  ){
+                                if( gamechar != client.getGameCharacter() &&  (gamechar.isPlayer() || ( gamechar.isPlayer() && !gc.isPlayer() ) )  ){
                                          /*
                                           * int damage = (weapon.getStrength*gc.getDexterity*gc.getStrength
                                           *                             - gc.getDefense);
@@ -80,11 +77,10 @@ public class CommandAttack extends Command
                                           * dexterity ( skill på vapnet ) 
                                           * intelligence (styrka på spells / mängd mana )
                                           */
-                                         gc.changeHealth( -weapon.getStrength() );
-                                         client.getGameCharacter().addCoolDown(client.getGameCharacter().getPrimary(),client.getGameCharacter().getPrimary().getCoolDown()) ;
+                                         gamechar.changeHealth( -weapon.getStrength() );
+                                         gc.addCoolDown(gc.getPrimary(),gc.getPrimary().getCoolDown()) ;
                                          // 100% hit each time, we implement stuff like that later
-                                         c.getGameCharacter().addStun(weapon.getStunType(),weapon.getStunTime());
-                                         gc.addStun(weapon.getStunType(),weapon.getStunTime());
+                                         gamechar.addStun(weapon.getStunType(),weapon.getStunTime());
                                  }
                          }
          }
