@@ -20,6 +20,7 @@ import command.Command;
  */
 public abstract class Client extends Observable implements Runnable, Serializable {
 
+
 	private Thread aktivitet;
     protected Engine engine;
     private GameCharacter gc; 

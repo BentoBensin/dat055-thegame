@@ -114,8 +114,12 @@ public class AI implements GenericInterface, Observer
         if (action == null) {
         	action = strings.Move;
         }
-        client.setDirection(direction);
-        client.addAction(action);
+        
+        client.getGameCharacter().setDirection(direction);
+        client.getGameCharacter().addAction(action);
+        
+        
+        
      }  
     
 

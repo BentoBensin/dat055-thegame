@@ -3,9 +3,7 @@ import java.io.*;
 import game.Client;
 import game.Engine;
 
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 
 
@@ -42,9 +40,5 @@ public class CommandSave extends Command {
 		
 	}
 	
-	private String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("MM-dd-HH-mm");
-        Date date = new Date();
-        return dateFormat.format(date+".sav");
-    } 
+
 }

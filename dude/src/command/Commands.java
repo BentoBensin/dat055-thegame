@@ -36,6 +36,7 @@ public class Commands
             commands.put(strings.Attack,new CommandAttack(engine));
             commands.put("pause",new CommandPauseToggle(engine));
             commands.put("save", new CommandSave(engine));
+            commands.put("load", new CommandLoad(engine));
         }
         /**
          * Returns all the commands we have.
