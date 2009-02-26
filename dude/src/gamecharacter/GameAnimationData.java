@@ -48,6 +48,18 @@ public abstract class GameAnimationData {
 		}
 		return 1;
 	}
+	public int getNextIndex(String action, String direction, int index)
+	{
+		HashMap<String,ArrayList<BufferedImage>> step1;
+		if ( image.get(action) != null 
+		&& (step2 = image.get(action).get(direction)) != null 
+		&& image.get(action).get(direction).get(index) != null ) {
+			if (step2.get(index+1) != null) return index++;
+			else return 0;
+		}
+		return null;
+	}
+
 	public void loadImages(HashMap<String,HashMap<String, ArrayList<String>>> images) throws NullPointerException {		
 		if( images == null)
 			throw new NullPointerException();
