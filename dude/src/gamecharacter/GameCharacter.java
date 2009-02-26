@@ -264,13 +264,19 @@ public abstract class GameCharacter {
 	    	if( !actions.contains(action) ) {
 	    		if( action.equals(Strings.Attack))
 	    			setSuperAnimationType(Strings.Attack);
-	    		actions.addFirst(action);
+	    		actions.addLast(action);
 	    	}	
     	}else {
     		setSuperAnimationType("die");
     	}
     }
     
+    public String getAction()
+    {
+    	if (!actions.isEmpty())
+    		return actions.pop();
+    	else return null;
+    }
     public void addStun( String stun, int time) {
     	stun(time);
     	setSuperAnimationType("hit"); 

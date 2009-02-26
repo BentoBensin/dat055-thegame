@@ -239,11 +239,11 @@ public class Gui implements Observer, ActionListener {
 	}
 	
 	public void loadgame() {
-		player.addAction("load");
+		player.getGameCharacter().addAction("load");
 		System.out.println("Loadknapp");
 	}
 	public void savegame() {
-		player.addAction("save");
+		player.getGameCharacter().addAction("save");
 		System.out.println("Save knapp");
 	}
 	public void exitgame() {
@@ -296,31 +296,55 @@ public class Gui implements Observer, ActionListener {
 
 			if( !Client.paused) {
 				if (e.getKeyCode() == KeyEvent.VK_W) {
+<<<<<<< .mine
+					player.getGameCharacter().setDirection(strings.North);
+					player.getGameCharacter().addAction(strings.Move);
+=======
 					player.setDirection(Strings.North);
 					player.addAction(Strings.Move);
+>>>>>>> .r38
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_S) {
+<<<<<<< .mine
+					player.getGameCharacter().setDirection(strings.South);
+					player.getGameCharacter().addAction(strings.Move);
+=======
 					player.setDirection(Strings.South);
 					player.addAction(Strings.Move);
+>>>>>>> .r38
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_A) {
+<<<<<<< .mine
+					player.getGameCharacter().setDirection(strings.West);
+					player.getGameCharacter().addAction(strings.Move);
+=======
 					player.setDirection(Strings.West);
 					player.addAction(Strings.Move);
+>>>>>>> .r38
 				}
 	
 				if (e.getKeyCode() == KeyEvent.VK_D) {
+<<<<<<< .mine
+					player.getGameCharacter().setDirection(strings.East);
+					player.getGameCharacter().addAction(strings.Move);
+=======
 					player.setDirection(Strings.East);
 					player.addAction(Strings.Move);
+>>>>>>> .r38
 				}
 				if (e.getKeyCode() == KeyEvent.VK_L) {
+<<<<<<< .mine
+					player.getGameCharacter().addAction(strings.Attack);
+=======
 					player.addAction(Strings.Attack);
+>>>>>>> .r38
 					return;
 				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				player.addAction("pause");
+				player.getGameCharacter().addAction("pause");
 				if( menu.isVisible() ) {
 					menu.setVisible(false);
 				}else
@@ -330,7 +354,11 @@ public class Gui implements Observer, ActionListener {
 		}
 
 		public void keyReleased(KeyEvent e) {
+<<<<<<< .mine
+			player.getGameCharacter().addAction(strings.Still);
+=======
 			player.addAction(Strings.Still);
+>>>>>>> .r38
 		}
 
 	};

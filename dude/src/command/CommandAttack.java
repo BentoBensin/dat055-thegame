@@ -54,6 +54,7 @@ public class CommandAttack extends Command
                         // if there is no targets
                          targets.isEmpty()
                         // if weapon can't be used, like, there is cooldown or it's broken
+                         || client.getGameCharacter().hasCoolDown( client.getGameCharacter().getPrimary() )
                          || gc.hasCoolDown( gc.getPrimary() )
                         // something more?
                         ){
@@ -80,8 +81,9 @@ public class CommandAttack extends Command
                                           * intelligence (styrka på spells / mängd mana )
                                           */
                                          gc.changeHealth( -weapon.getStrength() );
-                                         client.addCoolDown(client.getGameCharacter().getPrimary(),client.getGameCharacter().getPrimary().getCoolDown()) ;
+                                         client.getGameCharacter().addCoolDown(client.getGameCharacter().getPrimary(),client.getGameCharacter().getPrimary().getCoolDown()) ;
                                          // 100% hit each time, we implement stuff like that later
+                                         c.getGameCharacter().addStun(weapon.getStunType(),weapon.getStunTime());
                                          gc.addStun(weapon.getStunType(),weapon.getStunTime());
                                  }
                          }
