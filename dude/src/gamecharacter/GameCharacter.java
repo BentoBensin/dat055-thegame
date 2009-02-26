@@ -32,7 +32,7 @@ public abstract class GameCharacter {
 	private boolean isStunned;
 	private Weapon weapon;
 	private int health;
-	
+	private boolean isPlayer;
 	private Point point;
 	private String name;
 	private String direction;
@@ -43,7 +43,7 @@ public abstract class GameCharacter {
 	private HashMap<Item, Long > cooldowns;
 	
 	public GameCharacter(Weapon weapon, double speed, int width, int height, 
-			int health, String name, Point point){
+			int health, String name, Point point, boolean isPlayer){
 		
 		patterns = new LinkedList<MovePattern>();
 		this.weapon = weapon;
@@ -53,7 +53,7 @@ public abstract class GameCharacter {
 		this.attackRange = 20;
 		isStunned = false;
 		this.health = health;
-		
+		this.isPlayer = isPlayer;
 		this.name = name;
         this.point = point;
         direction = strings.South;
@@ -309,7 +309,7 @@ public abstract class GameCharacter {
     			animation = strings.Still;
     		}
     	}
-    return tmpList;
+    	return tmpList;
     }
     
     public void setPoint(Point newPoint){
@@ -345,9 +345,8 @@ public abstract class GameCharacter {
         this.name = name;
     }
 
-    
+    public boolean isPlayer() {
+    	return isPlayer;
+    }
 
-	
-	
-	
 }
