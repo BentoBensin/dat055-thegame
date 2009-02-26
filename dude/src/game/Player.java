@@ -21,18 +21,18 @@ public class Player extends Client{
 	private long ressurectionTime;
 	private boolean ress;
 	
-	public Player(int id, String name, GameCharacter gc, Engine engine){
-		super(id, new Point(500,300), name, gc, engine);		
+	public Player(int id, GameCharacter gc, Engine engine){
+		super(id, new Point(500,300), gc, engine);		
 		init();
 	}
-	public Player( int id, String name, GameCharacter gc){
-		super(id,new Point(500,300),name,gc, new Engine());
+	public Player( int id, GameCharacter gc){
+		super(id,new Point(500,300),gc, new Engine());
 		init();
 	}
-	public Player(int id, String name, GameCharacter gc, String host, Integer port){
-		super(id, new Point(500,300), name, gc);		
+	/*public Player(int id, GameCharacter gc, String host, Integer port){
+		super(id, new Point(500,300), gc);		
 		init();
-	}	
+	}*/	
 	
 	private void init(){
 		intervall = 50;
@@ -43,8 +43,8 @@ public class Player extends Client{
 		engine.addClient(this);
 	}
 	
-	public Player(Player p){	//TODO Animation not coppied...... BAD
-		super(IDGen.generateID(), (Point)p.getGameCharacter().getPoint().clone(), p.getGameCharacter().getName(),p.getGameCharacter(), p.engine);
+	public Player(Player p){
+		super(IDGen.generateID(), (Point)p.getGameCharacter().getPoint().clone(),p.getGameCharacter(), p.engine);
 	}
 	
 	public void run() {

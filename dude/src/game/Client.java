@@ -36,7 +36,7 @@ public abstract class Client extends Observable implements Runnable, Serializabl
      * @param HashMap<String,ArrayList<String>>
      * @param name
      */
-    public Client(int id, Point point, String name, GameCharacter gc, Engine engine){
+    public Client(int id, Point point, GameCharacter gc, Engine engine){
     	this.id = id;
     	this.engine = engine;
         this.gc=gc;
