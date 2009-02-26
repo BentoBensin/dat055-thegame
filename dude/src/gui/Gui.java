@@ -55,7 +55,6 @@ public class Gui implements Observer, ActionListener {
 	private Player player;
 	private HashMap<Client, TranspContainer> currentList;
 	private ArrayList<Client> removeList;
-	
 	private GraphicsEnvironment ge;
 	private GraphicsDevice gd;
 	private DisplayMode dmode;
@@ -419,8 +418,21 @@ public class Gui implements Observer, ActionListener {
 		 * with the new animationimage and new (absolute) position
 		 * 
 		 */
-		private void updateGraphic(Client client) {
-			if( client != null && currentList.containsKey(client)){
+		private void updateGraphic(GameCharacter gc) {
+			GameAnimationEngine gae = GameAnimationEngine.getInstance();
+			BufferedImage bimg;
+			if ( gc != null ){
+				Point point = (Point).getPoint().clone();
+				point.translate( (350 - gc.getPoint().x), (250 - gc.getPoint().y) );
+				if((bimg = gae.getNextImage(gc)) != null )
+					if ( bimg.getHeight() > 100 )
+						tmp.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
+			}
+			currentList.get(gc).setImage(bimg);
+			currentList.get(gc).setLocation(point);
+
+
+/*			if( client != null && currentList.containsKey(client)){
 				Point tmp = (Point)client.getGameCharacter().getPoint().clone();
 					if( !(client instanceof Player) ){
 						tmp.translate( (350 - player.getGameCharacter().getPoint().x), (250 - player.getGameCharacter().getPoint().y));
@@ -432,9 +444,9 @@ public class Gui implements Observer, ActionListener {
 				if( bimg.getHeight() > 100 ) {
 					tmp.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 				}
-				currentList.get(client).setImage(client.getGameCharacter().getAnimation());*/
+				currentList.get(client).setImage(client.getGameCharacter().getAnimation());
 				currentList.get(client).setLocation(tmp);
-			}
+			}*/
 		}
 		
 	}
