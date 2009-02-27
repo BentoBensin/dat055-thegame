@@ -1,16 +1,15 @@
 package game;
 
 /**
- * Write a description of class IDGen here.
- *
- * @author Gammel Teddie
- * @version Gammel version
+ * Generates a unique id-number for every client using the singleton design pattern.
+ * 
+ * @author Raul
+ * @version 1.0
  */
 
-//TODO KOMMENTERA!!!!!!!
 public class IDGen
 {
-   private static IDGen instance = new IDGen();
+   private static IDGen instance = null;
    private static int idCount = 1;
 
     /**
@@ -18,13 +17,23 @@ public class IDGen
      */
     private IDGen()
     {
-       idCount = 1;
+    	idCount = 1;
     }
    
+    /**
+     * 
+     * @return IDGen
+     */
     public IDGen getInstance(){
+    	if (instance==null)
+    		instance=new IDGen();
         return instance;
-        }
+    }
    
+    /**
+     * Generates a new unique id-number
+     * @return ID-number
+     */
     public static int generateID(){
         return idCount++;
     }
