@@ -2,6 +2,9 @@ package command;
 import game.Engine;
 
 import game.Client;
+import game.Player;
+import gamecharacter.GameCharacter;
+import game.IDGen;
 import java.io.*;
 
 public class CommandLoad extends Command {
@@ -14,14 +17,15 @@ public class CommandLoad extends Command {
 	@Override
 	public void execute(Client client) 
 	{
-		if(client.isPaused()) client.togglePaused();
+		if(!client.isPaused()) client.togglePaused();
 		engine.reset();
 		try{
 			ObjectInputStream in= 
 				new ObjectInputStream(
 						new FileInputStream("save.sav"));
-			while(true)
-				engine.addClient((Client)in.readObject()); //TODO Mecka nr det ndrats till GC
+			while(true){ 
+				engine.addClient(new Player(IDGen.generateID(),(GameCharacter)in.readObject())); //TODO Mecka nr det ndrats till GC
+			}
 		}
 		catch (IOException e)
 		{
@@ -34,7 +38,7 @@ public class CommandLoad extends Command {
 			System.out.println("Nt annat sket sig");
 			System.exit(0);
 		}
-		if(!client.isPaused()) client.togglePaused();
+		if(client.isPaused()) client.togglePaused();
 	}
 
 }

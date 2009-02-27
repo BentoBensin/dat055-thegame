@@ -1,6 +1,7 @@
 package command;
 import java.io.*;
 import game.Client;
+import game.Player;
 import game.Engine;
 
 
@@ -26,7 +27,7 @@ public class CommandSave extends Command {
 			for (Client c : savebrust)
 			{
 				System.out.println("BT");
-				out.writeObject(c);
+				if( c instanceof Player) out.writeObject(c.getGameCharacter());
 			}
 			
 		}
@@ -37,7 +38,6 @@ public class CommandSave extends Command {
 			System.exit(0);
 		}
 		if(client.isPaused()) client.togglePaused();
-		
 	}
 	
 

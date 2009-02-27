@@ -10,7 +10,7 @@ import main.Strings;
 /**
  * @file Player.java
  * @version 0.2
- * @author Mattias Lögdberg
+ * @author Mattias Lgdberg
  */
 //TODO KOMMENTERA!!!!!!!
 public class Player extends Client{
@@ -26,7 +26,7 @@ public class Player extends Client{
 		init();
 	}
 	public Player( int id, GameCharacter gc){
-		super(id,new Point(500,300),gc, new Engine());
+		super(id,gc.getPoint(),gc, new Engine());
 		init();
 	}
 	/*public Player(int id, GameCharacter gc, String host, Integer port){
@@ -50,9 +50,9 @@ public class Player extends Client{
 	public void run() {
 		ArrayList<GameCharacter> gc = null;
 		while (true) {
-			System.out.println("kör");
+			System.out.println("kr");
 			try {
-					Thread.sleep(intervall); //variabel som vi skapar en funktion som kan ändra
+					Thread.sleep(intervall); //variabel som vi skapar en funktion som kan ndra
 					if( !getGameCharacter().isAlive() && !ress){
 						ress = true;
 						ressurectionTime = System.currentTimeMillis()+ressurectionIntervall;
