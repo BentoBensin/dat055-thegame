@@ -7,6 +7,12 @@ import gamecharacter.GameCharacter;
 import game.IDGen;
 import java.io.*;
 
+/**
+ * This class resets the engine and reloads the players saved in the sav-file and puts them
+ * in the game engine
+ * @author raul
+ *
+ */
 public class CommandLoad extends Command {
 
 	public CommandLoad (Engine engine)
@@ -15,11 +21,16 @@ public class CommandLoad extends Command {
 		
 	}
 	@Override
+	/**
+	 * The command specific method doing 
+	 */
 	public void execute(Client client) 
 	{
-		if(!client.isPaused()) client.togglePaused();
+		//pause clients
+		if(!client.isPaused()) client.togglePaused(); 
+		//remove every client
 		engine.reset();
-		try{
+		try{   						// read clients from sav-file and put them into engine
 			ObjectInputStream in= 
 				new ObjectInputStream(
 						new FileInputStream("save.sav"));

@@ -9,7 +9,7 @@ import game.Engine;
  *
  */
 
-//TODO KOMMENTERA!!!!!!!
+
 public class CommandTurn extends Command
 {
     private int command;
@@ -17,7 +17,11 @@ public class CommandTurn extends Command
         super(engine);
         this.command = command;
     }
- 
+
+    /**
+     * Känns rätt hopplöst att kommentera denna atm
+     * Should turn the client towars a direction.
+     */
     public void execute(Client client)
     {
         switch(command)

@@ -7,7 +7,11 @@ import game.Engine;
 
 import java.util.ArrayList;
 
-
+/**
+ * Saves the game enviroment into a file that is loadable.
+ * @author teddie
+ *
+ */
 public class CommandSave extends Command {
 
 	public CommandSave (Engine engine)
@@ -16,24 +20,25 @@ public class CommandSave extends Command {
         
     }
 	@Override
+	/**
+	 * Performs the saving, serializing the gamecharacters and putting them to a file
+	 */
 	public void execute(Client client) {
-		// TODO Auto-generated method stub
+		
 		ArrayList<Client> savebrust=engine.getAllClients();
 		if(!client.isPaused()) client.togglePaused();
-		//String date=getDateTime();
+		
 		try{
 			ObjectOutputStream out=new ObjectOutputStream
-			(new FileOutputStream("BertilThomas.sav"));
+			(new FileOutputStream("save.sav"));
 			for (Client c : savebrust)
 			{
-				System.out.println("BT");
 				if( c instanceof Player) out.writeObject(c.getGameCharacter());
 			}
 			
 		}
 		catch (IOException e)
 		{
-			System.out.println("Det sket sig");
 			e.printStackTrace();
 			System.exit(0);
 		}
