@@ -1,10 +1,19 @@
 package map;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.TreeMap;
+
+import javax.imageio.ImageIO;
 
 /**
  * @file Maps.java
@@ -14,9 +23,35 @@ import java.util.TreeMap;
  */
 public class Maps {
     private TreeMap<String,MapPiece> map;
+    private BufferedImage grass;
+    private BufferedImage black;
+    private BufferedImage tree;
     public Maps()
     {
     	map = new TreeMap<String,MapPiece>();
+    	try { grass = ImageIO.read(new File("images/mapimages/grass.gif"));
+        } catch (NullPointerException e) { 
+          e.printStackTrace();
+          }
+            catch (IOException e) {
+            e.printStackTrace();
+            }
+            
+        try { black = ImageIO.read(new File("images/mapimages/black.gif"));
+        } catch (NullPointerException e) { 
+          e.printStackTrace();
+          }
+            catch (IOException e) {
+            e.printStackTrace();
+            }
+        
+         try { tree = ImageIO.read(new File("images/mapimages/tree.gif"));
+         } catch (NullPointerException e) { 
+           e.printStackTrace();
+           }
+             catch (IOException e) {
+             e.printStackTrace();
+             }
     }
     /**
      * Checks if a spot on the map is free to walk on
@@ -39,83 +74,118 @@ public class Maps {
     }
     /**
      * loads a map into the program
+     * a file should contain
+     * #comment
+     * #background
+     * 0 1 2 1 tree 1
+     * #background x y z Object isWalkAble
+     * 1 1 3 1 pot 0
+     * #item x y z Object isWalkAble
      * @param String
      * @return boolean true if succes false if not
      * @throws IOException
      */
-    public boolean loadMap(String path) throws IOException
+    public boolean loadMap(String mapname)
     {
         boolean isLoaded = false;
         boolean isFail = false;
         String s;
-        int l;
+        String[] split;
+        Scanner scanner = null;
+ 
         //MapPiece piece;
-        File f = new File( path , "map.csv");
-       	BufferedReader r = new BufferedReader(new FileReader(f));
-        while ( (s = r.readLine() ) != null )
-        {
-            switch (s.trim().charAt(0))
-            {
-            case '#':continue;
-            case '0':/*background*/
-                l = 0;
-                break;
-            case '1':/*item*/
-                l = 1;
-                break;
-            default:continue;
-            }
-            if ((l == 0 || l == 1))
-            {
-                String split[] = s.split("([\\s]+)?,([\\s]+)?");
-                int z = 0,
-                	x = 0,y = 0 ,walkable = 1;
-                String name = "";
-                for (int i=0;i<split.length;i++)
-                {
-                    switch(i)
+    
+        File f = new File( "maps/" , mapname);
+        try {
+            
+            //Construct the BufferedReader object
+            scanner = new Scanner(new BufferedReader(new FileReader(f)));
+            scanner.useDelimiter("\n");
+
+            while (scanner.hasNext()) {
+            	s = scanner.next(); 
+            	if(s.charAt(0) == '#' || s.charAt(0) == '\r'){
+            		continue;
+            	}
+            	else{
+            		split = s.split("\\s");
+            		
+            		int z = 0,x = 0,y = 0 ,walkable = 1;
+            		String objectName = "";
+            		for (int i=0;i<split.length;i++)
+            		{
+            			switch(i)
+            			{
+            			case 0:
+            				try {
+            					x = Integer.parseInt(split[i]);
+            				}
+            				catch (Exception e) {
+            					isFail = true;
+            				}
+            				break;
+            			case 1:
+            				try {
+            					y = Integer.parseInt(split[i]);
+            				} catch (Exception e) {
+            					isFail = true;
+            				}
+            				break;
+            			case 2:
+            				try {
+            					z = Integer.parseInt(split[i]);
+            				} catch (Exception e) {
+            					isFail = true;
+            				}
+            				break;
+            			case 3:
+            				objectName = split[i];
+            				break;
+            			case 4:
+            				try {
+            					walkable = Integer.parseInt(split[i]);
+            				} catch (Exception e) {
+            					isFail = true;
+            				}
+            			}
+            		}
+            		//System.out.println("\n"+"\nx = "+x+"\ny = "+y+"\nz = "+z+"\n walkable = "+walkable+"\nobjektname = "+objectName);
+            		if ( !isFail && (objectName.length()>0) && !map.containsKey(generateKey(z,x,y)))
                     {
-                    case 0:
-                        try {
-                            z = Integer.parseInt(split[i]);
-                        }
-                        catch (Exception e) {
-                            isFail = true;
-                        }
-                        break;
-                    case 1:
-                        try {
-                            x = Integer.parseInt(split[i]);
-                        } catch (Exception e) {
-                            isFail = true;
-                        }
-                        break;
-                    case 2:
-                        try {
-                            y = Integer.parseInt(split[i]);
-                        } catch (Exception e) {
-                            isFail = true;
-                        }
-                        break;
-                    case 3:
-                        name = split[i];
-                        break;
-                    case 4:
-                        try {
-                            walkable = Integer.parseInt(split[i]);
-                        } catch (Exception e) {
-                            isFail = true;
-                        }
+                    	MapPiece piece = new MapPiece(x,y,z,objectName,walkable);
+                        map.put(piece.toString(),piece);
+                        isLoaded = true;
                     }
-                }
-                if ( !isFail && name.length()>0 && map.containsKey(generateKey(z,y,x)))
+            	}
+            /*    if ((l == 0 || l == 1))
                 {
-			MapPiece piece = new MapPiece(x,y,z,name,walkable);
-                    map.put(piece.toString(),piece);
-                    isLoaded = true;
-                }
+                    String split[] = s.split("([\\s]+)?,([\\s]+)?");
+                    int z = 0,
+                    	x = 0,y = 0 ,walkable = 1;
+                    String objectName = "";
+                    for (int i=0;i<split.length;i++)
+                    {
+                      
+                    }
+                    if ( !isFail && (objectName.length()>0) && map.containsKey(generateKey(z,x,y)))
+                    {
+                    	MapPiece piece = new MapPiece(x,y,z,objectName,walkable);
+                        map.put(piece.toString(),piece);
+                        isLoaded = true;
+                    }
+                } */
+               
+            }
+            
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }finally {
+            if (scanner != null) {
+                scanner.close();
             }
         }
+        
+        
         return isLoaded;
     }
     /**
@@ -131,9 +201,9 @@ public class Maps {
      * @param int a field of ints {z,x,y}
      * @return MapPiece
      */
-    public MapPiece getMapPiece(int[] v)
+    public MapPiece getMapPiece(int z, int x, int y)
     {
-        return map.get(generateKey(v[0],v[1],v[2]));
+        return map.get(generateKey(z,x,y));
     }
     /**
      * generates the hashkey for our map-treemap
@@ -145,6 +215,102 @@ public class Maps {
     private String generateKey(int z,int x,int y)
     {
         return (String)(z+"-"+x+"-"+y);
+       
+    }
+    
+    public String toString()
+    {
+    	String tmp = new String();
+    	for(String s : map.keySet() )
+    	{
+    		System.out.println( map.get(s).toString());
+    	}
+    	return tmp;
+    }
+    /**
+     * generates the Background for our gui
+     * @param Point playerPoint - players current position in worldcoordinates 
+     * @return BufferedImage - a backgroundimage drawn based on the players position
+     */
+    public BufferedImage getCurrentBackground(Point playerPoint)
+    {
+    	//Converting from world coordinates to tile coordinates
+    	Double xpos = playerPoint.getX()/MapPiece.xsize;
+    	Double ypos = playerPoint.getY()/MapPiece.ysize;
+    	//Getting the tile at window position (0,0) by truncating the x/y positions
+    	int xtile = xpos.intValue();
+    	int ytile = ypos.intValue();
+    	int ztile = 0;
+    	// xrest and yrest variables are needed for offsetting the tile images correctly
+    	double xrest = xtile - xpos;
+    	double yrest = ytile - ypos;
+    	
+    	
+    	///Creating a new BufferedImage and graphics
+    	
+    	BufferedImage theCurrentBackground;
+    	Graphics2D drawGraphics;
+    	theCurrentBackground = new BufferedImage(880,680,BufferedImage.TYPE_INT_RGB );
+    	drawGraphics = (Graphics2D) theCurrentBackground.createGraphics();
+    	
+    	BufferedImage tileImage = null;
+    	
+    	String tmp = "black";
+    	
+    	/*try { tileImage = ImageIO.read(new File("images/mapimages/",getMapPiece(0,(x-1),(y-1)).getObjName()));
+        } catch (NullPointerException e) { 
+        	try{ tileImage = ImageIO.read(new File("images/mapimages/black.gif"));
+        	}catch(Exception ex2){
+        		
+        	}
+            }
+            catch (IOException e) {
+            e.printStackTrace();
+            }*/
+    	
+    	for(int y=0; y<17;y++)
+    	{
+    		
+    		for(int x=0; x<22;x++)
+    		{
+    			try{ tmp = getMapPiece(0,(x+xtile),(y+ytile)).getObjName();
+    			}catch(NullPointerException e){
+    				tmp = "black.gif";
+    			}
+    			 if( tmp.equals("grass.gif")){
+    				 tileImage = grass;
+    			 }
+    			 else{
+    				 tileImage = black;
+    			 }
+    		     //(int)(x*(MapPiece.xsize-MapPiece.xsize*xrest)),(int)(y*(MapPiece.ysize-MapPiece.ysize*yrest))
+    		   drawGraphics.drawImage(tileImage,((int)(40*xrest)+(40*x)),(int)(40*yrest)+(40*y),null);
+    		}
+    	}
+    	tileImage = null;
+    	////////////// Z lager 1
+    	for(int y=0; y<17;y++)
+    	{
+    		
+    		for(int x=0; x<22;x++)
+    		{
+    			try{ tmp = getMapPiece(1,(x+xtile),(y+ytile)).getObjName();
+    			}catch(NullPointerException e){
+    				tmp = "notfound";
+    			}
+    			 if( tmp.equals("tree.gif")){
+    				 tileImage = tree;
+    				 drawGraphics.drawImage(tileImage,((int)(40*xrest)+(40*x)),(int)(40*yrest)+(40*y),null);
+    			 }
+    			 else{
+    				 tileImage = black;
+    			 }
+    		     //(int)(x*(MapPiece.xsize-MapPiece.xsize*xrest)),(int)(y*(MapPiece.ysize-MapPiece.ysize*yrest))
+    		   
+    		}
+    	}
+    	
+    	return theCurrentBackground;
     }
 }
 

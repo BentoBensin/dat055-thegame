@@ -16,6 +16,9 @@ public class MapPiece
     private String objectName;
     private boolean walkable;
     private int z;
+    private Dimension size;
+    public static int xsize = 40;
+    public static int ysize = 40;
     /**
      * Constructor for objects of class MapPiece
      */
@@ -25,6 +28,10 @@ public class MapPiece
        this.point = new Point(x,y);
        this.objectName = obstacle;
        this.walkable = walk; 
+       if(z == 0)
+    	   this.size = new Dimension(xsize,ysize);
+       else
+    	   this.size = new Dimension(0,0);
     }
     public MapPiece(int x, int y, int z, String obstacle, int walk)
     {
@@ -64,7 +71,10 @@ public class MapPiece
     }
    
     public String toString(){
-        return (String)(z +"-" +point.getX() +"-" +point.getY());
+    	 int x = (int)point.getX();
+    	 int y = (int)point.getY();
+    	 
+    	 return (String)(z+"-"+x+"-"+y);
     }
        
        
