@@ -117,7 +117,9 @@ public class LogicModel {
         }
         return true;
     }
-   
+   /**
+	*Clears the treemap (list of all clients)
+	*/
    public void clear()
    {
 	   tm.clear();

@@ -21,19 +21,32 @@ public class Player extends Client{
 	private long ressurectionTime;
 	private boolean ress;
 	
+	/**
+	*Constructor for class Player
+	*@param int id - the Players id
+	*@param GameCharacter gc - Character type
+	*@param Engine engine - The game engine
+	*/
 	public Player(int id, GameCharacter gc, Engine engine){
 		super(id, new Point(500,300), gc, engine);		
 		init();
 	}
+	
+	/**
+	*Constructor for class Player
+	*@param int id - the Players id
+	*@param GameCharacter gc - Character type
+	*/
 	public Player( int id, GameCharacter gc){
 		super(id,gc.getPoint(),gc, new Engine());
 		init();
 	}
-	/*public Player(int id, GameCharacter gc, String host, Integer port){
-		super(id, new Point(500,300), gc);		
-		init();
-	}*/	
 	
+	/**
+	*Initiates the player varibles,
+	*starts the players thread and
+	*adds player to the list of all clients
+	*/
 	private void init(){
 		intervall = 50;
 		ressurectionIntervall = intervall*10;
@@ -42,17 +55,28 @@ public class Player extends Client{
 		startThread();
 		engine.addClient(this);
 	}
-	
+	/**
+	*Clone Constructor for this class
+	*@param Player p - the Player we want to clone
+	*/
 	public Player(Player p){
 		super(IDGen.generateID(), (Point)p.getGameCharacter().getPoint().clone(),p.getGameCharacter(), p.engine);
 	}
 	
+ /**
+	* The players thread. Checks if player is alive.
+	* Let's the player sleep in intervalls (so it won't update itself too often).
+	* Checks if the thread is paused, if so it waits.
+	* if the player is dead and has slept long enough it is ressurected.
+	* Runs all actions for this player.
+	* Checks if the player is close.
+	* player says it has changed and notifys observers.
+	*/	
 	public void run() {
 		ArrayList<GameCharacter> gc = null;
 		while (true) {
-			System.out.println("kr");
 			try {
-					Thread.sleep(intervall); //variabel som vi skapar en funktion som kan ndra
+					Thread.sleep(intervall); //variable for halting the thread.
 					if( !getGameCharacter().isAlive() && !ress){
 						ress = true;
 						ressurectionTime = System.currentTimeMillis()+ressurectionIntervall;
@@ -78,7 +102,9 @@ public class Player extends Client{
 			notifyObservers(gc);
 		}
 	}
-	
+	/**
+	*Clones this Player
+	*/
 	public Object clone() {
 		return new Player(this);
 	}

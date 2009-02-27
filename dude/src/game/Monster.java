@@ -1,11 +1,14 @@
 package game;
 
-/*Monster:
-Ska kolla om nya positionen r uppnd, om ngon spelare r i nrheten
-Meddela observers om ndring ska gras */
+
+/**
+ * Monster extends Client it is a logical representation
+ * of an enemy in our game.
+ * @file Monster.java
+ * @version 0.3
+ * @author Mattias, GammelTeddie, Raul
+ */
  
- 
-//TODO KOMMENTERA!!!!!!!
 import gamecharacter.GameCharacter;
 import main.Strings;
 import java.awt.Point;
@@ -18,6 +21,15 @@ public class Monster extends Client {
 	private int ressurectionTime;
 	private boolean ress;
 	
+	
+/**
+* Constructor for Monster
+* @param int id - Monster ID
+* @param Point point - Monster position
+* @Param GameCharacter gc - Character type for this monster
+* @param Engine engine - The game engine
+*/
+	
 	public Monster(int id, Point point,GameCharacter gc, Engine engine) {
 		super( id, point, gc, engine);
 		moveRemaining=0;
@@ -26,11 +38,21 @@ public class Monster extends Client {
 		ress = false;
 	}
 
-	public Monster(Monster monster) { //TODO Animation not coppied...... BAD
+	public Monster(Monster monster) { 
 		super(IDGen.generateID(), (Point) monster.getGameCharacter().getPoint().clone(),
 				 monster.getGameCharacter(), monster.engine);
 	}
-
+	
+	/**
+	* The monsters thread. Checks if monster is alive.
+	* Let's the monster sleep in intervalls (so it won't update itself too often).
+	* Checks if the thread is paused, if so it waits.
+	* if the monster is dead and has slept long enough it is ressurected.
+	* Runs all actions for this monster.
+	* Checks if the player is close.
+	* Monster says it has changed and notifys observers.
+	*/
+	
 	public void run() {
 		while (true) {
 			try {
@@ -60,7 +82,10 @@ public class Monster extends Client {
 			notifyObservers(temp);
 		}
 	}
-
+	/**
+	* Clones this object.
+	* @return Monster
+	*/
 	public Object clone() {
 		return new Monster(this);
 	}
