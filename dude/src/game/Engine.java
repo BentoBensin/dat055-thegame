@@ -92,8 +92,8 @@ public class Engine {
     {
        	maps.loadMap(mapPath);
     }
-    public boolean checkSpot(int [] v) {
-    	return maps.checkSpot(v);
+    public boolean checkSpot(int z, int x, int y) {
+    	return maps.checkSpot(z, x, y);
     }
     /**
      * his function returns a loaded map to the GUI

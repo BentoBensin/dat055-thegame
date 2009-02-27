@@ -1,9 +1,7 @@
 package map;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,9 +14,10 @@ import java.util.TreeMap;
 import javax.imageio.ImageIO;
 
 /**
+ * The Maps class has a number of tiles
  * @file Maps.java
  * @version 0.3
- * @author Josef Johansson, Teddie Heikkinen
+ * @author Josef Johansson, Teddie Heikkinen, Roberth Allevik
  *
  */
 public class Maps {
@@ -26,9 +25,15 @@ public class Maps {
     private BufferedImage grass;
     private BufferedImage black;
     private BufferedImage tree;
+    /**
+     * Constructor for objects of class Maps
+     * Creates a TreeMap for (String Object name) - (MapPiece the tile)
+     * Reading some tile-images
+     */
     public Maps()
     {
     	map = new TreeMap<String,MapPiece>();
+    	
     	try { grass = ImageIO.read(new File("images/mapimages/grass.gif"));
         } catch (NullPointerException e) { 
           e.printStackTrace();
@@ -55,10 +60,12 @@ public class Maps {
     }
     /**
      * Checks if a spot on the map is free to walk on
-     * @param v a field of ints {z,x,y}
+     * @param int z
+     * @param int x
+     * @param int y
      * @return true if it's walkable, false if not
      */
-    public boolean checkSpot(int [] v)
+    public boolean checkSpot(int z,int x,int y)
     {
 	return true;
 	/*
@@ -149,7 +156,6 @@ public class Maps {
             				}
             			}
             		}
-            		//System.out.println("\n"+"\nx = "+x+"\ny = "+y+"\nz = "+z+"\n walkable = "+walkable+"\nobjektname = "+objectName);
             		if ( !isFail && (objectName.length()>0) && !map.containsKey(generateKey(z,x,y)))
                     {
                     	MapPiece piece = new MapPiece(x,y,z,objectName,walkable);
@@ -157,24 +163,7 @@ public class Maps {
                         isLoaded = true;
                     }
             	}
-            /*    if ((l == 0 || l == 1))
-                {
-                    String split[] = s.split("([\\s]+)?,([\\s]+)?");
-                    int z = 0,
-                    	x = 0,y = 0 ,walkable = 1;
-                    String objectName = "";
-                    for (int i=0;i<split.length;i++)
-                    {
-                      
-                    }
-                    if ( !isFail && (objectName.length()>0) && map.containsKey(generateKey(z,x,y)))
-                    {
-                    	MapPiece piece = new MapPiece(x,y,z,objectName,walkable);
-                        map.put(piece.toString(),piece);
-                        isLoaded = true;
-                    }
-                } */
-               
+                         
             }
             
         } catch (FileNotFoundException ex) {
@@ -217,7 +206,10 @@ public class Maps {
         return (String)(z+"-"+x+"-"+y);
        
     }
-    
+    /**
+     * generates a string from our map
+     * @return String - that describes our map
+     */
     public String toString()
     {
     	String tmp = new String();
@@ -256,24 +248,13 @@ public class Maps {
     	BufferedImage tileImage = null;
     	
     	String tmp = "black";
-    	
-    	/*try { tileImage = ImageIO.read(new File("images/mapimages/",getMapPiece(0,(x-1),(y-1)).getObjName()));
-        } catch (NullPointerException e) { 
-        	try{ tileImage = ImageIO.read(new File("images/mapimages/black.gif"));
-        	}catch(Exception ex2){
-        		
-        	}
-            }
-            catch (IOException e) {
-            e.printStackTrace();
-            }*/
-    	
+          	
     	for(int y=0; y<17;y++)
     	{
     		
     		for(int x=0; x<22;x++)
     		{
-    			try{ tmp = getMapPiece(0,(x+xtile),(y+ytile)).getObjName();
+    			try{ tmp = getMapPiece(ztile,(x+xtile),(y+ytile)).getObjName();
     			}catch(NullPointerException e){
     				tmp = "black.gif";
     			}
@@ -283,18 +264,17 @@ public class Maps {
     			 else{
     				 tileImage = black;
     			 }
-    		     //(int)(x*(MapPiece.xsize-MapPiece.xsize*xrest)),(int)(y*(MapPiece.ysize-MapPiece.ysize*yrest))
     		   drawGraphics.drawImage(tileImage,((int)(40*xrest)+(40*x)),(int)(40*yrest)+(40*y),null);
     		}
     	}
     	tileImage = null;
-    	////////////// Z lager 1
+    	ztile++;
     	for(int y=0; y<17;y++)
     	{
     		
     		for(int x=0; x<22;x++)
     		{
-    			try{ tmp = getMapPiece(1,(x+xtile),(y+ytile)).getObjName();
+    			try{ tmp = getMapPiece(ztile,(x+xtile),(y+ytile)).getObjName();
     			}catch(NullPointerException e){
     				tmp = "notfound";
     			}
@@ -305,8 +285,7 @@ public class Maps {
     			 else{
     				 tileImage = black;
     			 }
-    		     //(int)(x*(MapPiece.xsize-MapPiece.xsize*xrest)),(int)(y*(MapPiece.ysize-MapPiece.ysize*yrest))
-    		   
+    		         		   
     		}
     	}
     	

@@ -1,37 +1,39 @@
 package map;
 
-/**
- * Write a description of class MapPiece here.
- *
- * @author Gammel Teddie
- * @version gammel version kanske`?
- */
+
 import java.awt.*;
+/**
+ * This class represents a tile in the map.
+ * The tile is represented in x,y and z coordinates.
+ * The tile has an object name which is what it represents on the map
+ * for instance a tile of grass.
+ * it also has a boolean variable that says if you can walk on the tile or not.
+ * Each tile in the z-layer 0 has a fixed size 40x40.
+ * 
+ * @file MapPiece.java
+ * @version 0.4
+ * @author Robban,Josef,Teddie
+ *
+ */
 
-
-//TODO KOMMENTERA!!!!!!!
+/**
+ * Constructor for objects of class MapPiece
+ */
 public class MapPiece
 {
     private Point point;
     private String objectName;
     private boolean walkable;
     private int z;
-    private Dimension size;
     public static int xsize = 40;
     public static int ysize = 40;
-    /**
-     * Constructor for objects of class MapPiece
-     */
+ 
     public MapPiece(int x, int y, int z, String obstacle, boolean walk)
     {
        this.z = z;
        this.point = new Point(x,y);
        this.objectName = obstacle;
-       this.walkable = walk; 
-       if(z == 0)
-    	   this.size = new Dimension(xsize,ysize);
-       else
-    	   this.size = new Dimension(0,0);
+       this.walkable = walk;    
     }
     public MapPiece(int x, int y, int z, String obstacle, int walk)
     {
