@@ -1,7 +1,6 @@
 package main;
 
 //import java.lang.Enum;
-import java.util.HashMap;
 import java.awt.event.KeyEvent;
 /**
  * Every string in the whole application
@@ -25,6 +24,8 @@ public final class Strings {
 	public static final String Move = "walk";
 	public static final String Still = "still";
 	public static final String Pause = "pause";
+	public static final String Hit	=	"hit";
+	public static final String Die	=	"die";
 	
 	public static final boolean Debug = true;
 	
@@ -57,58 +58,8 @@ public final class Strings {
 	public static final int FullScreenBackgroundRed = 6;
 	public static final int FullScreenBackgroundGreen = 107;
 	public static final int FullScreenBackgroundBlue = 1;
-	public static final String[] InGameMenuFunctions = {"startgame","settings","loadgame","savegame","exitgame"};
-	public static final String LocalizationDefault = English;
-	public static final HashMap<String,HashMap<String,String>> Localization = new HashMap<String,HashMap<String,String>>();
-	
-	public Strings(){
-		final HashMap<String,String> LocalizationEnglish = new HashMap<String,String>();
-		final HashMap<String,String> LocalizationSwedish = new HashMap<String,String>();
-		final HashMap<String,String> LocalizationMust	= new HashMap<String,String>();
-		LocalizationEnglish.put(InGameMenuFunctions[0],"Start Game");
-		LocalizationEnglish.put(InGameMenuFunctions[1],"Settings");
-		LocalizationEnglish.put(InGameMenuFunctions[2],"Load Game");
-		LocalizationEnglish.put(InGameMenuFunctions[3],"Save Game");
-		LocalizationEnglish.put(InGameMenuFunctions[4],"Exit");
-		LocalizationEnglish.put(GivePlayerName,			"Enter a playername");
-		LocalizationEnglish.put(PlayerName,				"Playername ");		
-		LocalizationEnglish.put(ChooseOne,				"Choose one");
-		LocalizationEnglish.put(Input,					"Input");		
-		LocalizationEnglish.put(ButtonLoad,				"Load");		
-		LocalizationEnglish.put(ButtonSave,				"Save");
-		LocalizationEnglish.put(exitTitle,				"Wanna quit, sir?");		
-		LocalizationEnglish.put(exitQuestion,			"Want to quit?");
-				
-		LocalizationSwedish.put(InGameMenuFunctions[0],"Stara spelet");
-		LocalizationSwedish.put(InGameMenuFunctions[1],"Inställningar");
-		LocalizationSwedish.put(InGameMenuFunctions[2],"Ladda");
-		LocalizationSwedish.put(InGameMenuFunctions[3],"Spara");
-		LocalizationSwedish.put(InGameMenuFunctions[4],"Avsluta");
-		LocalizationSwedish.put(GivePlayerName,			"Ange ett spelarnamn");
-		LocalizationSwedish.put(PlayerName,				"Spelarnamn ");		
-		LocalizationSwedish.put(ChooseOne,				"Välj ett alternativ ");
-		LocalizationSwedish.put(Input,					"Mata in ");		
-		LocalizationSwedish.put(ButtonLoad,				"Ladda");		
-		LocalizationSwedish.put(ButtonSave,				"Spara");
-		LocalizationSwedish.put(exitTitle,				"Musta brustet?");		
-		LocalizationSwedish.put(exitQuestion,			"Vill du avsluta?");
+	public static final String[] InGameMenuFunctions = {"startGame","settings","loadGame","saveGame","exitGame"};
 
-		LocalizationMust.put(InGameMenuFunctions[0],"Stara spelet");
-		LocalizationMust.put(InGameMenuFunctions[1],"Inställningar");
-		LocalizationMust.put(InGameMenuFunctions[2],"Ladda");
-		LocalizationMust.put(InGameMenuFunctions[3],"Spara");
-		LocalizationMust.put(InGameMenuFunctions[4],"Avsluta");
-		LocalizationMust.put(GivePlayerName,			"Ange ett spelarnamn");
-		LocalizationMust.put(PlayerName,				"Spelarnamn ");		
-		LocalizationMust.put(ChooseOne,				"Välj ett alternativ ");
-		LocalizationMust.put(Input,					"Mata in ");		
-		LocalizationMust.put(ButtonLoad,				"Ladda");		
-		LocalizationMust.put(ButtonSave,				"Spara");
-		LocalizationMust.put(exitTitle,				"Musta brustet?");		
-		LocalizationMust.put(exitQuestion,			"Vill du avsluta?");
-		Localization.put(English, LocalizationEnglish);
-		Localization.put(Swedish, LocalizationSwedish);
-		Localization.put(Must, LocalizationMust);
-	}
-	 
+	public Strings(){
+	}	 
 }

@@ -2,7 +2,7 @@ package gamecharacter;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-
+import main.Strings;
 public class GameAnimationEngine
 {
 	private static GameAnimationEngine instance = null;
@@ -28,14 +28,16 @@ public class GameAnimationEngine
 		int index = 0;
 		if (gc != null
 			&& (direction = gc.getDirection()) != null
-			&& (action = gc.getAction()) != null
+			&& (action = gc.getAnimationType()) != null
 			&& (index = gc.getAnimationIndex()) > -1
 			&& (skin = gc.getSkin()) != null
 		)
 			retImg = data.get(skin).getNextImage(action,direction,index);
-		if (retImg != null) index = data.get(skin).getNextIndex(action,direction,index);
+		if (retImg != null) 
+			index = data.get(skin).getNextIndex(action,direction,index);
 		else index = 0;
 		gc.setAnimationIndex(index);
+		if(retImg==null) data.get(skin).getNextImage(Strings.Still,Strings.North,0);
 		return retImg;
 	}
 

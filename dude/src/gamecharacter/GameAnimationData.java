@@ -8,10 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import main.Strings;
 import javax.imageio.ImageIO;
 
-import main.Strings;
 
 /**
  * @author josjoh
@@ -19,6 +18,11 @@ import main.Strings;
  */
 public abstract class GameAnimationData {
 	private HashMap<String,HashMap<String, ArrayList<BufferedImage>>> image;
+	
+	public GameAnimationData() {
+		image = new HashMap<String,HashMap<String, ArrayList<BufferedImage>>>();
+	}
+	
 	public abstract void initImages();
 	/**
 	 * Gets an action, a direction and an index and returns next image in sequence.
@@ -28,7 +32,11 @@ public abstract class GameAnimationData {
 	 * @return Next image in sequence.
 	 */
 	public BufferedImage getNextImage(String action, String direction, int index) {
-		if(action == null || direction == null || image.get(action) == null || image.get(action).get(direction) == null ){
+		action = (action != null)?action:Strings.Still;
+		direction = (direction != null)?direction:Strings.North; 
+		System.out.println("Storlek: " + image.size() );
+		if (image.get(action) == null 
+		|| image.get(action).get(direction) == null ){
 			if(Strings.Debug) System.out.println("NullPointer in getNextImage trying to get the i: " + index + " action: " + action + " direction " + direction);
 			return null;
 		}
@@ -54,7 +62,8 @@ public abstract class GameAnimationData {
 		if ( image.get(action) != null 
 		&& (step2 = image.get(action).get(direction)) != null 
 		&& image.get(action).get(direction).get(index) != null ) {
-			if (step2.get(index+1) != null) return index++;
+			index++;
+			if (step2.get(index) != null) return index;
 		}
 		return 0;
 	}

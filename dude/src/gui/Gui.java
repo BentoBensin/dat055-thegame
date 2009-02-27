@@ -2,6 +2,7 @@
 
 package gui;
 
+import gui.Localization;
 import game.IDGen;
 import game.Player;
 import gamecharacter.GameAnimationEngine;
@@ -33,7 +34,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
-
 import main.Strings;
 
 /**
@@ -57,53 +57,9 @@ public class Gui implements Observer, ActionListener {
 	private DisplayMode dmode;
 	private JWindow win;
 	private String lang;
-	private HashMap<String,String> cL; //currentLanguage
+	private Localization cL; //currentLanguage
 	private Runner r;
-	/**
-	 * KeyListener is a listener that we create with the helpclass KeyAdapter 
-	 * that contains an inner function that get keycodes and executes a command
-	 * depending on what key the player pressed
-	 */
-	private KeyListener kl = new KeyAdapter() {
-		GameCharacter gc = player.getGameCharacter();
-		public void keyPressed(KeyEvent e) {
-			if( !gc.paused){ 
-				switch (e.getKeyCode())
-				{
-				case Strings.KeyMoveNorth :
-					gc.setDirection(Strings.North);
-					gc.addAction(Strings.Move);
-					break;
-				case Strings.KeyMoveSouth :
-					gc.setDirection(Strings.South);
-					gc.addAction(Strings.Move);
-					break;
-				case Strings.KeyMoveWest :
-					gc.setDirection(Strings.West);
-					gc.addAction(Strings.Move);
-					break;
-				case Strings.KeyMoveEast :
-					gc.setDirection(Strings.East);
-					gc.addAction(Strings.Move);
-					break;
-				case Strings.KeyAttack :
-					gc.addAction(Strings.Attack);
-					break;
-				}
-				return;
-			}
-			if (e.getKeyCode() == Strings.KeyPause) {
-				gc.addAction(Strings.Pause);
-				if( menu.isVisible() )	menu.setVisible(false);
-				else 					menu.setVisible(true);
-			}		
-		}
-
-		public void keyReleased(KeyEvent e) {
-			gc.addAction(Strings.Still);
-		}
-	};
-
+	private GameCharacter gc;
 	/**
 	 * Constructor for class Gui creates the frame and all the
 	 * graphical components
@@ -125,13 +81,12 @@ public class Gui implements Observer, ActionListener {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win = new JWindow(frame,gd.getDefaultConfiguration());
-
+		cL = new Localization();
 		//set default language
 		lang=Strings.Swedish;
-		if ((cL = Strings.Localization.get(lang))==null) //select the chosen lang
-			cL = Strings.Localization.get(Strings.LocalizationDefault); //failsafe
+		lang = cL.get(Strings.FullScreen);
 		String[] graphicModes = {cL.get(Strings.FullScreen), cL.get(Strings.Window)};
-        int x = JOptionPane.showOptionDialog(null, cL.get(Strings.ChooseAlternative), cL.get(Strings.GraphicMode), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,graphicModes,graphicModes[1]);
+        int x = JOptionPane.showOptionDialog(null,cL.get(Strings.ChooseAlternative), cL.get(Strings.GraphicMode), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,graphicModes,graphicModes[1]);
         if(x==0) createFullGUI();
         else createGUI();
 		
@@ -211,7 +166,49 @@ public class Gui implements Observer, ActionListener {
 		menu.setLocation( ((Strings.WindowSizeX-menu.getWidth())/2) ,((Strings.WindowSizeY-menu.getHeight())/2));
 		return menu;
 	}
-	
+	/**
+	 * KeyListener is a listener that we create with the helpclass KeyAdapter 
+	 * that contains an inner function that get keycodes and executes a command
+	 * depending on what key the player pressed
+	 */
+	private KeyListener kl = new KeyAdapter() {
+		public void keyPressed(KeyEvent e) {
+			if( gc != null && !gc.paused){ 
+				switch (e.getKeyCode())
+				{
+				case Strings.KeyMoveNorth :
+					gc.setDirection(Strings.North);
+					gc.addAction(Strings.Move);
+					break;
+				case Strings.KeyMoveSouth :
+					gc.setDirection(Strings.South);
+					gc.addAction(Strings.Move);
+					break;
+				case Strings.KeyMoveWest :
+					gc.setDirection(Strings.West);
+					gc.addAction(Strings.Move);
+					break;
+				case Strings.KeyMoveEast :
+					gc.setDirection(Strings.East);
+					gc.addAction(Strings.Move);
+					break;
+				case Strings.KeyAttack :
+					gc.addAction(Strings.Attack);
+					break;
+				}
+				return;
+			}
+			if (e.getKeyCode() == Strings.KeyPause) {
+				gc.addAction(Strings.Pause);
+				if( menu.isVisible() )	menu.setVisible(false);
+				else 					menu.setVisible(true);
+			}		
+		}
+
+		public void keyReleased(KeyEvent e) {
+			gc.addAction(Strings.Still);
+		}
+	};
 	public void actionPerformed( ActionEvent e) {
 			try {
 				this.getClass().getMethod(e.getActionCommand()).invoke(this);
@@ -239,6 +236,7 @@ public class Gui implements Observer, ActionListener {
 		if(player != null){
 			player.addObserver(this);
 			this.player = player;
+			this.gc = player.getGameCharacter();
 			currentList.put(player.getGameCharacter(), null);
 		}
 	}
@@ -249,14 +247,13 @@ public class Gui implements Observer, ActionListener {
 	public void settings() {
 		menu.setVisible(false);
 		String[] possibleValues = {};
-		for(String langIterate : Strings.Localization.keySet())
+		for(String langIterate : cL.availableLanguages())
 			possibleValues[possibleValues.length+1]=langIterate;
-		 lang = (String)JOptionPane.showInputDialog(frame,
+			lang = (String)JOptionPane.showInputDialog(frame,
 		            cL.get(Strings.ChooseOne), cL.get(Strings.Input),
 		            JOptionPane.INFORMATION_MESSAGE, null,
 		            possibleValues, possibleValues[0]);
-		if ((cL = Strings.Localization.get(lang))==null) //select the chosen lang
-			cL = Strings.Localization.get(Strings.LocalizationDefault); //failsafe
+		 cL.setLanguage(lang);
 		 guiPane.remove(guiPane.getIndexOf(menu));
 		 menu=createIngameMenu();
 		 guiPane.add( menu, JLayeredPane.POPUP_LAYER );
@@ -316,7 +313,7 @@ public class Gui implements Observer, ActionListener {
 					if (currentList.get(gameCharacter) == null) {
 						currentList.put(gameCharacter, addGraphic());
 						if( gameCharacter == player.getGameCharacter() )
-							currentList.get(player).setLocation( new Point(350,250));
+							currentList.get(gameCharacter).setLocation( new Point(350,250));
 					}
 					if( !gameCharacter.paused )
 						updateGraphic(gameCharacter);
@@ -360,27 +357,28 @@ public class Gui implements Observer, ActionListener {
 		 * with the new animationimage and new (absolute) position
 		 * 
 		 */
-		private void updateGraphic(GameCharacter gc) {
+		private void updateGraphic(GameCharacter gameCharacter) {
 			GameAnimationEngine gae = GameAnimationEngine.getInstance();
 			BufferedImage bimg = null;
 			Point point = null;
-			if ( gc != null ){
-				point = (Point)gc.getPoint().clone();
-				if (gc != player.getGameCharacter())
-				// move everybody else 
-					point.translate( (350 - gc.getPoint().x), (250 - gc.getPoint().y) );
+			if ( gameCharacter != null ){
+				point = (Point)gameCharacter.getPoint().clone();
+				// move everybody else
+				if (gameCharacter != gc) 
+					point.translate( (350 - gameCharacter.getPoint().x), (250 - gameCharacter.getPoint().y) );
 				// The player want's to be centered in the window, atleast we think so ;)
 				else point = new Point(350,250);
-				if((bimg = gae.getImage(gc)) != null )
+				if((bimg = gae.getImage(gameCharacter)) != null )
 					if ( bimg.getHeight() > 100 )
 						point.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 			}
 			// no image, something went bananas, interrupt with a transparent picture please
 			if ( bimg == null ) bimg = null;
 			// if there is no GameCharacter we wont update
+			System.out.println("point is "+point+" bimg is "+bimg+" gc is "+gameCharacter);
 			if ( point != null ) {
-				currentList.get(gc).setImage(bimg);
-				currentList.get(gc).setLocation(point);
+				currentList.get(gameCharacter).setImage(bimg);
+				currentList.get(gameCharacter).setLocation(point);
 			}
 		}
 		

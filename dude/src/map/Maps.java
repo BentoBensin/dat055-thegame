@@ -67,9 +67,7 @@ public class Maps {
      */
     public boolean checkSpot(int z,int x,int y)
     {
-	return true;
-	/*
-        MapPiece piece = map.get((String)(v[0]+"-"+v[1]+"-"+v[2]));
+        MapPiece piece = map.get((String)(z+"-"+x+"-"+y));
         if (piece != null)
         {
             if (piece.isWalkable())
@@ -77,7 +75,7 @@ public class Maps {
                 return true;
             }
         }
-        return false;*/
+        return false;
     }
     /**
      * loads a map into the program

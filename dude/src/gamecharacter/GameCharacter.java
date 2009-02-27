@@ -182,7 +182,10 @@ public abstract class GameCharacter implements Serializable {
     		animationIndex = 0;
     	animation = type;
     }
-    
+    public String getAnimationType()
+    {
+    	return animation;
+    }
     /**
      * Set's an new type of superAnimation this is an superior
      * animation type. Overrides normal animations.

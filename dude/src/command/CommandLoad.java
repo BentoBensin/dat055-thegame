@@ -34,9 +34,11 @@ public class CommandLoad extends Command {
 			ObjectInputStream in= 
 				new ObjectInputStream(
 						new FileInputStream("save.sav"));
-			while(true){ 
-				engine.addClient(new Player(IDGen.generateID(),(GameCharacter)in.readObject())); //TODO Mecka nr det ndrats till GC
+			Object loadedGameChar=in.readObject();
+			while(loadedGameChar!=null){ 
+				engine.addClient(new Player(IDGen.generateID(),(GameCharacter)loadedGameChar)); //TODO Mecka nr det ndrats till GC
 			}
+			
 		}
 		catch (IOException e)
 		{
