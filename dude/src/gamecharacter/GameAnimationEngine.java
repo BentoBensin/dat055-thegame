@@ -20,13 +20,16 @@ public class GameAnimationEngine
 	}
 	public BufferedImage getImage(GameCharacter gc)
 	{
-		String direction,action,skin;
-		BufferedImage retImg;
-		int index;
+		String direction=new String();
+		String action=new String();
+		String skin=new String();
+		
+		BufferedImage retImg = null;
+		int index = 0;
 		if (gc != null
 			&& (direction = gc.getDirection()) != null
 			&& (action = gc.getAction()) != null
-			&& (index = gc.getAnimationIndex()) != null
+			&& (index = gc.getAnimationIndex()) > -1
 			&& (skin = gc.getSkin()) != null
 		)
 			retImg = data.get(skin).getNextImage(action,direction,index);

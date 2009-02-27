@@ -1,6 +1,6 @@
 package command;
 import game.Engine;
-
+import game.Client;
 /**
  * The abstract class that defines a Command
  * @file Command.java
@@ -25,6 +25,7 @@ public abstract class Command implements CommandInterf
     {
         this.engine = engine;
     }
+    public abstract void execute(Client client);
     /**
      * Adds an parameter
      * @param param

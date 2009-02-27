@@ -11,7 +11,7 @@ import main.Strings;
  */
 public class Warrior extends GameCharacter{
 	
-	
+	static final long serialVersionUID=12331;
 	public Warrior(String name, Point point, boolean isPlayer){
 		super(new TreeSword(),1.0, 100, 100, 100,name, point, isPlayer); //speed, width and height.
 		newMovePattern();

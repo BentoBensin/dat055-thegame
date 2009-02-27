@@ -42,7 +42,7 @@ public abstract class GameAnimationData {
 	
 	public int getAnimationLength(String action, String direction){
 		if( image.get(action) != null && image.get(action).get(direction) != null ) {
-			if(Strings.Debug) System.out.println("Försöker hämta action : " + action + " direction: " + direction);
+			if(Strings.Debug) System.out.println("Frsker hmta action : " + action + " direction: " + direction);
 			if(Strings.Debug) System.out.println("finns action? : " + image.containsKey(action) + " och direction? " + image.get(action).containsKey(direction) );
 			return image.get(action).get(direction).size();
 		}
@@ -50,14 +50,13 @@ public abstract class GameAnimationData {
 	}
 	public int getNextIndex(String action, String direction, int index)
 	{
-		HashMap<String,ArrayList<BufferedImage>> step1;
+		ArrayList<BufferedImage> step2;
 		if ( image.get(action) != null 
 		&& (step2 = image.get(action).get(direction)) != null 
 		&& image.get(action).get(direction).get(index) != null ) {
 			if (step2.get(index+1) != null) return index++;
-			else return 0;
 		}
-		return null;
+		return 0;
 	}
 
 	public void loadImages(HashMap<String,HashMap<String, ArrayList<String>>> images) throws NullPointerException {		

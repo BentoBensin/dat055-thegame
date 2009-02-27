@@ -22,9 +22,9 @@ public class CommandPauseToggle extends Command
  
     public void execute(Client client)
     {
-    	Client.paused = !Client.paused;
-    	System.out.println("Nu ska vi pausa:" + Client.paused );
-    	if( !Client.paused ) {
+    	client.togglePaused();
+    	System.out.println("Nu ska vi pausa:" + client.isPaused() );
+    	if( !client.isPaused() ) {
     		for( Client c : engine.getAllClients() ){
     			c.resumeThread();
     		}

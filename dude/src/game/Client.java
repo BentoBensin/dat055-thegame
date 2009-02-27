@@ -1,14 +1,9 @@
 package game;
-import java.io.Serializable;
 
 import gamecharacter.GameCharacter;
-
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
-
-import command.Command;
 
 /**
  * Client is responsible for having all the connection
@@ -18,15 +13,13 @@ import command.Command;
  * @version 0.3
  * @author mathal
  */
-public abstract class Client extends Observable implements Runnable, Serializable {
+public abstract class Client extends Observable implements Runnable {
 
 
 	private Thread aktivitet;
     protected Engine engine;
     private GameCharacter gc; 
     private int id;
-
-    public static boolean paused = false; 
     
     /**
      * Constructor for Client object
@@ -133,9 +126,18 @@ public abstract class Client extends Observable implements Runnable, Serializabl
     	return false;
     }
     
+    public boolean isPaused()
+    {
+    	return gc.paused;
+    }
+    
+    public void togglePaused()
+    {
+    	gc.paused = !isPaused();
+    }
     
     public synchronized void resumeThread() {
-    	if( !Client.paused )
+    	if( !isPaused() )
     		notify();
     }
     /**

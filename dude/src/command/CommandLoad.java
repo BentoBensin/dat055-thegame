@@ -14,14 +14,14 @@ public class CommandLoad extends Command {
 	@Override
 	public void execute(Client client) 
 	{
-		Client.paused=true;
+		if(client.isPaused()) client.togglePaused();
 		engine.reset();
 		try{
 			ObjectInputStream in= 
 				new ObjectInputStream(
 						new FileInputStream("save.sav"));
 			while(true)
-				engine.addClient((Client)in.readObject()); //TODO Mecka när det ändrats till GC
+				engine.addClient((Client)in.readObject()); //TODO Mecka nr det ndrats till GC
 		}
 		catch (IOException e)
 		{
@@ -31,10 +31,10 @@ public class CommandLoad extends Command {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			System.out.println("Nåt annat sket sig");
+			System.out.println("Nt annat sket sig");
 			System.exit(0);
 		}
-		Client.paused=false;
+		if(!client.isPaused()) client.togglePaused();
 	}
 
 }

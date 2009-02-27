@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import main.Strings;
+import java.io.Serializable;
 
 /**
  * This class contains information such as speed, height and width, about a character.
@@ -15,7 +16,7 @@ import main.Strings;
  * @author Teddie
  *
  */
-public abstract class GameCharacter {
+public abstract class GameCharacter implements Serializable {
 	
 	private LinkedList<MovePattern> patterns;
 	private double speed;
@@ -32,13 +33,15 @@ public abstract class GameCharacter {
 	private String animation;
 	private String superAnimation;
 	private LinkedList<String> actions;
-	private int position;
 	private int moveRemaining;
+	private String skin;
+	private int animationIndex;
 	private HashMap<Item, Long > cooldowns;
-	
+    public boolean paused;
+    
 	public GameCharacter(Weapon weapon, double speed, int width, int height, 
 			int health, String name, Point point, boolean isPlayer){
-		
+		paused = false;
 		patterns = new LinkedList<MovePattern>();
 		this.weapon = weapon;
 		this.speed = speed;
@@ -52,16 +55,17 @@ public abstract class GameCharacter {
         this.point = point;
         direction = Strings.South;
         animation = Strings.Still;
-        position = 0;
         cooldowns = new HashMap<Item, Long >();
         actions = new LinkedList<String>();
         superAnimation = "";
         moveRemaining = 0;
+        animationIndex=0;
+        skin="ShroomsMan";
 	}
 
-	// hålla koll på animeringsstyp
+	// hlla koll p animeringsstyp
 	// positionen i animeringen
-	// direction på snubben
+	// direction p snubben
 	
 	/**
 	 * Finds next move pattern.
@@ -151,7 +155,7 @@ public abstract class GameCharacter {
 	public int changeHealth(int healthChange)
 	{
 		health += healthChange;
-		System.out.println("-------------------------Players hälsa: " + health);
+		System.out.println("-------------------------Players hlsa: " + health);
 		return health;
 	}
 	/**
@@ -175,7 +179,7 @@ public abstract class GameCharacter {
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
     	if( !type.equals(animation))
-    		position = 0;
+    		animationIndex = 0;
     	animation = type;
     }
     
@@ -192,7 +196,7 @@ public abstract class GameCharacter {
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
     	if( !type.equals(superAnimation)){
-    		position = 0;
+    		animationIndex = 0;
     		}
     	superAnimation = type;
     }
@@ -348,7 +352,17 @@ public abstract class GameCharacter {
 	{
 		moveRemaining--;
 	}
-
-    
+    public int getAnimationIndex()
+    {
+    	return animationIndex;
+    }
+    public void setAnimationIndex(int index)
+    {
+    	animationIndex = index;
+    }
+    public String getSkin()
+    {
+    	return skin;
+    }
 
 }

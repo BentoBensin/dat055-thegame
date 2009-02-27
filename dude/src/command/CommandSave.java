@@ -18,7 +18,7 @@ public class CommandSave extends Command {
 	public void execute(Client client) {
 		// TODO Auto-generated method stub
 		ArrayList<Client> savebrust=engine.getAllClients();
-		Client.paused = true;
+		if(!client.isPaused()) client.togglePaused();
 		//String date=getDateTime();
 		try{
 			ObjectOutputStream out=new ObjectOutputStream
@@ -36,7 +36,7 @@ public class CommandSave extends Command {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		Client.paused=false;
+		if(client.isPaused()) client.togglePaused();
 		
 	}
 	

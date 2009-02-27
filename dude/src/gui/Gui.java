@@ -2,11 +2,12 @@
 
 package gui;
 
-import game.Client;
 import game.IDGen;
 import game.Player;
+import gamecharacter.GameAnimationEngine;
 import gamecharacter.Warrior;
-
+import gamecharacter.GameCharacter;
+import main.Envelope;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,17 +22,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -50,28 +46,72 @@ import main.Strings;
 public class Gui implements Observer, ActionListener {
 	private JFrame frame;
 	private JPanel menu;
-	private JLayeredPane myLayeredPane;
-	private JLabel WelcomeImage;
+	private JLayeredPane guiPane;
 	private Player player;
-	private HashMap<Client, TranspContainer> currentList;
-	private ArrayList<Client> removeList;
+	private HashMap<GameCharacter, TranspContainer> currentList;
+	private LinkedList<GameCharacter> removeList;
 	private GraphicsEnvironment ge;
 	private GraphicsDevice gd;
 	private DisplayMode dmode;
 	private JWindow win;
 	private String lang;
+	private HashMap<String,String> cL; //currentLanguage
 	private Runner r;
+	/**
+	 * KeyListener is a listener that we create with the helpclass KeyAdapter 
+	 * that contains an inner function that get keycodes and executes a command
+	 * depending on what key the player pressed
+	 */
+	private KeyListener kl = new KeyAdapter() {
+		GameCharacter gc = player.getGameCharacter();
+		public void keyPressed(KeyEvent e) {
+			if( !gc.paused){ 
+				switch (e.getKeyCode())
+				{
+				case Strings.KeyMoveNorth :
+					gc.setDirection(Strings.North);
+					gc.addAction(Strings.Move);
+					break;
+				case Strings.KeyMoveSouth :
+					gc.setDirection(Strings.South);
+					gc.addAction(Strings.Move);
+					break;
+				case Strings.KeyMoveWest :
+					gc.setDirection(Strings.West);
+					gc.addAction(Strings.Move);
+					break;
+				case Strings.KeyMoveEast :
+					gc.setDirection(Strings.East);
+					gc.addAction(Strings.Move);
+					break;
+				case Strings.KeyAttack :
+					gc.addAction(Strings.Attack);
+					break;
+				}
+				return;
+			}
+			if (e.getKeyCode() == Strings.KeyPause) {
+				gc.addAction(Strings.Pause);
+				if( menu.isVisible() )	menu.setVisible(false);
+				else 					menu.setVisible(true);
+			}		
+		}
+
+		public void keyReleased(KeyEvent e) {
+			gc.addAction(Strings.Still);
+		}
+	};
 
 	/**
-	 * Konstruktorn gör framen och alla grafiska objekt, vill att dom skall
-	 * finnas när vi skapar GUIt
+	 * Konstruktorn gr framen och alla grafiska objekt, vill att dom skall
+	 * finnas nr vi skapar GUIt
 	 */
 	// Object nedan skall vara player/client
 	public Gui() {
 		r = new Runner();
 		// Current list of clients visible to player
-		currentList = new HashMap<Client, TranspContainer>();
-		removeList = new ArrayList<Client>();
+		currentList = new HashMap<GameCharacter, TranspContainer>();
+		removeList = new LinkedList<GameCharacter>();
 		
 		//thisDirection = new DirectionParser();
 		frame = new JFrame();
@@ -86,118 +126,90 @@ public class Gui implements Observer, ActionListener {
 		win = new JWindow(frame,gd.getDefaultConfiguration());
 
 		//set default language
-		lang="Svenska";
-		
-		String[] a = {"Fullskärmsläge", "Fönsterläge"};
-        int x = JOptionPane.showOptionDialog(null, "Välj ett alternativ", "Grafikläge", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,a,a[1]);
+		lang=Strings.Swedish;
+		if ((cL = Strings.Localization.get(lang))==null) //select the chosen lang
+			cL = Strings.Localization.get(Strings.LocalizationDefault); //failsafe
+		String[] graphicModes = {cL.get(Strings.FullScreen), cL.get(Strings.Window)};
+        int x = JOptionPane.showOptionDialog(null, cL.get(Strings.ChooseAlternative), cL.get(Strings.GraphicMode), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,graphicModes,graphicModes[1]);
         if(x==0) createFullGUI();
         else createGUI();
 		
 	}
-	
-	
-	private void setPlayer(Player player){
-		if(player != null){
-			player.addObserver(this);
-			this.player = player;
-			currentList.put(player, null);
-		}
-	}
+
 	/**
-	 * sätter att framen skall ha borderlayout lägger till canvasen i mitten på
-	 * layouten Vi har en lagerpanel där vi kan lägga till grafiska objekt i
-	 * olika lager. Det finns 5 fördefinierade lager, men man kan nog använda
-	 * fler om man vill.
+	 * createGUI sets the layout of the frame to BorderLayout 
+	 * and adds a JLayeredPane to the frame
+	 * adds a guiPanel that contains the ingame menu
+	 * we set the guiPanel to a certian width, height and background.
+	 * This is where we put our graphical objects
+	 * guiPanel has 5 layers to start with.
 	 */
 	private void createGUI() {
-		frame.setTitle("Spel");
+		frame.setTitle(cL.get(Strings.GameTitle));
 		frame.setLayout(new BorderLayout());
-		myLayeredPane = new JLayeredPane();
-		JPanel tmp = new JPanel();
-		tmp.setBackground( new Color(1,107,6));
-		myLayeredPane.add(tmp, JLayeredPane.DEFAULT_LAYER);
-		
-		tmp.setSize(800,600);
+		guiPane = new JLayeredPane();
+		JPanel guiPanel = new JPanel();
+		guiPanel.setBackground( new Color(Strings.WindowBackgroundRed,Strings.WindowBackgroundGreen,Strings.FullScreenBackgroundBlue));
+		guiPane.add(guiPanel, JLayeredPane.DEFAULT_LAYER);
+		guiPanel.setSize(Strings.WindowSizeX,Strings.WindowSizeY);
 		menu = createIngameMenu();
-		myLayeredPane.add( menu, JLayeredPane.POPUP_LAYER );
-		
-		// Våran Lagerpanel kan inte vara genomskinlig
-		myLayeredPane.setOpaque(true);
+		guiPane.add( menu, JLayeredPane.POPUP_LAYER );
+		// Our pane can't be transparent
+		guiPane.setOpaque(true);
 
-		frame.getContentPane().add(myLayeredPane, BorderLayout.CENTER);
-
+		frame.getContentPane().add(guiPane, BorderLayout.CENTER);
 		frame.addKeyListener(kl);
 		frame.setPreferredSize(new Dimension(800, 600));
 		frame.pack();
 		frame.setResizable(false);
-		// initContainer() måste alltid göras EFTER frame.pack()
+		// initContainer() mste alltid gras EFTER frame.pack()
 
 		frame.setVisible(true);
 
 	}
-	
+	/**
+	 * Creates a fullscreen gui instead of a window
+	 * look at createGUI for comments.
+	 */
 	private void createFullGUI()
 	{
-		frame.setTitle("Spel");
+		frame.setTitle(cL.get(Strings.GameTitle));
 		frame.validate();
 		frame.setVisible(true);
-		
-		myLayeredPane = new JLayeredPane();
-		myLayeredPane.setOpaque(true);
-			
-		win.getContentPane().add(myLayeredPane, BorderLayout.CENTER);
-		//////////////////
-		JPanel tmp = new JPanel();
-		tmp.setBackground( new Color(1,107,6));
-		myLayeredPane.add(tmp, JLayeredPane.DEFAULT_LAYER);
-		
-		tmp.setSize(800,600);
+		guiPane = new JLayeredPane();
+		guiPane.setOpaque(true);
+		win.getContentPane().add(guiPane, BorderLayout.CENTER);
+		JPanel guiPanel = new JPanel();
+		guiPanel.setBackground( new Color(Strings.FullScreenBackgroundRed,Strings.FullScreenBackgroundGreen,Strings.FullScreenBackgroundBlue));
+		guiPane.add(guiPanel, JLayeredPane.DEFAULT_LAYER);
+		guiPanel.setSize(Strings.FullScreenSizeX,Strings.FullScreenSizeY);
 		menu = createIngameMenu();
-		myLayeredPane.add( menu, JLayeredPane.POPUP_LAYER );
-		//////////////////
-	      	win.addKeyListener(kl);
-	      	win.validate();
-	      	win.setFocusable(true);
-	      	gd.setFullScreenWindow(win);
-	      	gd.setDisplayMode(dmode);
-	      	win.requestFocus();
-		
-
+		guiPane.add( menu, JLayeredPane.POPUP_LAYER );
+		win.addKeyListener(kl);
+		win.validate();
+		win.setFocusable(true);
+		gd.setFullScreenWindow(win);
+		gd.setDisplayMode(dmode);
+		win.requestFocus();
 	}
-	
-
-
+	/**
+	 * Creates the startmenu
+	 * @return a panel that contains our menu
+	 */
 	public JPanel createIngameMenu(){
-		BufferedReader reader = null;
 		JPanel menu = new JPanel();
 		menu.setLayout( new FlowLayout());
-		menu.setBackground( new Color(1,107,6));
-		try{
-			reader =  new BufferedReader( new FileReader("languages/"+lang+"/inGameMenu.txt"));
-		}catch( IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}catch( Exception e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-		
-		String[] functions = {"startgame","settings","loadgame","savegame","exitgame"};
-		String line = "";
-		for( String f : functions) {
-			try{
-				line = reader.readLine();
-			}catch( IOException e) {
-				e.printStackTrace();
-				System.exit(0);
+		menu.setBackground( new Color(Strings.WindowBackgroundRed,Strings.WindowBackgroundGreen,Strings.WindowBackgroundBlue));
+		for( String function : Strings.InGameMenuFunctions) {
+			if (cL.get(function)!=null){
+				JButton button = new JButton(cL.get(function));
+				button.setActionCommand(function);
+				button.addActionListener(this);
+				menu.add(button);
 			}
-			JButton button = new JButton(line);
-			button.setActionCommand(f);
-			button.addActionListener(this);
-			menu.add(button);
 		}
 		menu.setSize(120,160);
-		menu.setLocation( ((800-menu.getWidth())/2) ,((600-menu.getHeight())/2));
+		menu.setLocation( ((Strings.WindowSizeX-menu.getWidth())/2) ,((Strings.WindowSizeY-menu.getHeight())/2));
 		return menu;
 	}
 	
@@ -209,46 +221,59 @@ public class Gui implements Observer, ActionListener {
 			} 
 	}
 	
-	
-	public void startgame() {
+	public void startGame() {
 		menu.setVisible(false);
-		String tmp = (String) JOptionPane.showInputDialog(frame,"Ange Spelarnamn","Spelarnamn",JOptionPane.ERROR_MESSAGE);
-		
-		if( tmp != null){
-			setPlayer(new Player( IDGen.generateID(), new Warrior(tmp, new Point(100,100), true) ) );
-		}else{
-			menu.setVisible(true);
+		String jOptionPane = (String) JOptionPane.showInputDialog(frame,cL.get(Strings.GivePlayerName),cL.get(Strings.PlayerName),JOptionPane.ERROR_MESSAGE);
+		if( jOptionPane != null) 
+			setPlayer(
+					new Player( 
+							IDGen.generateID(), 
+							new Warrior(jOptionPane, 
+									new Point(100,100), 
+									true
+							) 
+					) 
+			);
+		else menu.setVisible(true);
+	}
+	private void setPlayer(Player player){
+		if(player != null){
+			player.addObserver(this);
+			this.player = player;
+			currentList.put(player.getGameCharacter(), null);
 		}
 	}
-	
+	/**
+	 * Allows the player to set the language
+	 *
+	 */
 	public void settings() {
 		menu.setVisible(false);
-		 Object[] possibleValues = { "English", "Svenska"};
+		String[] possibleValues = {};
+		for(String langIterate : Strings.Localization.keySet())
+			possibleValues[possibleValues.length+1]=langIterate;
 		 lang = (String)JOptionPane.showInputDialog(frame,
-
-		            "Choose one", "Input",
-
+		            cL.get(Strings.ChooseOne), cL.get(Strings.Input),
 		            JOptionPane.INFORMATION_MESSAGE, null,
-
 		            possibleValues, possibleValues[0]);
-
-		 myLayeredPane.remove(myLayeredPane.getIndexOf(menu));
+		if ((cL = Strings.Localization.get(lang))==null) //select the chosen lang
+			cL = Strings.Localization.get(Strings.LocalizationDefault); //failsafe
+		 guiPane.remove(guiPane.getIndexOf(menu));
 		 menu=createIngameMenu();
-		 myLayeredPane.add( menu, JLayeredPane.POPUP_LAYER );
+		 guiPane.add( menu, JLayeredPane.POPUP_LAYER );
 	}
 	
-	public void loadgame() {
-		player.getGameCharacter().addAction("load");
-		System.out.println("Loadknapp");
+	public void loadGame() {
+		player.getGameCharacter().addAction(Strings.ButtonLoad);
+		System.out.println(cL.get(Strings.ButtonLoad));
 	}
-	public void savegame() {
-		player.getGameCharacter().addAction("save");
-		System.out.println("Save knapp");
+	public void saveGame() {
+		player.getGameCharacter().addAction(Strings.ButtonSave);
+		System.out.println(cL.get(Strings.ButtonSave));
 	}
-	public void exitgame() {
+	public void exitGame() {
 		int choice=(int)JOptionPane.showConfirmDialog(frame,
-
-	            "Wanna quit, sir?", "Vill du avsluta?", JOptionPane.YES_NO_OPTION);
+	            cL.get(Strings.exitTitle), cL.get(Strings.exitQuestion), JOptionPane.YES_NO_OPTION);
 		if (choice==0)
 			System.exit(0);
 		else return;
@@ -256,10 +281,10 @@ public class Gui implements Observer, ActionListener {
 
 
 	/**
-	 * update updates our currentList of clients it goes through each client in
-	 * our currentlist and compares it with arg list, it adds a new client for
-	 * each client in arglist that does not exist in our currentlist and removes
-	 * the clients in currentlist that does not exist in the new list(arg)
+	 * update updates our currentList of GameCharacters it goes through each GameCharacter in
+	 * our currentlist and compares it with arg list, it adds a new GameCharacter for
+	 * each GameCharacter in arglist that does not exist in our currentlist and removes
+	 * the GameCharacters in currentlist that does not exist in the new list(arg)
 	 * 
 	 * @param Observable
 	 *            client
@@ -270,114 +295,32 @@ public class Gui implements Observer, ActionListener {
 
 	public void update(Observable o, Object arg) {
 		if( arg == null ) return;
-		if (arg instanceof ArrayList) {
-			ArrayList<Client> temp = (ArrayList<Client>) arg;
-			for (Client client : temp) {
-				if (!currentList.keySet().contains(client)) {
-					currentList.put(client, null);
-				}
-			}
-			for( Client client : currentList.keySet() ){
-				if( !temp.contains(client) )
-					removeList.add(client);
-			}
+		if (arg instanceof Envelope) {
+			LinkedList<GameCharacter> remoteList = ((Envelope)arg).getGuiLinkedList();
+			for (GameCharacter gameCharacter : remoteList)
+				if (!currentList.keySet().contains(gameCharacter)) 
+					currentList.put(gameCharacter, null);
+			for( GameCharacter gameCharacter : currentList.keySet() )
+				if( !remoteList.contains(gameCharacter) )
+					removeList.add(gameCharacter);
 		}
 		SwingUtilities.invokeLater(r);
 	}
 
-	/**
-	 * KeyListner är en lyssnare som vi skapar med hjälp av en hjälpklass med
-	 * anonym inre klass den utför saker beroende på vilken händelse (tangent)
-	 * den "hör"
-	 */
-	KeyListener kl = new KeyAdapter() {
-		public void keyPressed(KeyEvent e) {
-
-			if( !Client.paused) {
-				if (e.getKeyCode() == KeyEvent.VK_W) {
-
-					player.getGameCharacter().setDirection(Strings.North);
-					player.getGameCharacter().addAction(Strings.Move);
-
-					player.getGameCharacter().setDirection(Strings.North);
-					player.getGameCharacter().addAction(Strings.Move);
-
-				}
-	
-				if (e.getKeyCode() == KeyEvent.VK_S) {
-
-					player.getGameCharacter().setDirection(Strings.South);
-					player.getGameCharacter().addAction(Strings.Move);
-
-					player.getGameCharacter().setDirection(Strings.South);
-					player.getGameCharacter().addAction(Strings.Move);
-
-				}
-	
-				if (e.getKeyCode() == KeyEvent.VK_A) {
-
-					player.getGameCharacter().setDirection(Strings.West);
-					player.getGameCharacter().addAction(Strings.Move);
-
-					player.getGameCharacter().setDirection(Strings.West);
-					player.getGameCharacter().addAction(Strings.Move);
-
-				}
-	
-				if (e.getKeyCode() == KeyEvent.VK_D) {
-
-					player.getGameCharacter().setDirection(Strings.East);
-					player.getGameCharacter().addAction(Strings.Move);
-
-					player.getGameCharacter().setDirection(Strings.East);
-					player.getGameCharacter().addAction(Strings.Move);
-
-				}
-				if (e.getKeyCode() == KeyEvent.VK_L) {
-
-					player.getGameCharacter().addAction(Strings.Attack);
-
-					player.getGameCharacter().addAction(Strings.Attack);
-
-					return;
-				}
-			}
-			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				player.getGameCharacter().addAction("pause");
-				if( menu.isVisible() ) {
-					menu.setVisible(false);
-				}else
-					menu.setVisible(true);
-				return;
-			}		
-		}
-
-		public void keyReleased(KeyEvent e) {
-
-			player.getGameCharacter().addAction(Strings.Still);
-
-			player.getGameCharacter().addAction(Strings.Still);
-
-		}
-
-	};
-	
+		
 	private class Runner implements Runnable {
 		public void run() {
-				if( !removeList.isEmpty()) {
-					int i = 0;
-					while( !removeList.isEmpty()){
-						removeGraphic(currentList.remove(removeList.remove(i++)));
-					}
-				}
-				for (Client client : currentList.keySet()) {
-					if (currentList.get(client) == null) {
-						currentList.put(client, addGraphic());
-						if( client instanceof Player )
+				if( !removeList.isEmpty()) 
+					while(!removeList.isEmpty())
+						removeGraphic(currentList.remove(removeList.removeLast()));
+				for (GameCharacter gameCharacter : currentList.keySet()) {
+					if (currentList.get(gameCharacter) == null) {
+						currentList.put(gameCharacter, addGraphic());
+						if( gameCharacter == player.getGameCharacter() )
 							currentList.get(player).setLocation( new Point(350,250));
 					}
-					if( !Client.paused )
-						updateGraphic(client);
+					if( !gameCharacter.paused )
+						updateGraphic(gameCharacter);
 				}
 			}
 		/**
@@ -389,7 +332,7 @@ public class Gui implements Observer, ActionListener {
 
 		private void removeGraphic(TranspContainer rtc) {
 			rtc.setSize(0, 0);
-			myLayeredPane.remove(myLayeredPane.getIndexOf(rtc));
+			guiPane.remove(guiPane.getIndexOf(rtc));
 			rtc = null;
 		}
 		/**
@@ -401,9 +344,9 @@ public class Gui implements Observer, ActionListener {
 
 		private TranspContainer addGraphic() {
 			TranspContainer tnc = new TranspContainer(100, 100);
-			assert (myLayeredPane != null && tnc != null) : "myLayeredPane eller tnc är Null i Gui.update()";
+			assert (guiPane != null && tnc != null) : "guiPane eller tnc r Null i Gui.update()";
 			try {
-				myLayeredPane.add(tnc, JLayeredPane.PALETTE_LAYER);
+				guiPane.add(tnc, JLayeredPane.PALETTE_LAYER);
 			} catch (NullPointerException e) {
 				System.out.println("Nullpointer in Runner.run");
 				System.out.println(e.getMessage());
@@ -420,33 +363,26 @@ public class Gui implements Observer, ActionListener {
 		 */
 		private void updateGraphic(GameCharacter gc) {
 			GameAnimationEngine gae = GameAnimationEngine.getInstance();
-			BufferedImage bimg;
+			BufferedImage bimg = null;
+			Point point = null;
 			if ( gc != null ){
-				Point point = (Point).getPoint().clone();
-				point.translate( (350 - gc.getPoint().x), (250 - gc.getPoint().y) );
-				if((bimg = gae.getNextImage(gc)) != null )
+				point = (Point)gc.getPoint().clone();
+				if (gc != player.getGameCharacter())
+				// move everybody else 
+					point.translate( (350 - gc.getPoint().x), (250 - gc.getPoint().y) );
+				// The player want's to be centered in the window, atleast we think so ;)
+				else point = new Point(350,250);
+				if((bimg = gae.getImage(gc)) != null )
 					if ( bimg.getHeight() > 100 )
-						tmp.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
+						point.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 			}
-			currentList.get(gc).setImage(bimg);
-			currentList.get(gc).setLocation(point);
-
-
-/*			if( client != null && currentList.containsKey(client)){
-				Point tmp = (Point)client.getGameCharacter().getPoint().clone();
-					if( !(client instanceof Player) ){
-						tmp.translate( (350 - player.getGameCharacter().getPoint().x), (250 - player.getGameCharacter().getPoint().y));
-					}else{
-						tmp = new Point(350,250);
-					}
-				/*BufferedImage bimg = client.getAnimation();
-				// animeringsmotor .getAnimation( gc );
-				if( bimg.getHeight() > 100 ) {
-					tmp.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
-				}
-				currentList.get(client).setImage(client.getGameCharacter().getAnimation());
-				currentList.get(client).setLocation(tmp);
-			}*/
+			// no image, something went bananas, interrupt with a transparent picture please
+			if ( bimg == null ) bimg = null;
+			// if there is no GameCharacter we wont update
+			if ( point != null ) {
+				currentList.get(gc).setImage(bimg);
+				currentList.get(gc).setLocation(point);
+			}
 		}
 		
 	}

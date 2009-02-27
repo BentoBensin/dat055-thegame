@@ -1,13 +1,12 @@
 package game;
 
 /*Monster:
-Ska kolla om nya positionen är uppnåd, om någon spelare är i närheten
-Meddela observers om ändring ska göras */
+Ska kolla om nya positionen r uppnd, om ngon spelare r i nrheten
+Meddela observers om ndring ska gras */
  
  
 //TODO KOMMENTERA!!!!!!!
 import gamecharacter.GameCharacter;
-import gamecharacter.MovePattern;
 import main.Strings;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 public class Monster extends Client {
 	private ArrayList<GameCharacter> temp;
 	private int moveRemaining;
-	private MovePattern currentPattern;
-	private int patternIndex;
 	private int intervall;
 	private int ressurectionTime;
 	private boolean ress;
@@ -24,8 +21,6 @@ public class Monster extends Client {
 	public Monster(int id, Point point,GameCharacter gc, Engine engine) {
 		super( id, point, gc, engine);
 		moveRemaining=0;
-		currentPattern=null;
-		patternIndex=0;
 		intervall = 100;
 		ressurectionTime = 1000*20;
 		ress = false;
@@ -40,13 +35,13 @@ public class Monster extends Client {
 		while (true) {
 			try {
 				if( this.getGameCharacter().isAlive() )
-					Thread.sleep(intervall); //variabel som vi skapar en funktion som kan ändra
+					Thread.sleep(intervall); //variabel som vi skapar en funktion som kan ndra
 				else{
 					Thread.sleep(ressurectionTime);
 					ress = true;
 				}
 				synchronized(this) {
-					while( Client.paused)
+					while( this.isPaused())
 						wait();
 				}
 			} catch (InterruptedException e) {
@@ -60,7 +55,7 @@ public class Monster extends Client {
 			runActions();
 			temp = engine.nearbyClients(this, 100);
 			if( temp != null)
-				System.out.println("Monster letar efter närliggande " + temp.size() );												// detta funkar
+				System.out.println("Monster letar efter nrliggande " + temp.size() );												// detta funkar
 			setChanged();
 			notifyObservers(temp);
 		}
