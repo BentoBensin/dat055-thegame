@@ -13,10 +13,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- * TranspContainer är en komponent som innehåller en buffrad bild med
- * genomskinlig bakgrund och dess grafikkontext (den grafik man kan skapa från
- * bilden). RÖR EJ I DENNA KLASSEN UTAN ATT TÄNKA EFTER FÖRST!!!!!!!!!!!!!!
- * 
+ * TranspContainer is a graphical component that contains a BufferedImage
+ * with a transparent background. 
  * @file TranspContainer.java
  * @version 0.6
  * @author Robban
@@ -30,8 +28,9 @@ public class TranspContainer extends JPanel {
 	private Rectangle wrongtangle;
 
 	/**
-	 * Constructor for objects of class TranspContainer sätt storlek för
-	 * container (Arean vi vill kunna rita på)
+	 * Constructor for objects of class TranspContainer 
+	 * @param int height - the height of the TranspContainer
+	 * @param int windth - the width of the TranspContainer	 
 	 */
 	public TranspContainer(int height, int width) {
 		this.height = height;
@@ -42,8 +41,8 @@ public class TranspContainer extends JPanel {
 	}
 
 	/**
-	 * Överskuggar paint i superklass, det är denna metod som anropas varje gång
-	 * vi tar (instans av denna klass).repaint()
+	 * Overrides paint in superclass, its this method that is invoked everytime
+	 * we repaint our TranspContainer
 	 */
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -51,10 +50,8 @@ public class TranspContainer extends JPanel {
 	}
 
 	/**
-	 * initierar vår container med specifik höjd/bredd container blir en
-	 * genomskinlig bild. Vi måste initiera vår container efter frame.pack()
-	 * ingen aning varför, men om vi inte gör det efter så skapas ingen grafik
-	 * från bilden.
+	 * Initiates our TranspContainer with a specific height/width and creates
+	 * the transparant alphacomposite.
 	 */
 	public void initContainer() {
 		// Create image with RGB and alpha channel
@@ -71,13 +68,17 @@ public class TranspContainer extends JPanel {
 	}
 
 	/**
-	 * Returnera grafikkontexten för det containern innehåller Alltså det vi
-	 * vill rita på.
+	 * Returns the current graphiccontext for the container (which is used to draw on).
+	 * @return Graphics2D - This containers graphics.
 	 */
 	public Graphics2D getGraphics() {
 		return graphics;
 	}
 
+	/**
+	 * Returns a new graphiccontext for the container (which is used to draw on).
+	 * @return Graphics2D - new transparant graphics.
+	 */
 	public Graphics2D getNewGraphics() {
 		// Create image with RGB and alpha channel
 		this.bimage = new BufferedImage(height, width,
@@ -91,7 +92,11 @@ public class TranspContainer extends JPanel {
 		g2d.fill(rect);
 		return (Graphics2D) this.bimage.getGraphics();
 	}
-
+	
+	/**
+	*Sets the image from a String
+	*@param String - the searchpath to the image
+	*/
 	public void setImage(String imagename) {
 		Graphics2D graphic = getNewGraphics();
 
@@ -114,6 +119,11 @@ public class TranspContainer extends JPanel {
 		graphic.drawImage(currentimage, 0, 0, null);
 
 	}
+	
+	/**
+	*Sets the image from a BufferedImage
+	*@param BufferedImage - the image we want to display
+	*/
 	public void setImage(BufferedImage bimg) {
 		if( bimg != null ){
 			Graphics2D graphic = getNewGraphics();

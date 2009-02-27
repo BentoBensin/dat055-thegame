@@ -37,8 +37,10 @@ import javax.swing.SwingUtilities;
 import main.Strings;
 
 /**
- * Write a description of class Gui
- * 
+ * The GUI class controls all the interaction between the user and the program.
+ * It displays the visual representation of our game that is:
+ * The player itself, monsters and the environment.
+ * It also lets the player control a gamecharacter via the keyboard
  * @file Gui.java
  * @version 0.6
  * @author Robban
@@ -103,10 +105,9 @@ public class Gui implements Observer, ActionListener {
 	};
 
 	/**
-	 * Konstruktorn gr framen och alla grafiska objekt, vill att dom skall
-	 * finnas nr vi skapar GUIt
+	 * Constructor for class Gui creates the frame and all the
+	 * graphical components
 	 */
-	// Object nedan skall vara player/client
 	public Gui() {
 		r = new Runner();
 		// Current list of clients visible to player
@@ -119,7 +120,7 @@ public class Gui implements Observer, ActionListener {
 		
 		ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		gd = ge.getDefaultScreenDevice();
-		dmode = new DisplayMode(800, 600, 16, DisplayMode.REFRESH_RATE_UNKNOWN); //sista arg DisplayMode.REFRESH_RATE_UNKNOWN
+		dmode = new DisplayMode(Strings.WindowSizeX,Strings.WindowSizeY, 16, DisplayMode.REFRESH_RATE_UNKNOWN); //sista arg DisplayMode.REFRESH_RATE_UNKNOWN
 		    
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -159,11 +160,9 @@ public class Gui implements Observer, ActionListener {
 
 		frame.getContentPane().add(guiPane, BorderLayout.CENTER);
 		frame.addKeyListener(kl);
-		frame.setPreferredSize(new Dimension(800, 600));
+		frame.setPreferredSize(new Dimension(Strings.WindowSizeX,Strings.WindowSizeY));
 		frame.pack();
 		frame.setResizable(false);
-		// initContainer() mste alltid gras EFTER frame.pack()
-
 		frame.setVisible(true);
 
 	}
@@ -339,7 +338,7 @@ public class Gui implements Observer, ActionListener {
 		 * addGraphic adds an new container 
 		 * 
 		 * @param TranspContainer
-		 *            rtc - the container we want to remove @
+		 * @return TranspContainer - the container we want to remove
 		 */
 
 		private TranspContainer addGraphic() {
