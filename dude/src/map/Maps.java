@@ -25,15 +25,17 @@ public class Maps {
     private BufferedImage grass;
     private BufferedImage black;
     private BufferedImage tree;
+    private boolean isLoaded;
+    private static Maps maps;
     /**
      * Constructor for objects of class Maps
      * Creates a TreeMap for (String Object name) - (MapPiece the tile)
      * Reading some tile-images
      */
-    public Maps()
+    private Maps()
     {
     	map = new TreeMap<String,MapPiece>();
-    	
+    	isLoaded = false;
     	try { grass = ImageIO.read(new File("mapimages/grass.gif"));
         } catch (NullPointerException e) { 
           e.printStackTrace();
@@ -58,6 +60,13 @@ public class Maps {
              e.printStackTrace();
              }
     }
+    public static Maps getInstance()
+    {
+    	if(maps == null){
+    		maps = new Maps();
+    	}
+    	return maps;
+    }
     /**
      * Checks if a spot on the map is free to walk on
      * @param int z
@@ -67,7 +76,17 @@ public class Maps {
      */
     public boolean checkSpot(int z,int x,int y)
     {
-        MapPiece piece = map.get((String)(z+"-"+x+"-"+y));
+    	//Converting from world coordinates to tile coordinates
+    	int xpos = (x+440)/MapPiece.xsize;
+    	int ypos = (y+340)/MapPiece.ysize;
+    	//Getting the tile at window position (0,0) by truncating the x/y positions
+        	// xrest and yrest variables are needed for offsetting the tile images correctly
+    	
+    	String temp = (String)(z+"-"+xpos+"-"+ypos);
+    	System.out.println("\n"+temp);
+    	MapPiece piece = getMapPiece(z, xpos, ypos);
+    	piece.toString();
+        //MapPiece piece = map.get((String)(z+"-"+xpos+"-"+ypos));
         if (piece != null)
         {
             if (piece.isWalkable())
@@ -92,7 +111,7 @@ public class Maps {
      */
     public boolean loadMap(String mapname)
     {
-        boolean isLoaded = false;
+        isLoaded = false;
         boolean isFail = false;
         String s;
         String[] split;
@@ -100,7 +119,7 @@ public class Maps {
  
         //MapPiece piece;
     
-        File f = new File( "maps/" , mapname);
+        File f = new File( "src/maps/" , mapname);
         try {
             
             //Construct the BufferedReader object
@@ -262,7 +281,8 @@ public class Maps {
     			 else{
     				 tileImage = black;
     			 }
-    		   drawGraphics.drawImage(tileImage,((int)(40*xrest)+(40*x)),(int)(40*yrest)+(40*y),null);
+    		//drawGraphics.drawImage(tileImage,((int)(40*xrest)+(40*x)),(int)(40*yrest)+(40*y),null);
+    		   drawGraphics.drawImage(tileImage,((int)(MapPiece.xsize*xrest)+(MapPiece.xsize*x)),(int)(MapPiece.ysize*yrest)+(MapPiece.ysize*y),null);
     		}
     	}
     	tileImage = null;
@@ -278,7 +298,8 @@ public class Maps {
     			}
     			 if( tmp.equals("tree.gif")){
     				 tileImage = tree;
-    				 drawGraphics.drawImage(tileImage,((int)(40*xrest)+(40*x)),(int)(40*yrest)+(40*y),null);
+    				 //drawGraphics.drawImage(tileImage,((int)(40*xrest)+(40*x)),(int)(40*yrest)+(40*y),null);
+    				 drawGraphics.drawImage(tileImage,((int)(MapPiece.xsize*xrest)+(MapPiece.xsize*x)),(int)(MapPiece.ysize*yrest)+(MapPiece.ysize*y),null);
     			 }
     			 else{
     				 tileImage = black;

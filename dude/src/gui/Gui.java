@@ -7,6 +7,7 @@ import game.Player;
 import gamecharacter.GameAnimationData;
 import gamecharacter.GameCharacter;
 import gamecharacter.Warrior;
+import map.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -73,6 +74,10 @@ public class Gui implements Observer, ActionListener {
 	 */
 	public Gui() {
 		r = new Runner();
+		// init maps
+		kartor = Maps.getInstance();
+		kartor.loadMap("map.txt");
+		oldspot = new Point(0,0);
 		// Current list of clients visible to player
 		currentList = new HashMap<GameCharacter, TranspContainer>();
 		removeList = new LinkedList<GameCharacter>();
@@ -144,8 +149,7 @@ public class Gui implements Observer, ActionListener {
 		guiPane = new JLayeredPane();
 		guiPane.setOpaque(true);
 		win.getContentPane().add(guiPane, BorderLayout.CENTER);
-		JPanel guiPanel = new JPanel();
-		
+			
 		backgroundPanel = new TranspContainer(Strings.FullScreenSizeX,Strings.FullScreenSizeY);
 		backgroundPanel.setOpaque(true);
 		guiPane.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
@@ -395,7 +399,9 @@ public class Gui implements Observer, ActionListener {
 				currentList.get(gameCharacter).setLocation(point);
 				
 				if(gameCharacter == gc){
-			    	if(!(oldspot.equals((Point)gc.getPoint()))){
+					System.out.println("\noldspot: "+oldspot.toString());
+					System.out.println("\ngc (Point): "+gc.getPoint().toString());
+			    	if(!(oldspot.equals((Point) gc.getPoint()) )){
 			    	BufferedImage bakgr = kartor.getCurrentBackground( gc.getPoint() );
 					backgroundPanel.setBackImage(bakgr );
 			    	}

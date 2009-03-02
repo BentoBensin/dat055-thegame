@@ -25,8 +25,8 @@ public class MapPiece
     private String objectName;
     private boolean walkable;
     private int z;
-    public static int xsize = 40;
-    public static int ysize = 40;
+    protected static int xsize = 40;
+    protected static int ysize = 40;
  
     public MapPiece(int x, int y, int z, String obstacle, boolean walk)
     {

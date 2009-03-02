@@ -37,7 +37,7 @@ public class Engine {
     public Engine()
     {
     	parser = new Parser(this);
-        maps = new Maps();
+        maps = Maps.getInstance();
         logicModel = new LogicModel();
         ai = new AI();
     }
