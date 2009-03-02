@@ -2,12 +2,23 @@ package gui;
 
 import main.Strings;
 import java.util.HashMap;
-
+/**
+ * Localizationsupport for GUI
+ * To use this do like this
+ * Localization local = new Localization();
+ * local.setLanguage(Strings.Swedish);
+ * System.out.println(local.get(Strings.exitPanel));
+ * @author josjoh
+ *
+ */
 public class Localization {
 	public final String LocalizationDefault = Strings.English;
 	public final HashMap<String,HashMap<String,String>> Localization;
 	private HashMap<String,String> currentLanguage;
-
+	
+	/**
+	 * Initializes the languages
+	 */
 	public Localization(){
 		Localization=new HashMap<String,HashMap<String,String>>();
 		final HashMap<String,String> LocalizationEnglish = new HashMap<String,String>();
@@ -75,17 +86,30 @@ public class Localization {
 		Localization.put(Strings.Must, LocalizationMust);
 		setLanguage(LocalizationDefault);
 	}
+	/**
+	 * Another constructor if you want to set language directly
+	 * @param defaultLanguage
+	 */
 	public Localization(String defaultLanguage)
 	{
 		this();
 		setLanguage(defaultLanguage);
 	}
+	/**
+	 * Returns a localized word
+	 * @param word
+	 * @return localized word
+	 */
 	public String get(String word)
 	{
 		String string = currentLanguage.get(word);
 		if ( string == null ) string = "unset";
 		return string;
 	}
+	/**
+	 * returns all the available languages
+	 * @return String[] of languages
+	 */
 	public String[] availableLanguages()
 	{
 		String[] string = new String[Localization.size()];
@@ -94,6 +118,10 @@ public class Localization {
 			string[i++] = s;
 		return string;
 	}
+	/**
+	 * sets the current language
+	 * @param language
+	 */
 	public void setLanguage(String language)
 	{
 		if(Localization.containsKey(language))
