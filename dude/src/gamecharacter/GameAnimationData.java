@@ -4,89 +4,209 @@
 package gamecharacter;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import main.Strings;
+import java.util.LinkedList;
+
 import javax.imageio.ImageIO;
 
-
 /**
+ * Handles the images in The Game
+ * this class is a singleton
+ * typical implementation is
+ * GameAnimationData images = GameAnimationData.getInstance();
+ * BufferedImage image;
+ * if(images.size(skin,action,direction) > index)
+ * 	image = images.get(skin,action,direction,index);
+ * else image = images.get(skin,action,direction, (index=0) );
+ * 
+ * @file GameAnimationData.java
+ * @version 0.1
+ * @revision 64
  * @author josjoh
  *
  */
-public abstract class GameAnimationData {
-	private HashMap<String,HashMap<String, ArrayList<BufferedImage>>> image;
-	
-	public GameAnimationData() {
-		image = new HashMap<String,HashMap<String, ArrayList<BufferedImage>>>();
+public class GameAnimationData {
+	private GameAnimationData instance = null;
+	private HashMap<String,Object> image;
+	private static final String imageDirectory = "images/";
+	private GameAnimationData()
+	{
+    	addImageSet("shroomsman/walk/north/nn","gif",8);
+    	addImageSet("shroomsman/walk/south/ss","gif",8);
+    	addImageSet("shroomsman/walk/east/ee","gif",8);
+    	addImageSet("shroomsman/walk/west/ww","gif",8);
+    	
+    	addImageSet("shroomsman/attack/north/nn","gif",11);
+    	addImageSet("shroomsman/attack/south/ss","gif",11);
+    	addImageSet("shroomsman/attack/east/ee","gif",11);
+    	addImageSet("shroomsman/attack/west/ww","gif",11);
+    	
+    	addImageSet("shroomsman/die/north/nn","gif",7);
+    	addImageSet("shroomsman/die/south/ss","gif",7);
+    	addImageSet("shroomsman/die/east/ee","gif",7);
+    	addImageSet("shroomsman/die/west/ww","gif",7);
+    	
+    	addImageSet("shroomsman/hit/north/nn","gif",9);
+    	addImageSet("shroomsman/hit/south/ss","gif",9);
+    	addImageSet("shroomsman/hit/east/ee","gif",9);
+    	addImageSet("shroomsman/hit/west/ww","gif",9);
+    	
+    	addImageSet("shroomsman/still/north/nn","gif",1);
+    	addImageSet("shroomsman/still/south/ss","gif",1);
+    	addImageSet("shroomsman/still/east/ee","gif",1);
+    	addImageSet("shroomsman/still/west/ww","gif",1);
+    	
+    	addImageSet("warrior/walk/north/nn","gif",8);
+    	addImageSet("warrior/walk/south/ss","gif",8);
+    	addImageSet("warrior/walk/east/ee","gif",8);
+    	addImageSet("warrior/walk/west/ww","gif",8);
+    	
+    	addImageSet("warrior/attack/north/nn","gif",12);
+    	addImageSet("warrior/attack/south/ss","gif",12);
+    	addImageSet("warrior/attack/east/ee","gif",12);
+    	addImageSet("warrior/attack/west/ww","gif",12);
+    	
+    	addImageSet("warrior/die/north/nn","gif",12);
+    	addImageSet("warrior/die/south/ss","gif",12);
+    	addImageSet("warrior/die/east/ee","gif",12);
+    	addImageSet("warrior/die/west/ww","gif",12);
+    	
+    	addImageSet("warrior/hit/north/nn","gif",8);
+    	addImageSet("warrior/hit/south/ss","gif",8);
+    	addImageSet("warrior/hit/east/ee","gif",8);
+    	addImageSet("warrior/hit/west/ww","gif",8);
+    	
+    	addImageSet("warrior/still/north/nn","gif",1);
+    	addImageSet("warrior/still/south/ss","gif",1);
+    	addImageSet("warrior/still/east/ee","gif",1);
+    	addImageSet("warrior/still/west/ww","gif",1);
 	}
-	
-	public abstract void initImages();
+	public GameAnimationData getInstance()
+	{
+		if( instance == null) instance = new GameAnimationData();
+		return instance;
+	}
+	private BufferedImage whitePicture()
+	{
+		  int width = 100; // Dimensions of the image
+		  int height = 100;
+		  // Let's create a BufferedImage for a binary image.
+		  BufferedImage im = new BufferedImage(width,height,BufferedImage.TYPE_BYTE_BINARY);
+		  // We need its raster to set the pixels' values.
+		  WritableRaster raster = im.getRaster();
+		  // Put the pixels on the raster. Note that only values 0 and 1 are used for the pixels.
+		  // You could even use other values: in this type of image, even values are black and odd
+		  // values are white.
+		  for(int h=0;h<height;h++)
+		  for(int w=0;w<width;w++)
+		  raster.setSample(w,h,0,0);
+		  return im;
+	}
 	/**
-	 * Gets an action, a direction and an index and returns next image in sequence.
+	 * returns a list of images in our HashMaplist
+	 * @param skin
+	 * @param action
+	 * @param direction
+	 * @return The list containing BufferedImages
+	 */
+	@SuppressWarnings("unchecked")
+	private LinkedList<BufferedImage> getImageList(String skin, String action, String direction)
+	{
+		Object step = null;
+		if((step = image.get(skin)) != null)
+			if((step instanceof HashMap) && (step = ((HashMap<String,Object>)step).get(action)) != null)
+				if((step instanceof HashMap) && (step = ((HashMap<String,Object>)step).get(direction)) != null)
+					if( step instanceof LinkedList)
+					return (LinkedList<BufferedImage>)step;
+		return null;
+	}
+	/**
+	 * Returns the size of the list that is given by the parameters
+	 * @param skin
+	 * @param action
+	 * @param direction
+	 * @return size
+	 */
+	public int size(String skin, String action, String direction){
+		LinkedList<BufferedImage> ll = getImageList(skin,action,direction);
+		if(ll != null) return ll.size();
+		return 0;
+	}
+	/**
+	 * gets the image that is given by the parameters
+	 * @param skin
 	 * @param action
 	 * @param direction
 	 * @param index
-	 * @return Next image in sequence.
+	 * @return image or whitepicture when the image is not found
 	 */
-	public BufferedImage getNextImage(String action, String direction, int index) {
-		action = (action != null)?action:Strings.Still;
-		direction = (direction != null)?direction:Strings.North; 
-		System.out.println("Storlek: " + image.size() );
-		if (image.get(action) == null 
-		|| image.get(action).get(direction) == null ){
-			if(Strings.Debug) System.out.println("NullPointer in getNextImage trying to get the i: " + index + " action: " + action + " direction " + direction);
-			return null;
+	public BufferedImage getImage(String skin, String action, String direction, int index) {
+		LinkedList<BufferedImage> ll = getImageList(skin,action,direction);
+		BufferedImage stepImage;
+		if( ll != null)
+		{
+			// doesn't really return null because the image is always found here
+			if(ll.size()>index && (stepImage = ll.get(index)) != null)	
+				return stepImage;
 		}
-		
-		if( (index < 0) || (index > image.get(action).get(direction).size())){
-			throw new IllegalArgumentException();
-		}
-		
-		return image.get(action).get(direction).get(index);
+		return whitePicture();
 	}
-	
-	public int getAnimationLength(String action, String direction){
-		if( image.get(action) != null && image.get(action).get(direction) != null ) {
-			if(Strings.Debug) System.out.println("Frsker hmta action : " + action + " direction: " + direction);
-			if(Strings.Debug) System.out.println("finns action? : " + image.containsKey(action) + " och direction? " + image.get(action).containsKey(direction) );
-			return image.get(action).get(direction).size();
-		}
-		return 1;
-	}
-	public int getNextIndex(String action, String direction, int index)
+	/**
+	 * Adds images to our set, uses defaultImagePath
+	 * path should be "skin/action/direction/dd"
+	 * filetype accepted is jpg and gif
+	 * num should be the number of images in the set
+	 * path that is read is of the given parameters ("skin/action/direction/dd","gif",1)
+	 * "images/skin/action/direction/dd00.gif"
+	 * @param path
+	 * @param filetype
+	 * @param num
+	 */
+	@SuppressWarnings("unchecked")
+	public void addImageSet(String path,String filetype,int num)
 	{
-		ArrayList<BufferedImage> step2;
-		if ( image.get(action) != null 
-		&& (step2 = image.get(action).get(direction)) != null 
-		&& image.get(action).get(direction).get(index) != null ) {
-			index++;
-			if (step2.get(index) != null) return index;
+		// sanitycheck
+		if( !( 
+				(num>0) 
+				&&	(path.length()>0) 
+				&&	( 
+						(filetype.equals("gif")) 
+						|| (filetype.equals("jpg"))
+				)
+			) 
+		)
+			return;
+		HashMap<String,Object> stepStone = image;
+		LinkedList<BufferedImage> stepImage;
+		String splitPath[] = path.split("/");
+		LinkedList<String> ll = new LinkedList<String>();
+		for (String part:splitPath)
+			ll.addLast(part);
+		String fileName = ll.removeLast();
+		String imageDirection = ll.removeLast();
+		// shroomsman/walk/south/ss
+		for(String part:ll)
+		{
+			//if(i+1==splitPath.length) stepImage = stepStone.put((Object)new ArrayList<BufferedImage>());
+			stepStone = (HashMap<String,Object>)stepStone.put(part,new HashMap<String,Object>());
 		}
-		return 0;
-	}
-
-	public void loadImages(HashMap<String,HashMap<String, ArrayList<String>>> images) throws NullPointerException {		
-		if( images == null)
-			throw new NullPointerException();
-		for(String action: images.keySet()){
-			if(Strings.Debug) System.out.println(action);
-			image.put(action, new HashMap<String, ArrayList<BufferedImage>>());
-			for(String direction: images.get(action).keySet()){
-				image.get(action).put(direction, new ArrayList<BufferedImage>());
-				for(int i=0; i<images.get(action).get(direction).size(); i++){
-					try {
-						image.get(action).get(direction).add( ImageIO.read(new File(images.get(action).get(direction).get(i))));
-					} catch (NullPointerException e) {
-						if(Strings.Debug) System.out.println("NullPointer found in GameCharacter.loadImages() while loading image:" + images.get(action).get(direction).get(i));
-						if(Strings.Debug) e.printStackTrace();
-					}catch( IOException e) {
-						if(Strings.Debug) System.out.println("IOException found in GameCharacter.loadImages() while loading image:" + images.get(action).get(direction).get(i));
-						if(Strings.Debug) e.printStackTrace();
-					}
-				}
+		stepImage = (LinkedList<BufferedImage>)stepStone.put(imageDirection,new LinkedList<BufferedImage>());
+		String fileNum = new String();
+		for(int i = 0;i<num;i++)
+		{
+			if(i<10) fileNum = "0"+i;
+			else fileNum = ""+i;
+			try {
+				stepImage.add( ImageIO.read(new File(imageDirectory+path+fileName+fileNum+"."+filetype)) );
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				System.exit(0);
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.exit(0);
 			}
 		}
 	}
