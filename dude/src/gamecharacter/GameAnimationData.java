@@ -29,11 +29,12 @@ import javax.imageio.ImageIO;
  *
  */
 public class GameAnimationData {
-	private GameAnimationData instance = null;
+	private static GameAnimationData instance = null;
 	private HashMap<String,Object> image;
 	private static final String imageDirectory = "images/";
 	private GameAnimationData()
 	{
+		image = new HashMap<String,Object>();
     	addImageSet("shroomsman/walk/north/nn","gif",8);
     	addImageSet("shroomsman/walk/south/ss","gif",8);
     	addImageSet("shroomsman/walk/east/ee","gif",8);
@@ -84,7 +85,7 @@ public class GameAnimationData {
     	addImageSet("warrior/still/east/ee","gif",1);
     	addImageSet("warrior/still/west/ww","gif",1);
 	}
-	public GameAnimationData getInstance()
+	public static GameAnimationData getInstance()
 	{
 		if( instance == null) instance = new GameAnimationData();
 		return instance;
@@ -180,7 +181,6 @@ public class GameAnimationData {
 		)
 			return;
 		HashMap<String,Object> stepStone = image;
-		LinkedList<BufferedImage> stepImage;
 		String splitPath[] = path.split("/");
 		LinkedList<String> ll = new LinkedList<String>();
 		for (String part:splitPath)
@@ -191,16 +191,18 @@ public class GameAnimationData {
 		for(String part:ll)
 		{
 			//if(i+1==splitPath.length) stepImage = stepStone.put((Object)new ArrayList<BufferedImage>());
-			stepStone = (HashMap<String,Object>)stepStone.put(part,new HashMap<String,Object>());
+			stepStone.put(part,new HashMap<String,Object>());
+			stepStone = (HashMap<String,Object>)stepStone.get(part);
 		}
-		stepImage = (LinkedList<BufferedImage>)stepStone.put(imageDirection,new LinkedList<BufferedImage>());
+		LinkedList<BufferedImage> stepImage = new LinkedList<BufferedImage>();
+		stepStone.put(imageDirection,stepImage);
 		String fileNum = new String();
 		for(int i = 0;i<num;i++)
 		{
 			if(i<10) fileNum = "0"+i;
 			else fileNum = ""+i;
 			try {
-				stepImage.add( ImageIO.read(new File(imageDirectory+path+fileName+fileNum+"."+filetype)) );
+				stepImage.add( ImageIO.read(new File(imageDirectory+path+fileNum+"."+filetype)) );
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 				System.exit(0);

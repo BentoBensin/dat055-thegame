@@ -34,7 +34,7 @@ public class Maps {
     {
     	map = new TreeMap<String,MapPiece>();
     	
-    	try { grass = ImageIO.read(new File("images/mapimages/grass.gif"));
+    	try { grass = ImageIO.read(new File("mapimages/grass.gif"));
         } catch (NullPointerException e) { 
           e.printStackTrace();
           }
@@ -42,7 +42,7 @@ public class Maps {
             e.printStackTrace();
             }
             
-        try { black = ImageIO.read(new File("images/mapimages/black.gif"));
+        try { black = ImageIO.read(new File("mapimages/black.gif"));
         } catch (NullPointerException e) { 
           e.printStackTrace();
           }
@@ -50,7 +50,7 @@ public class Maps {
             e.printStackTrace();
             }
         
-         try { tree = ImageIO.read(new File("images/mapimages/tree.gif"));
+         try { tree = ImageIO.read(new File("mapimages/tree.gif"));
          } catch (NullPointerException e) { 
            e.printStackTrace();
            }

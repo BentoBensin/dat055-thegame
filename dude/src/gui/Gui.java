@@ -2,13 +2,12 @@
 
 package gui;
 
-import gui.Localization;
 import game.IDGen;
 import game.Player;
-import gamecharacter.GameAnimationEngine;
-import gamecharacter.Warrior;
+import gamecharacter.GameAnimationData;
 import gamecharacter.GameCharacter;
-import main.Envelope;
+import gamecharacter.Warrior;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,10 +22,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
@@ -34,6 +34,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
+
+import main.Envelope;
 import main.Strings;
 
 /**
@@ -358,7 +360,7 @@ public class Gui implements Observer, ActionListener {
 		 * 
 		 */
 		private void updateGraphic(GameCharacter gameCharacter) {
-			GameAnimationEngine gae = GameAnimationEngine.getInstance();
+			GameAnimationData gad = GameAnimationData.getInstance();
 			BufferedImage bimg = null;
 			Point point = null;
 			if ( gameCharacter != null ){
@@ -368,7 +370,7 @@ public class Gui implements Observer, ActionListener {
 					point.translate( (350 - gameCharacter.getPoint().x), (250 - gameCharacter.getPoint().y) );
 				// The player want's to be centered in the window, atleast we think so ;)
 				else point = new Point(350,250);
-				if((bimg = gae.getImage(gameCharacter)) != null )
+				if((bimg = gameCharacter.getImage()) != null )
 					if ( bimg.getHeight() > 100 )
 						point.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 			}

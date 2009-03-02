@@ -2,12 +2,15 @@ package gamecharacter;
 
 import items.Item;
 import items.Weapon;
+
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+
 import main.Strings;
-import java.io.Serializable;
 
 /**
  * This class contains information such as speed, height and width, about a character.
@@ -366,6 +369,12 @@ public abstract class GameCharacter implements Serializable {
     public String getSkin()
     {
     	return skin;
+    }
+    
+    public BufferedImage getImage() {
+    	if( animationIndex >= GameAnimationData.getInstance().size(skin, animation, direction)) 
+    		animationIndex = 0;
+    	return GameAnimationData.getInstance().getImage(skin, animation, direction, animationIndex);
     }
 
 }
