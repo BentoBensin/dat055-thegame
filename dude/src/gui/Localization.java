@@ -88,7 +88,7 @@ public class Localization {
 	}
 	public String[] availableLanguages()
 	{
-		String[] string = {};
+		String[] string = new String[Localization.size()];
 		int i = 0;
 		for(String s : Localization.keySet())
 			string[i++] = s;

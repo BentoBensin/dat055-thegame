@@ -208,7 +208,7 @@ public class Gui implements Observer, ActionListener {
 		}
 
 		public void keyReleased(KeyEvent e) {
-			gc.addAction(Strings.Still);
+			//gc.addAction(Strings.Still);
 		}
 	};
 	public void actionPerformed( ActionEvent e) {
@@ -248,9 +248,9 @@ public class Gui implements Observer, ActionListener {
 	 */
 	public void settings() {
 		menu.setVisible(false);
-		String[] possibleValues = {};
+		String[] possibleValues = new String[cL.availableLanguages().length];
 		for(String langIterate : cL.availableLanguages())
-			possibleValues[possibleValues.length+1]=langIterate;
+			possibleValues[possibleValues.length]=langIterate;
 			lang = (String)JOptionPane.showInputDialog(frame,
 		            cL.get(Strings.ChooseOne), cL.get(Strings.Input),
 		            JOptionPane.INFORMATION_MESSAGE, null,
@@ -360,28 +360,27 @@ public class Gui implements Observer, ActionListener {
 		 * 
 		 */
 		private void updateGraphic(GameCharacter gameCharacter) {
-			GameAnimationData gad = GameAnimationData.getInstance();
-			BufferedImage bimg = null;
-			Point point = null;
 			if ( gameCharacter != null ){
-				point = (Point)gameCharacter.getPoint().clone();
-				// move everybody else
+				GameAnimationData gad = GameAnimationData.getInstance();
+				int index = gameCharacter.getAnimationIndex();
+				String skin = gameCharacter.getSkin();
+				String action = gameCharacter.getAnimationType();
+				String direction = gameCharacter.getDirection();
+				if( index > gad.size(skin, action, direction) )
+					index = 0;
+				BufferedImage bimg = gad.getImage(skin, action, direction, index);
+				Point point = (Point)gameCharacter.getPoint().clone();
+			// move everybody else
 				if (gameCharacter != gc) 
 					point.translate( (350 - gameCharacter.getPoint().x), (250 - gameCharacter.getPoint().y) );
-				// The player want's to be centered in the window, atleast we think so ;)
+			// The player want's to be centered in the window, atleast we think so ;)
 				else point = new Point(350,250);
-				if((bimg = gameCharacter.getImage()) != null )
-					if ( bimg.getHeight() > 100 )
+				if ( bimg.getHeight() > 100 )
 						point.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
-			}
-			// no image, something went bananas, interrupt with a transparent picture please
-			if ( bimg == null ) bimg = null;
-			// if there is no GameCharacter we wont update
-			System.out.println("point is "+point+" bimg is "+bimg+" gc is "+gameCharacter);
-			if ( point != null ) {
 				currentList.get(gameCharacter).setImage(bimg);
 				currentList.get(gameCharacter).setLocation(point);
 			}
+				//System.out.println("point is "+point+" bimg is "+bimg+" gc is "+gameCharacter);
 		}
 		
 	}

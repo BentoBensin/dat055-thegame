@@ -117,11 +117,14 @@ public class GameAnimationData {
 	private LinkedList<BufferedImage> getImageList(String skin, String action, String direction)
 	{
 		Object step = null;
-		if((step = image.get(skin)) != null)
-			if((step instanceof HashMap) && (step = ((HashMap<String,Object>)step).get(action)) != null)
-				if((step instanceof HashMap) && (step = ((HashMap<String,Object>)step).get(direction)) != null)
+		if((step = image.get(skin.toLowerCase())) != null){
+			if((step instanceof HashMap) && (step = ((HashMap<String,Object>)step).get(action.toLowerCase())) != null){
+				if((step instanceof HashMap) && (step = ((HashMap<String,Object>)step).get(direction.toLowerCase())) != null){
 					if( step instanceof LinkedList)
 					return (LinkedList<BufferedImage>)step;
+				}else System.out.println("Failed at direction="+direction.toLowerCase());
+			}else System.out.println("Failed at action="+action.toLowerCase());
+		}else System.out.println("Failed at skin="+skin.toLowerCase());
 		return null;
 	}
 	/**
@@ -185,13 +188,13 @@ public class GameAnimationData {
 		LinkedList<String> ll = new LinkedList<String>();
 		for (String part:splitPath)
 			ll.addLast(part);
-		String fileName = ll.removeLast();
+		ll.removeLast(); // removes filename;
 		String imageDirection = ll.removeLast();
 		// shroomsman/walk/south/ss
 		for(String part:ll)
 		{
 			//if(i+1==splitPath.length) stepImage = stepStone.put((Object)new ArrayList<BufferedImage>());
-			stepStone.put(part,new HashMap<String,Object>());
+			if(!stepStone.containsKey(part))stepStone.put(part,new HashMap<String,Object>());
 			stepStone = (HashMap<String,Object>)stepStone.get(part);
 		}
 		LinkedList<BufferedImage> stepImage = new LinkedList<BufferedImage>();
@@ -201,12 +204,16 @@ public class GameAnimationData {
 		{
 			if(i<10) fileNum = "0"+i;
 			else fileNum = ""+i;
+			String file = imageDirectory+path+fileNum+"."+filetype;
 			try {
-				stepImage.add( ImageIO.read(new File(imageDirectory+path+fileNum+"."+filetype)) );
+				stepImage.add( ImageIO.read(new File(file)) );
+				System.out.println("Added: "+file);
 			} catch (NullPointerException e) {
+				System.out.println(file);
 				e.printStackTrace();
 				System.exit(0);
 			} catch (IOException e) {
+				System.out.println(file);
 				e.printStackTrace();
 				System.exit(0);
 			}
