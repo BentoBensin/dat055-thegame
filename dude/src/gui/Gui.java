@@ -62,6 +62,11 @@ public class Gui implements Observer, ActionListener {
 	private Localization cL; //currentLanguage
 	private Runner r;
 	private GameCharacter gc;
+	//Till kartor
+	private Point oldspot;
+	private Maps kartor;
+	private TranspContainer backgroundPanel;
+
 	/**
 	 * Constructor for class Gui creates the frame and all the
 	 * graphical components
@@ -106,10 +111,14 @@ public class Gui implements Observer, ActionListener {
 		frame.setTitle(cL.get(Strings.GameTitle));
 		frame.setLayout(new BorderLayout());
 		guiPane = new JLayeredPane();
-		JPanel guiPanel = new JPanel();
-		guiPanel.setBackground( new Color(Strings.WindowBackgroundRed,Strings.WindowBackgroundGreen,Strings.FullScreenBackgroundBlue));
-		guiPane.add(guiPanel, JLayeredPane.DEFAULT_LAYER);
-		guiPanel.setSize(Strings.WindowSizeX,Strings.WindowSizeY);
+
+		backgroundPanel = new TranspContainer(800,600);
+		backgroundPanel.setOpaque(true);
+		guiPane.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
+		
+		backgroundPanel.setSize(Strings.WindowSizeX,Strings.WindowSizeY);
+		backgroundPanel.initContainer();
+		
 		menu = createIngameMenu();
 		guiPane.add( menu, JLayeredPane.POPUP_LAYER );
 		// Our pane can't be transparent
@@ -136,9 +145,14 @@ public class Gui implements Observer, ActionListener {
 		guiPane.setOpaque(true);
 		win.getContentPane().add(guiPane, BorderLayout.CENTER);
 		JPanel guiPanel = new JPanel();
-		guiPanel.setBackground( new Color(Strings.FullScreenBackgroundRed,Strings.FullScreenBackgroundGreen,Strings.FullScreenBackgroundBlue));
-		guiPane.add(guiPanel, JLayeredPane.DEFAULT_LAYER);
-		guiPanel.setSize(Strings.FullScreenSizeX,Strings.FullScreenSizeY);
+		
+		backgroundPanel = new TranspContainer(Strings.FullScreenSizeX,Strings.FullScreenSizeY);
+		backgroundPanel.setOpaque(true);
+		guiPane.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
+		
+		backgroundPanel.setSize(Strings.WindowSizeX,Strings.WindowSizeY);
+		backgroundPanel.initContainer();
+			
 		menu = createIngameMenu();
 		guiPane.add( menu, JLayeredPane.POPUP_LAYER );
 		win.addKeyListener(kl);
@@ -379,6 +393,14 @@ public class Gui implements Observer, ActionListener {
 						point.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 				currentList.get(gameCharacter).setImage(bimg);
 				currentList.get(gameCharacter).setLocation(point);
+				
+				if(gameCharacter == gc){
+			    	if(!(oldspot.equals((Point)gc.getPoint()))){
+			    	BufferedImage bakgr = kartor.getCurrentBackground( gc.getPoint() );
+					backgroundPanel.setBackImage(bakgr );
+			    	}
+			    	oldspot = (Point)gc.getPoint().clone();
+			    }
 			}
 				//System.out.println("point is "+point+" bimg is "+bimg+" gc is "+gameCharacter);
 		}

@@ -131,4 +131,13 @@ public class TranspContainer extends JPanel {
 			graphic.drawImage(bimg, 0, 0, null);
 		}
 	}
+	
+	public void setBackImage(BufferedImage bimg) {
+		if( bimg != null ){
+			Graphics2D graphic = getNewGraphics();
+			repaint();
+			graphic.drawImage(bimg, -40, -40, null);
+		}
+	}
+	
 }
