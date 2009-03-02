@@ -20,7 +20,7 @@ import main.Strings;
  *
  */
 public abstract class GameCharacter implements Serializable {
-	
+	static final long serialVersionUID = 9123;
 	private LinkedList<MovePattern> patterns;
 	private double speed;
 	private int width;
@@ -43,7 +43,7 @@ public abstract class GameCharacter implements Serializable {
     public boolean paused;
     
 	public GameCharacter(Weapon weapon, double speed, int width, int height, 
-			int health, String name, Point point, boolean isPlayer){
+			int health, String name, Point point, String skin, boolean isPlayer){
 		paused = false;
 		patterns = new LinkedList<MovePattern>();
 		this.weapon = weapon;
@@ -63,12 +63,8 @@ public abstract class GameCharacter implements Serializable {
         superAnimation = "";
         moveRemaining = 0;
         animationIndex=0;
-        skin="ShroomsMan";
+        this.skin = skin;
 	}
-
-	// hlla koll p animeringsstyp
-	// positionen i animeringen
-	// direction p snubben
 	
 	/**
 	 * Finds next move pattern.
@@ -138,7 +134,10 @@ public abstract class GameCharacter implements Serializable {
 	public int getHeight(){
 		return height;
 	}
-	
+	/**
+	 * Get's the gamecharacters primary weapon
+	 * @return weapon
+	 */
 	public Weapon getPrimary() {
 		return weapon;
 	}
@@ -158,7 +157,6 @@ public abstract class GameCharacter implements Serializable {
 	public int changeHealth(int healthChange)
 	{
 		health += healthChange;
-		System.out.println("-------------------------Players hlsa: " + health);
 		return health;
 	}
 	/**
@@ -181,13 +179,17 @@ public abstract class GameCharacter implements Serializable {
     private void setAnimationType(String type)  {
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
-    	if( !type.equals(animation))
-    		animationIndex = 0;
-    	animation = type;
+    	if( type.equals("hit") || type.equals("die") || type.equals("attack") || type.equals("walk") ){
+	    	if( !type.equals(animation))
+	    		animationIndex = 0;
+	    	animation = type;
+    	}
     }
     public String getAnimationType()
     {
-    	return animation;
+    	if(superAnimation.equals(""))
+    		return animation;
+    	return superAnimation;
     }
     /**
      * Set's an new type of superAnimation this is an superior
@@ -201,10 +203,10 @@ public abstract class GameCharacter implements Serializable {
     public void setSuperAnimationType(String type)  {
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
-    	if( !type.equals(superAnimation)){
-    		animationIndex = 0;
-    		}
-    	superAnimation = type;
+	    	if( !type.equals(superAnimation)){
+	    		animationIndex = 0;
+	    		}
+	    	superAnimation = type;
     }
     
     /**
@@ -266,8 +268,6 @@ public abstract class GameCharacter implements Serializable {
     public void addAction(String action) { 
     	if(isAlive()) {
 	    	if( !actions.contains(action) ) {
-	    		if( action.equals(Strings.Attack))
-	    			setSuperAnimationType(Strings.Attack);
 	    		actions.addLast(action);
 	    	}	
     	}else {
@@ -275,21 +275,28 @@ public abstract class GameCharacter implements Serializable {
     	}
     }
     
+    /**
+     * Get's the next action from the actions lsit 
+     * This rmeoves the action from the list
+     * @return String representing the action
+     */
     public String getAction()
     {
     	if (!actions.isEmpty())
     		return actions.pop();
     	else return null;
     }
+    /**
+     * Adds a stun to the player with speciefied time
+     * @param stun
+     * @param time
+     */
     public void addStun( String stun, int time) {
     	stun(time);
     	setSuperAnimationType("hit"); 
     }
     
-    /**
-     * Sets a new point.
-     * @param newPoint
-     */
+
     
     /**
      * Runs all actions and uses interpretCommand
@@ -298,27 +305,18 @@ public abstract class GameCharacter implements Serializable {
     public ArrayList<String> runActions() {
     	String tmp;
     	ArrayList<String> tmpList = new ArrayList<String>();
-    	if( actions.isEmpty() && superAnimation.equals(""))
-    		setAnimationType(Strings.Still);
-    	
+  	
     	for(int i=0; i < actions.size() ; i++) {
     		tmp = actions.remove();
     		if ( !isStunned() ){ 
-    			
     			tmpList.add(tmp);
-    			if( !tmp.equals("pause"))
-    				setAnimationType(tmp);
-    		}else {
-    			animation = Strings.Still;
+    			// better to do check if animationType and then set it...
+    			setAnimationType(tmp);
     		}
     	}
     	return tmpList;
     }
-    
-    public void setPoint(Point newPoint){
-    	point = newPoint;
-    }
-    
+   
     /**
      * Update the objects Coordinates
      * @param cord
@@ -347,7 +345,10 @@ public abstract class GameCharacter implements Serializable {
     public void setName(String name){
         this.name = name;
     }
-
+    /**
+     * Checks if the Gamehcaracter is a player
+     * @return true if player
+     */
     public boolean isPlayer() {
     	return isPlayer;
     }
@@ -358,23 +359,13 @@ public abstract class GameCharacter implements Serializable {
 	{
 		moveRemaining--;
 	}
-    public int getAnimationIndex()
-    {
-    	return animationIndex;
-    }
-    public void setAnimationIndex(int index)
-    {
-    	animationIndex = index;
-    }
-    public String getSkin()
-    {
-    	return skin;
-    }
-    
-    public BufferedImage getImage() {
-    	if( animationIndex >= GameAnimationData.getInstance().size(skin, animation, direction)) 
-    		animationIndex = 0;
-    	return GameAnimationData.getInstance().getImage(skin, animation, direction, animationIndex);
-    }
 
+    public BufferedImage getImage() {
+    	GameAnimationData gad = GameAnimationData.getInstance();
+    	if( animationIndex >= gad.size(skin, animation, direction) ) {
+    		animationIndex = 0;
+    		animation = Strings.Still;
+    	}
+    	return gad.getImage(skin, animation, direction, animationIndex++); 
+    }
 }

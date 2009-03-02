@@ -40,6 +40,7 @@ public class Engine {
         maps = Maps.getInstance();
         logicModel = new LogicModel();
         ai = new AI();
+        createEnemies(3);
     }
     /**
      * Adds an Client to the LogicModel

@@ -15,7 +15,7 @@ public final class Strings {
 	public static final int KeyMoveWest = KeyEvent.VK_A;
 	public static final int KeyMoveEast = KeyEvent.VK_D;
 	public static final int KeyAttack 	= KeyEvent.VK_L;
-	public static final int KeyPause 	= KeyEvent.VK_ESCAPE;
+	public static final int KeyPause 	= KeyEvent.VK_P;
 	public static final String North = "north";
 	public static final String West = "west";
 	public static final String South = "south";

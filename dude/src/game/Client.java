@@ -33,7 +33,7 @@ public abstract class Client extends Observable implements Runnable {
     	this.id = id;
     	this.engine = engine;
         this.gc=gc;
-        gc.setPoint(point);
+        gc.updateCoordinates(point);
         aktivitet = new Thread(this);
     }
     public Client(int id, Point point, String name, GameCharacter gc){
@@ -42,7 +42,7 @@ public abstract class Client extends Observable implements Runnable {
     	// communication engine instead!
     	this.engine = null;
         this.gc=gc;
-        gc.setPoint(point);
+        gc.updateCoordinates(point);
         aktivitet = new Thread(this);
     }
     /*****************************************************/
@@ -51,7 +51,6 @@ public abstract class Client extends Observable implements Runnable {
      * Runs all actions and uses interpretCommand
      * to send actions
      */
-    @SuppressWarnings("unchecked")
     public void runActions(){
     	ArrayList<String> tmp = gc.runActions();
     	
@@ -106,7 +105,10 @@ public abstract class Client extends Observable implements Runnable {
     }
     
 
-    
+    /**
+     * Get's the Clients GameCharacter
+     * @return the GameCharacter
+     */
     public GameCharacter getGameCharacter()
     {
     	return gc;
@@ -125,17 +127,27 @@ public abstract class Client extends Observable implements Runnable {
     		return true;
     	return false;
     }
-    
+    /**
+     * Checks if the Client is paused
+     * @return true if paused
+     */
     public boolean isPaused()
     {
     	return gc.paused;
     }
-    
+    /**
+     * Toggle the Clients paused state
+     * 
+     */
     public void togglePaused()
     {
     	gc.paused = !isPaused();
     }
-    
+    /**
+     * Resumes the thread after pause
+     * Check if isPaused() == false before this is used
+     * otherwise it will not have any effect
+     */
     public synchronized void resumeThread() {
     	if( !isPaused() )
     		notify();

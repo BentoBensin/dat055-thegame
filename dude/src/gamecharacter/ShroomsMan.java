@@ -14,7 +14,7 @@ import main.Strings;
 public class ShroomsMan extends GameCharacter {
 	static final long serialVersionUID=12332;
 	public ShroomsMan(String name, Point point, boolean isPlayer){
-		super(new TreeSword(), 0.5, 100, 100,100,name, point, isPlayer); //speed, width and height.
+		super(new TreeSword(), 0.5, 100, 100,100,name, point,"shroomsman", isPlayer); //speed, width and height.
 		newMovePattern();
 	}
 
