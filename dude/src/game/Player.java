@@ -4,7 +4,7 @@ import gamecharacter.GameCharacter;
 
 import java.awt.Point;
 import java.util.ArrayList;
-
+import main.Envelope;
 import main.Strings;
 
 /**
@@ -99,7 +99,7 @@ public class Player extends Client{
 				e.printStackTrace();
 			}
 			setChanged();
-			notifyObservers(gc);
+			notifyObservers( new Envelope(gc));
 		}
 	}
 	/**

@@ -29,19 +29,10 @@ public class CommandMove extends Command
     
     public void execute(Client client)
     {
-    	System.out.println("försöker köra move för: " + client.getGameCharacter().getName());
     	if( client != null) {
     		int x = client.getGameCharacter().getPoint().x;
     		int y = client.getGameCharacter().getPoint().y;
     		double stepSize = globalStepSize * client.getGameCharacter().getSpeed();
-		
-           /* switch(client.getDirection())
-            {
-                case "NORTH": y-=stepSize; break;
-                case "SOUTH": y+=stepSize; break;
-                case "EAST": x+=stepSize; break;
-                case "WEST": x-=stepSize; break;
-            }*/
 
 			if(client.getGameCharacter().getDirection().equals(Strings.North)) y-=stepSize;
 			if(client.getGameCharacter().equals(Strings.South)) y+=stepSize;
@@ -55,7 +46,7 @@ public class CommandMove extends Command
 			// tog bort && engine.checkSpot( 1,x,y ) från nedanstående så länge
 			if (engine.checkSpot( 0, x, y ))
             {
-            	System.out.println("Position ändras. Från " + client.getGameCharacter().getPoint() + " till " + new Point(x,y));
+            	//System.out.println("Position ändras. Från " + client.getGameCharacter().getPoint() + " till " + new Point(x,y));
                 client.getGameCharacter().updateCoordinates(new Point(x,y));
             }
     	}

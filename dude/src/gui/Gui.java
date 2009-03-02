@@ -4,13 +4,10 @@ package gui;
 
 import game.IDGen;
 import game.Player;
-import gamecharacter.GameAnimationData;
 import gamecharacter.GameCharacter;
 import gamecharacter.Warrior;
-import map.*;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.FlowLayout;
@@ -23,6 +20,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Observable;
@@ -38,6 +36,7 @@ import javax.swing.SwingUtilities;
 
 import main.Envelope;
 import main.Strings;
+import map.Maps;
 
 /**
  * The GUI class controls all the interaction between the user and the program.
@@ -173,7 +172,7 @@ public class Gui implements Observer, ActionListener {
 	public JPanel createIngameMenu(){
 		JPanel menu = new JPanel();
 		menu.setLayout( new FlowLayout());
-		menu.setBackground( new Color(Strings.WindowBackgroundRed,Strings.WindowBackgroundGreen,Strings.WindowBackgroundBlue));
+		//menu.setBackground( new Color(Strings.WindowBackgroundRed,Strings.WindowBackgroundGreen,Strings.WindowBackgroundBlue));
 		for( String function : Strings.InGameMenuFunctions) {
 			if (cL.get(function)!=null){
 				JButton button = new JButton(cL.get(function));
@@ -229,6 +228,9 @@ public class Gui implements Observer, ActionListener {
 			//gc.addAction(Strings.Still);
 		}
 	};
+	/**
+	 * This handels the actions done by keybord
+	 */
 	public void actionPerformed( ActionEvent e) {
 			try {
 				this.getClass().getMethod(e.getActionCommand()).invoke(this);
@@ -237,6 +239,9 @@ public class Gui implements Observer, ActionListener {
 			} 
 	}
 	
+	/**
+	 * Setsup and starts the game
+	 */
 	public void startGame() {
 		menu.setVisible(false);
 		String jOptionPane = (String) JOptionPane.showInputDialog(frame,cL.get(Strings.GivePlayerName),cL.get(Strings.PlayerName),JOptionPane.ERROR_MESSAGE);
@@ -252,6 +257,10 @@ public class Gui implements Observer, ActionListener {
 			);
 		else menu.setVisible(true);
 	}
+	/**
+	 * Sets an player connected to the GUI ( observer mode)
+	 * @param player
+	 */
 	private void setPlayer(Player player){
 		if(player != null){
 			player.addObserver(this);
@@ -279,14 +288,23 @@ public class Gui implements Observer, ActionListener {
 		 guiPane.add( menu, JLayeredPane.POPUP_LAYER );
 	}
 	
+	/**
+	 * Loads an game.. Not working atm
+	 */
 	public void loadGame() {
 		player.getGameCharacter().addAction(Strings.ButtonLoad);
 		System.out.println(cL.get(Strings.ButtonLoad));
 	}
+	/**
+	 * Saves an game... Not working atm
+	 */
 	public void saveGame() {
 		player.getGameCharacter().addAction(Strings.ButtonSave);
 		System.out.println(cL.get(Strings.ButtonSave));
 	}
+	/**
+	 * Exits the game, this terminates the game
+	 */
 	public void exitGame() {
 		int choice=(int)JOptionPane.showConfirmDialog(frame,
 	            cL.get(Strings.exitTitle), cL.get(Strings.exitQuestion), JOptionPane.YES_NO_OPTION);
@@ -310,9 +328,13 @@ public class Gui implements Observer, ActionListener {
 	 */
 
 	public void update(Observable o, Object arg) {
+		System.out.println("hej hopp nu kör vi update");
 		if( arg == null ) return;
+		System.out.println("steg2");
 		if (arg instanceof Envelope) {
-			LinkedList<GameCharacter> remoteList = ((Envelope)arg).getGuiLinkedList();
+			System.out.println("steg3");
+			ArrayList<GameCharacter> remoteList = ((Envelope)arg).getGuiLinkedList();
+			System.out.println("Längden på listan = " + remoteList.size());
 			for (GameCharacter gameCharacter : remoteList)
 				if (!currentList.keySet().contains(gameCharacter)) 
 					currentList.put(gameCharacter, null);
@@ -323,7 +345,12 @@ public class Gui implements Observer, ActionListener {
 		SwingUtilities.invokeLater(r);
 	}
 
-		
+	/**
+	 * Private helper class that handels all the updating and adding to the
+	 * screen when the game is started	
+	 * @author Mattias
+	 *
+	 */
 	private class Runner implements Runnable {
 		public void run() {
 				if( !removeList.isEmpty()) 
@@ -332,8 +359,6 @@ public class Gui implements Observer, ActionListener {
 				for (GameCharacter gameCharacter : currentList.keySet()) {
 					if (currentList.get(gameCharacter) == null) {
 						currentList.put(gameCharacter, addGraphic());
-						if( gameCharacter == player.getGameCharacter() )
-							currentList.get(gameCharacter).setLocation( new Point(350,250));
 					}
 					if( !gameCharacter.paused )
 						updateGraphic(gameCharacter);
@@ -379,14 +404,7 @@ public class Gui implements Observer, ActionListener {
 		 */
 		private void updateGraphic(GameCharacter gameCharacter) {
 			if ( gameCharacter != null ){
-				GameAnimationData gad = GameAnimationData.getInstance();
-				int index = gameCharacter.getAnimationIndex();
-				String skin = gameCharacter.getSkin();
-				String action = gameCharacter.getAnimationType();
-				String direction = gameCharacter.getDirection();
-				if( index > gad.size(skin, action, direction) )
-					index = 0;
-				BufferedImage bimg = gad.getImage(skin, action, direction, index);
+				BufferedImage bimg = gameCharacter.getImage();
 				Point point = (Point)gameCharacter.getPoint().clone();
 			// move everybody else
 				if (gameCharacter != gc) 
@@ -399,16 +417,13 @@ public class Gui implements Observer, ActionListener {
 				currentList.get(gameCharacter).setLocation(point);
 				
 				if(gameCharacter == gc){
-					System.out.println("\noldspot: "+oldspot.toString());
-					System.out.println("\ngc (Point): "+gc.getPoint().toString());
 			    	if(!(oldspot.equals((Point) gc.getPoint()) )){
 			    	BufferedImage bakgr = kartor.getCurrentBackground( gc.getPoint() );
 					backgroundPanel.setBackImage(bakgr );
 			    	}
 			    	oldspot = (Point)gc.getPoint().clone();
 			    }
-			}
-				//System.out.println("point is "+point+" bimg is "+bimg+" gc is "+gameCharacter);
+			}				
 		}
 		
 	}

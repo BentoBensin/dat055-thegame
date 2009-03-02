@@ -4,7 +4,7 @@
 package main;
 
 import gamecharacter.GameCharacter;
-import java.util.LinkedList;
+import java.util.ArrayList;
 /**
  * A class that wraps up a LinkedList
  * @file Envelope.java
@@ -13,12 +13,12 @@ import java.util.LinkedList;
  *
  */
 public class Envelope {
-	private LinkedList<GameCharacter> l;
-	public Envelope(LinkedList<GameCharacter> l)
+	private ArrayList<GameCharacter> l;
+	public Envelope(ArrayList<GameCharacter> l)
 	{
 		this.l = l;
 	}
-	public LinkedList<GameCharacter> getGuiLinkedList()
+	public ArrayList<GameCharacter> getGuiLinkedList()
 	{
 		return l;
 	}

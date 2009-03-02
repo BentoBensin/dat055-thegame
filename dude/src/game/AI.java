@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import main.Envelope;
 import main.Strings;
 /**
  * AI is responsible for the monsters decisions; whether it is going to follow a
@@ -132,12 +133,12 @@ public class AI implements GenericInterface, Observer
       * @param O
       * @param arg
       */
-    @SuppressWarnings("unchecked")
         public void update(Observable o, Object arg) 
         {
-        	if( o instanceof Client && arg instanceof ArrayList){
+        	if( o instanceof Client && arg instanceof Envelope){
+        		Envelope env = (Envelope) arg;
         		ArrayList<GameCharacter> argC = new ArrayList<GameCharacter>();
-        		for(Object a : (ArrayList<Object>)arg)
+        		for(Object a : env.getGuiLinkedList())
         			if (a instanceof GameCharacter){
         				argC.add((GameCharacter)a);
         			}

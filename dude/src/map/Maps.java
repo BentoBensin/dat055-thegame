@@ -82,8 +82,8 @@ public class Maps {
     	//Getting the tile at window position (0,0) by truncating the x/y positions
         	// xrest and yrest variables are needed for offsetting the tile images correctly
     	
-    	String temp = (String)(z+"-"+xpos+"-"+ypos);
-    	System.out.println("\n"+temp);
+    	//String temp = (String)(z+"-"+xpos+"-"+ypos);
+    	//System.out.println("\n"+temp);
     	MapPiece piece = getMapPiece(z, xpos, ypos);
     	piece.toString();
         //MapPiece piece = map.get((String)(z+"-"+xpos+"-"+ypos));

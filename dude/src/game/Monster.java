@@ -10,9 +10,12 @@ package game;
  */
  
 import gamecharacter.GameCharacter;
-import main.Strings;
+
 import java.awt.Point;
 import java.util.ArrayList;
+
+import main.Envelope;
+import main.Strings;
 
 public class Monster extends Client {
 	private ArrayList<GameCharacter> temp;
@@ -79,7 +82,7 @@ public class Monster extends Client {
 			if( temp != null)
 				System.out.println("Monster letar efter nrliggande " + temp.size() );												// detta funkar
 			setChanged();
-			notifyObservers(temp);
+			notifyObservers( new Envelope(temp));
 		}
 	}
 	/**
