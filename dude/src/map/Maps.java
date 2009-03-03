@@ -84,8 +84,9 @@ public class Maps {
     	
     	//String temp = (String)(z+"-"+xpos+"-"+ypos);
     	//System.out.println("\n"+temp);
+    	if(z == 0){
     	MapPiece piece = getMapPiece(z, xpos, ypos);
-    	piece.toString();
+    	
         //MapPiece piece = map.get((String)(z+"-"+xpos+"-"+ypos));
         if (piece != null)
         {
@@ -95,6 +96,20 @@ public class Maps {
             }
         }
         return false;
+    	}
+    	else{
+    	MapPiece piece = getMapPiece(z, xpos, ypos);
+        
+        
+           if (piece == null || piece.isWalkable())
+           {
+             return true;
+           }
+           else{
+            return false;
+           }
+        }
+      
     }
     /**
      * loads a map into the program
@@ -299,7 +314,7 @@ public class Maps {
     			 if( tmp.equals("tree.gif")){
     				 tileImage = tree;
     				 //drawGraphics.drawImage(tileImage,((int)(40*xrest)+(40*x)),(int)(40*yrest)+(40*y),null);
-    				 drawGraphics.drawImage(tileImage,((int)(MapPiece.xsize*xrest)+(MapPiece.xsize*x)),(int)(MapPiece.ysize*yrest)+(MapPiece.ysize*y),null);
+    				 drawGraphics.drawImage(tileImage,(int)( (MapPiece.xsize*xrest)+(MapPiece.xsize*x) ),(int)((MapPiece.ysize*yrest)+(MapPiece.ysize*y))-(tileImage.getHeight()/2),null);
     			 }
     			 else{
     				 tileImage = black;
