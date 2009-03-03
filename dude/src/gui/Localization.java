@@ -44,7 +44,7 @@ public class Localization {
 		LocalizationEnglish.put(Strings.GameTitle	, 				"The Game");
 				
 		LocalizationSwedish.put(Strings.InGameMenuFunctions[0],"Stara spelet");
-		LocalizationSwedish.put(Strings.InGameMenuFunctions[1],"Inst√§llningar");
+		LocalizationSwedish.put(Strings.InGameMenuFunctions[1],"Inst‰llningar");
 		LocalizationSwedish.put(Strings.InGameMenuFunctions[2],"Ladda");
 		LocalizationSwedish.put(Strings.InGameMenuFunctions[3],"Spara");
 		LocalizationSwedish.put(Strings.InGameMenuFunctions[4],"Avsluta");
