@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -85,11 +86,35 @@ public class GameAnimationData {
     	addImageSet("warrior/still/east/ee","gif",1);
     	addImageSet("warrior/still/west/ww","gif",1);
 	}
+	/**
+	 * Returns the instance for this Singleton
+	 * @return GameAnimationData
+	 */
 	public static GameAnimationData getInstance()
 	{
 		if( instance == null) instance = new GameAnimationData();
 		return instance;
 	}
+	/**
+	 * list the actions that we have animations for
+	 * @param skin
+	 * @return Collection<String>
+	 */
+	public Collection<String> listActions(String skin)
+	{
+		Object actions = image.get(skin);
+		if( actions != null && actions instanceof HashMap)
+		{
+			HashMap<String,Object> map = (HashMap<String,Object>)actions;
+			return map.keySet();
+		}
+		return null;
+	}
+	/**
+	 * Creates a black picture... that you didn't see coming ;)
+	 * 
+	 * @return BufferedImage
+	 */
 	private BufferedImage whitePicture()
 	{
 		  int width = 100; // Dimensions of the image
@@ -207,7 +232,6 @@ public class GameAnimationData {
 			String file = imageDirectory+path+fileNum+"."+filetype;
 			try {
 				stepImage.add( ImageIO.read(new File(file)) );
-				System.out.println("Added: "+file);
 			} catch (NullPointerException e) {
 				System.out.println(file);
 				e.printStackTrace();
