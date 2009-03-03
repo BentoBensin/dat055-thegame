@@ -1,6 +1,9 @@
 package gamecharacter;
 
-public class MovePattern {
+import java.io.Serializable;
+
+public class MovePattern implements Serializable{
+	static final long serialVersionUID = 123999;  
     public int length;
     public String direction;
     

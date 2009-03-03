@@ -215,7 +215,6 @@ public class Gui implements Observer, ActionListener {
 					gc.addAction(Strings.Attack);
 					break;
 				}
-				return;
 			}
 			if (e.getKeyCode() == Strings.KeyPause) {
 				gc.addAction(Strings.Pause);
@@ -225,7 +224,7 @@ public class Gui implements Observer, ActionListener {
 		}
 
 		public void keyReleased(KeyEvent e) {
-			//gc.addAction(Strings.Still);
+			//nothing atm
 		}
 	};
 	/**
@@ -293,14 +292,17 @@ public class Gui implements Observer, ActionListener {
 	 * Loads an game.. Not working atm
 	 */
 	public void loadGame() {
-		player.getGameCharacter().addAction(Strings.ButtonLoad);
+		menu.setVisible(false);
+		setPlayer(new Player(IDGen.generateID(),new Warrior("anonym",new Point(100,100),true))); 
+		gc.addAction(Strings.ButtonLoad);
 		System.out.println(cL.get(Strings.ButtonLoad));
 	}
 	/**
 	 * Saves an game... Not working atm
 	 */
 	public void saveGame() {
-		player.getGameCharacter().addAction(Strings.ButtonSave);
+		if( gc!= null )
+			player.getGameCharacter().addAction(Strings.ButtonSave);
 		System.out.println(cL.get(Strings.ButtonSave));
 	}
 	/**
@@ -329,13 +331,9 @@ public class Gui implements Observer, ActionListener {
 	 */
 
 	public void update(Observable o, Object arg) {
-		System.out.println("hej hopp nu kör vi update");
 		if( arg == null ) return;
-		System.out.println("steg2");
 		if (arg instanceof Envelope) {
-			System.out.println("steg3");
 			ArrayList<GameCharacter> remoteList = ((Envelope)arg).getGuiLinkedList();
-			System.out.println("Längden på listan = " + remoteList.size());
 			for (GameCharacter gameCharacter : remoteList)
 				if (!currentList.keySet().contains(gameCharacter)) 
 					currentList.put(gameCharacter, null);
@@ -424,7 +422,6 @@ public class Gui implements Observer, ActionListener {
 						point.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 				currentList.get(gameCharacter).setImage(bimg);
 				currentList.get(gameCharacter).setLocation(point);
-				System.out.println(gameCharacter.getName() + " har position " + point + " och i erkliga världen: " + gameCharacter.getPoint());
 			}				
 		}
 		
