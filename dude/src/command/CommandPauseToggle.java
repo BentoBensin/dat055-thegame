@@ -20,15 +20,17 @@ public class CommandPauseToggle extends Command
         super(engine);
     }
  
+    /**
+     * Executes the pause command
+     * pauses all clients if they are unpaused and
+     * unpauses if paused
+     */
     public void execute(Client client)
     {
-    	client.togglePaused();
-    	System.out.println("Nu ska vi pausa:" + client.isPaused() );
-    	if( !client.isPaused() ) {
-    		for( Client c : engine.getAllClients() ){
+    	for( Client c : engine.getAllClients() ){
+    		c.togglePaused();
+    		if( !c.isPaused())
     			c.resumeThread();
-    		}
-    	}
-    	
+    	}    	
     }
 }
