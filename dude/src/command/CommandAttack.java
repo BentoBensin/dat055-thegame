@@ -63,8 +63,10 @@ public class CommandAttack extends Command
                  for (GameCharacter gamechar : targets)
                          {
                                 // client ain't me or 
-                                if( gamechar != client.getGameCharacter() &&  (gamechar.isPlayer() || ( gamechar.isPlayer() && !gc.isPlayer() ) )  ){
+                	 			// Attack the player
+                                if( gamechar != client.getGameCharacter() &&  gamechar.isPlayer() && gamechar.isAlive() ) {
                                          /*
+                                          * 
                                           * int damage = (weapon.getStrength*gc.getDexterity*gc.getStrength
                                           *                             - gc.getDefense);
                                           * if (damage < 0 ) c.changeHealth(damage);
@@ -81,7 +83,34 @@ public class CommandAttack extends Command
                                          gc.addCoolDown(gc.getPrimary(),gc.getPrimary().getCoolDown()) ;
                                          // 100% hit each time, we implement stuff like that later
                                          gamechar.addStun(weapon.getStunType(),weapon.getStunTime());
+                                         System.out.println("\nPlayer blir attackerad");
                                  }
+                                // om den som attackerar är player och gamecharacter är levande och gamechar inte är player
+                                else if( gc.isPlayer() && gamechar.isAlive() && !gamechar.isPlayer() )
+                                {
+                                	/*
+                                     * 
+                                     * int damage = (weapon.getStrength*gc.getDexterity*gc.getStrength
+                                     *                             - gc.getDefense);
+                                     * if (damage < 0 ) c.changeHealth(damage);
+                                     * defense_skill (%)
+                                     * strength_skill
+                                     * 
+                                     * strength
+                                     * stamina (hälsa)
+                                     * agility (smidighet
+                                     * dexterity ( skill på vapnet ) 
+                                     * intelligence (styrka på spells / mängd mana )
+                                     */
+                                    gamechar.changeHealth( -weapon.getStrength() );
+                                    gc.addCoolDown(gc.getPrimary(),gc.getPrimary().getCoolDown()) ;
+                                    // 100% hit each time, we implement stuff like that later
+                                    gamechar.addStun(weapon.getStunType(),weapon.getStunTime());
+                                    System.out.println("\nMonster blir attackerad");
+                                }
+                                
+                             // client ain't me or 
+                                
                          }
          }
 }
