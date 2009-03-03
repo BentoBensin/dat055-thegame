@@ -275,9 +275,10 @@ public class Gui implements Observer, ActionListener {
 	 */
 	public void settings() {
 		menu.setVisible(false);
+		int i = 0;
 		String[] possibleValues = new String[cL.availableLanguages().length];
 		for(String langIterate : cL.availableLanguages())
-			possibleValues[possibleValues.length]=langIterate;
+			possibleValues[i++]=langIterate;
 			lang = (String)JOptionPane.showInputDialog(frame,
 		            cL.get(Strings.ChooseOne), cL.get(Strings.Input),
 		            JOptionPane.INFORMATION_MESSAGE, null,
@@ -407,22 +408,23 @@ public class Gui implements Observer, ActionListener {
 				BufferedImage bimg = gameCharacter.getImage();
 				Point point = (Point)gameCharacter.getPoint().clone();
 			// move everybody else
-				if (gameCharacter != gc) 
-					point.translate( (350 - gameCharacter.getPoint().x), (250 - gameCharacter.getPoint().y) );
+			//TODO if network we need to solve this on another way
+				if (!gameCharacter.isPlayer()) 
+					point.translate( (350 - gc.getPoint().x), (250 - gc.getPoint().y) );
 			// The player want's to be centered in the window, atleast we think so ;)
-				else point = new Point(350,250);
+				else{
+					if(!(oldspot.equals(point) )){
+				    	BufferedImage bakgr = kartor.getCurrentBackground( point );
+						backgroundPanel.setBackImage(bakgr );
+						oldspot = (Point)point.clone();
+				    	}
+					point = new Point(350,250);
+				}
 				if ( bimg.getHeight() > 100 )
 						point.translate( ((100-bimg.getHeight())/2) , ((100-bimg.getHeight())/2) );
 				currentList.get(gameCharacter).setImage(bimg);
 				currentList.get(gameCharacter).setLocation(point);
-				
-				if(gameCharacter == gc){
-			    	if(!(oldspot.equals((Point) gc.getPoint()) )){
-			    	BufferedImage bakgr = kartor.getCurrentBackground( gc.getPoint() );
-					backgroundPanel.setBackImage(bakgr );
-			    	}
-			    	oldspot = (Point)gc.getPoint().clone();
-			    }
+				System.out.println(gameCharacter.getName() + " har position " + point + " och i erkliga världen: " + gameCharacter.getPoint());
 			}				
 		}
 		
