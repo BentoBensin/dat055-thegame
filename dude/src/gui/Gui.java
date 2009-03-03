@@ -242,19 +242,21 @@ public class Gui implements Observer, ActionListener {
 	 * Setsup and starts the game
 	 */
 	public void startGame() {
-		menu.setVisible(false);
-		String jOptionPane = (String) JOptionPane.showInputDialog(frame,cL.get(Strings.GivePlayerName),cL.get(Strings.PlayerName),JOptionPane.ERROR_MESSAGE);
-		if( jOptionPane != null) 
-			setPlayer(
-					new Player( 
-							IDGen.generateID(), 
-							new Warrior(jOptionPane, 
-									new Point(100,100), 
-									true
-							) 
-					) 
-			);
-		else menu.setVisible(true);
+		if(player == null){
+			menu.setVisible(false);
+			String jOptionPane = (String) JOptionPane.showInputDialog(frame,cL.get(Strings.GivePlayerName),cL.get(Strings.PlayerName),JOptionPane.ERROR_MESSAGE);
+			if( jOptionPane != null) 
+				setPlayer(
+						new Player( 
+								IDGen.generateID(), 
+								new Warrior(jOptionPane, 
+										new Point(100,100), 
+										true
+								) 
+						) 
+				);
+			else menu.setVisible(true);
+		}
 	}
 	/**
 	 * Sets an player connected to the GUI ( observer mode)

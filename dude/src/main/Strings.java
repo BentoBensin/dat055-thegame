@@ -58,8 +58,7 @@ public final class Strings {
 	public static final int FullScreenBackgroundRed = 6;
 	public static final int FullScreenBackgroundGreen = 107;
 	public static final int FullScreenBackgroundBlue = 1;
-	public static final String[] InGameMenuFunctions = {"startGame","settings","loadGame","saveGame","exitGame"};
-
+	public static final String[] InGameMenuFunctions = {"startGame","settings","exitGame"};
 	public Strings(){
 	}	 
 }

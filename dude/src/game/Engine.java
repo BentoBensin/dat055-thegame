@@ -59,9 +59,8 @@ public class Engine {
      */
     public void createEnemies( int n ){
     	Client monster;
-    	
     	for( int i = 0 ; i < n ; i++ ) {
-    		monster = new Monster( IDGen.generateID(),new Point( (int)Math.round(-600*Math.random()), (int)Math.round(-400*Math.random())), new ShroomsMan("Monster",new Point( i*200, i*100),false), this);
+    		monster = new Monster( IDGen.generateID(),new Point( (int)Math.round(-400*Math.random()), (int)Math.round(-300*Math.random())), new ShroomsMan("Monster",new Point( i*200, i*100),false), this);
     		monster.addObserver( ai );
     		addClient(monster );
     		monster.startThread();

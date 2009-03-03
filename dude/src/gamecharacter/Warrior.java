@@ -5,6 +5,9 @@ import java.awt.Point;
 import main.Strings;
 
 /**
+ * This is the bas class of warrior determins that the gamecharacter
+ * uses warrior skin and has it's own movepattern
+ * 
  * @file Warrior.java
  * @version 0.1
  * @author Teddie

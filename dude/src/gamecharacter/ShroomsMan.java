@@ -6,6 +6,9 @@ import java.awt.Point;
 import main.Strings;
 
 /**
+ * This is the bas class of shroomsman determins that the gamecharacter
+ * uses shroomsman skin and has it's own movepattern
+ * 
  * @file ShroomsMan.java
  * @version 0.1
  * @author Teddie
