@@ -1,7 +1,10 @@
 package items;
 
-public class Weapon extends Item {
+import java.io.Serializable;
 
+public class Weapon extends Item implements Serializable{
+
+	final static long serialVersionUID = 124998;
 	private int strength, stunTime, range;
 	private String stunType;
 	

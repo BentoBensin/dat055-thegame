@@ -2,9 +2,7 @@ package command;
 import game.Engine;
 
 import game.Client;
-import game.Player;
 import gamecharacter.GameCharacter;
-import game.IDGen;
 import java.io.*;
 
 /**
@@ -36,7 +34,7 @@ public class CommandLoad extends Command {
 						new FileInputStream("save.sav"));
 			Object loadedGameChar=in.readObject();
 			while(loadedGameChar!=null){ 
-				engine.addClient(new Player(IDGen.generateID(),(GameCharacter)loadedGameChar)); //TODO Mecka nr det ndrats till GC
+				client.setGameCharacter((GameCharacter)loadedGameChar);
 			}
 			
 		}

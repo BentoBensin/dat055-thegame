@@ -77,7 +77,7 @@ public abstract class Client extends Observable implements Runnable {
      * @param cmd
      */
     private void interpretCommand(String cmd) {
-    	if( !gc.isStunned() && gc.isAlive() ) 
+    	if( gc.isAlive() || (!gc.isAlive() && !gc.isAction(cmd)) ) 
     		engine.interpretCommand(cmd, this.id);
     }
 
@@ -151,6 +151,13 @@ public abstract class Client extends Observable implements Runnable {
     public synchronized void resumeThread() {
     	if( !isPaused() )
     		notify();
+    }
+    /**
+     * Sets an new Gamecharacter to the Client
+     * @param gc
+     */
+    public void setGameCharacter( GameCharacter gc){
+    	this.gc = gc;
     }
     /**
      * abstract methods

@@ -293,8 +293,8 @@ public class Gui implements Observer, ActionListener {
 	 */
 	public void loadGame() {
 		menu.setVisible(false);
-		setPlayer(new Player(IDGen.generateID(),new Warrior("anonym",new Point(100,100),true))); 
-		gc.addAction(Strings.ButtonLoad);
+			setPlayer(new Player(IDGen.generateID(),new Warrior("anonym",new Point(100,100),true))); 
+			gc.addAction(Strings.ButtonLoad);
 		System.out.println(cL.get(Strings.ButtonLoad));
 	}
 	/**

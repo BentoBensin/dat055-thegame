@@ -49,7 +49,7 @@ public class Player extends Client{
 	*/
 	private void init(){
 		intervall = 50;
-		ressurectionIntervall = intervall*10;
+		ressurectionIntervall = intervall*1000;
 		ressurectionTime = 0;
 		ress = false;
 		startThread();

@@ -58,7 +58,7 @@ public class Engine {
     	Client monster;
     
     	for( int i = 0 ; i < n ; i++ ) {
-    		monster = new Monster( IDGen.generateID(),new Point( i*200, i*100), new ShroomsMan("Monster",new Point( i*200, i*100),false), this);
+    		monster = new Monster( IDGen.generateID(),new Point( i*100, i*20), new ShroomsMan("Monster",new Point( i*200, i*100),false), this);
     		monster.addObserver( ai );
     		addClient(monster );
     		monster.startThread();

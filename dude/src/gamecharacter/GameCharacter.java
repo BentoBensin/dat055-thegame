@@ -172,6 +172,11 @@ public abstract class GameCharacter implements Serializable {
 	}
 	
 
+	public boolean isAction(String action){
+		GameAnimationData gad = GameAnimationData.getInstance();
+		return (gad.listActions(skin).contains(action));
+	}
+	
     /**
      * Set's an new type of animation
      * Unvalid types will throw an IllegalArgumentException
@@ -181,10 +186,9 @@ public abstract class GameCharacter implements Serializable {
      * @throws NullPointerException
      */
     public void setAnimationType(String type)  {
-    	GameAnimationData gad = GameAnimationData.getInstance();
     	if( type == null)
     		throw new NullPointerException("NullPointer in setAnimationType for Client " + name);
-    	if( gad.listActions(skin).contains(type) )
+    	if( isAction(type) )
     	{
 	    	if( !type.equals(animation))
 	    		animationIndex = 0;
@@ -348,8 +352,14 @@ public abstract class GameCharacter implements Serializable {
     	GameAnimationData gad = GameAnimationData.getInstance();
     	if( animationIndex >= gad.size(skin, animation, direction) ) {
     		animationIndex = 0;
-    		animation = Strings.Still;
-    	}
+    		if( !isAlive() && animation.equals(Strings.Die)){
+    			animationIndex = gad.size(skin, animation, direction)-1;
+    		}
+    		if( !isAlive())
+    			animation = Strings.Die;
+    		if( isAlive())
+    			animation = Strings.Still;
+      	}
     	return gad.getImage(skin, animation, direction, animationIndex++); 
     }
 }
