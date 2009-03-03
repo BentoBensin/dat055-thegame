@@ -45,6 +45,7 @@ public abstract class GameCharacter implements Serializable {
 			int health, String name, Point point, String skin, boolean isPlayer){
 		paused = false;
 		patterns = new LinkedList<MovePattern>();
+		
 		this.weapon = weapon;
 		this.speed = speed;
 		this.width = width;
@@ -70,13 +71,18 @@ public abstract class GameCharacter implements Serializable {
 	 * @return Next move pattern.
 	 */
 	public void followPattern(){
-		if( moveRemaining-- != 0 )
+		if( moveRemaining-- > 0 )
+		{
+			this.setDirection(direction);
+			this.addAction(Strings.Move);
 			return;
+		}
 		else{
 			MovePattern tmp = patterns.pop();
 			direction = tmp.direction;
 			moveRemaining = tmp.length;
 			patterns.addLast(tmp);
+			followPattern();
 		}
 	}
 
