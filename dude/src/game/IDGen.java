@@ -37,7 +37,10 @@ public class IDGen
     public static int generateID(){
         return idCount++;
     }
-   
+   /**
+    * returns the number of id's generated
+    * @return
+    */
     public int numberOfIDs(){
         return idCount;
     }

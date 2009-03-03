@@ -58,13 +58,13 @@ public class CommandAttack extends Command
                 	 return;
                  }
                  
-                 System.out.println("******************************************* nu attackerar jag");    
+                 System.out.println("******************************************* nu attackerar " +gc.getName());    
                  // We can attack, let's start..
                  for (GameCharacter gamechar : targets)
                          {
                                 // client ain't me or 
                 	 			// Attack the player
-                                if( gamechar != client.getGameCharacter() &&  gamechar.isPlayer() && gamechar.isAlive() ) {
+                                if( gamechar != gc &&  gamechar.isPlayer() && gamechar.isAlive() ) {
                                          /*
                                           * 
                                           * int damage = (weapon.getStrength*gc.getDexterity*gc.getStrength
@@ -86,7 +86,7 @@ public class CommandAttack extends Command
                                          System.out.println("\nPlayer blir attackerad");
                                  }
                                 // om den som attackerar är player och gamecharacter är levande och gamechar inte är player
-                                else if( gc.isPlayer() && gamechar.isAlive() && !gamechar.isPlayer() )
+                                else if( gc.isPlayer() && gamechar.isAlive() && gc != gamechar )
                                 {
                                 	/*
                                      * 

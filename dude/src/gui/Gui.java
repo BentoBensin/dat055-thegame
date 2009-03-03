@@ -192,7 +192,7 @@ public class Gui implements Observer, ActionListener {
 	 */
 	private KeyListener kl = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
-			if( gc != null && !gc.paused){ 
+			if( gc != null && !gc.paused && gc.isAlive()){ 
 				switch (e.getKeyCode())
 				{
 				case Strings.KeyMoveNorth :

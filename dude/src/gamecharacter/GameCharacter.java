@@ -171,7 +171,11 @@ public abstract class GameCharacter implements Serializable {
 		return (health>0);
 	}
 	
-
+	/**
+	 * Checks if the possible action is an valid action
+	 * @param action
+	 * @return true if action
+	 */
 	public boolean isAction(String action){
 		GameAnimationData gad = GameAnimationData.getInstance();
 		return (gad.listActions(skin).contains(action));

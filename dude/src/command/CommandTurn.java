@@ -19,8 +19,7 @@ public class CommandTurn extends Command
     }
 
     /**
-     * Känns rätt hopplöst att kommentera denna atm
-     * Should turn the client towars a direction.
+     * Executes the turn command
      */
     public void execute(Client client)
     {

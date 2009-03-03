@@ -100,6 +100,7 @@ public class GameAnimationData {
 	 * @param skin
 	 * @return Collection<String>
 	 */
+	@SuppressWarnings("unchecked")
 	public Collection<String> listActions(String skin)
 	{
 		Object actions = image.get(skin);

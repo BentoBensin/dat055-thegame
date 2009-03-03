@@ -18,7 +18,9 @@ public class ShroomsMan extends GameCharacter {
 		newMovePattern();
 	}
 
-	
+	/**
+	 * Creates new movepatterns
+	 */
 	public void newMovePattern(){
 		addPattern(new MovePattern(130, Strings.South));
 		addPattern(new MovePattern(100, Strings.East));

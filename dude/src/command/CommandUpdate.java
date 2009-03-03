@@ -19,7 +19,9 @@ public class CommandUpdate extends Command{
 	public CommandUpdate(Engine engine){
         super(engine);
     }
- 
+ /**
+  * Executes the update command
+  */
     public void execute(Client client)
     {
     	System.out.println("Client requests an update");

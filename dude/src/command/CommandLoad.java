@@ -19,9 +19,9 @@ public class CommandLoad extends Command {
 		
 	}
 	@Override
-	/**
-	 * The command specific method doing 
-	 */
+	 /**
+	  * Executes the load command
+	  */
 	public void execute(Client client) 
 	{
 		//pause clients

@@ -12,7 +12,6 @@ import main.Strings;
  * @version 0.2
  * @author Mattias Lgdberg
  */
-//TODO KOMMENTERA!!!!!!!
 public class Player extends Client{
 	
 	static final long serialVersionUID = 00001234567; 
