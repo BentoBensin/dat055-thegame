@@ -74,13 +74,13 @@ public class Monster extends Client {
 			}
 			if( !this.getGameCharacter().isAlive() && ress ) {
 				this.getGameCharacter().changeHealth(100);
-				getGameCharacter().setSuperAnimationType(Strings.Still);
+				getGameCharacter().setAnimationType(Strings.Still);
 				ress = false;
 			}
 			runActions();
 			temp = engine.nearbyClients(this, 100);
 			if( temp != null)
-				System.out.println("Monster letar efter nrliggande " + temp.size() );												// detta funkar
+				//System.out.println("Monster letar efter nrliggande " + temp.size() );												// detta funkar
 			setChanged();
 			notifyObservers( new Envelope(temp));
 		}
