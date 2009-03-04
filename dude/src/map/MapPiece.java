@@ -72,35 +72,40 @@ public class MapPiece
        this.objectName = new String(mpiece.getObjName());
        this.walkable = mpiece.isWalkable();
     }
-    /*
+    
+    /**
 	 *Returns the z-value of this MapPiece
 	 *@return int z - the z-value
 	 */
     public int getZ(){
         return z;
     }
-	 /*
+	 
+    /**
 	 *Returns the Point of this MapPiece
 	 *@return Point point - the point of this mappiece
 	 */
     public Point getPoint(){
        return point;
     }
-    /*
+    
+    /**
 	 *Returns the name/obstacle of this MapPiece
 	 *@return String objectname - the objectname of this mappiece
 	 */
     public String getObjName(){
         return objectName;
     }
-    /*
+    
+    /**
 	 *Returns the walkable value of this MapPiece
 	 *@return boolean walkable - if the mappiece is walkable or not
 	 */
     public boolean isWalkable(){
         return walkable;
     }
-    /*
+    
+    /**
 	 *Returns the String of this MapPiece
 	 *@return String astring - a String that tells the z,x,y value of this MapPiece
 	 */
@@ -112,7 +117,7 @@ public class MapPiece
     }
        
        
-    /*
+    /**
 	 *Returns a clone of this MapPiece
 	 *@return MapPiece mappiece - a clone of this MapPiece
 	 */

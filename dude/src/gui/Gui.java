@@ -1,4 +1,4 @@
-//gui.java
+
 
 package gui;
 
@@ -365,18 +365,19 @@ public class Gui implements Observer, ActionListener {
 						updateGraphic(gameCharacter);
 				}
 			}
+		
 		/**
 		 * removeGraphic removes the container from our main window
 		 * 
 		 * @param TranspContainer
 		 *            rtc - the container we want to remove @
 		 */
-
 		private void removeGraphic(TranspContainer rtc) {
 			rtc.setSize(0, 0);
 			guiPane.remove(guiPane.getIndexOf(rtc));
 			rtc = null;
 		}
+		
 		/**
 		 * addGraphic adds an new container 
 		 * 

@@ -1,6 +1,4 @@
-﻿
- 
-package game;
+﻿package game;
 import gamecharacter.GameCharacter;
 import items.Weapon;
 

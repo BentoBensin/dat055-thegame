@@ -130,6 +130,9 @@ public class Engine {
         return parser.getAllCommands();
     }
     
+    /**
+     * Clears the logic model from all data
+     */
     public void reset()
     {
     	logicModel.clear();

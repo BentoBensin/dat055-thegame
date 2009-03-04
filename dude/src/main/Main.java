@@ -19,7 +19,8 @@ public class Main
     {
     	init();
     }
-	 /*
+	
+    /**
 	 *the main method of the game creates a Gui.
 	 *@param String [] args - arguments are not used
 	 */
@@ -27,7 +28,8 @@ public class Main
     {
     	new Gui();
     }
-    /*
+    
+    /**
 	 *init initializes the game
 	 *by creating a new Engine and enemies.
 	 */

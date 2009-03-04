@@ -60,6 +60,11 @@ public class Maps {
              e.printStackTrace();
              }
     }
+    
+    /**
+     * Returns the map instance, creates new if not initiated
+     * @return Maps
+     */
     public static Maps getInstance()
     {
     	if(maps == null){

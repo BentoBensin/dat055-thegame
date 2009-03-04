@@ -1,6 +1,5 @@
 package main;
 
-//import java.lang.Enum;
 import java.awt.event.KeyEvent;
 /**
  * Every string in the whole application

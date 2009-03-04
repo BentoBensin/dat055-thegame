@@ -11,10 +11,11 @@ import java.io.Serializable;
 public class TreeSword extends Weapon implements Serializable{
 	static final long serialVersionUID = 124999;
  
- /**
-   *Constructor for Class TreeSword.
-	*Calls superclass with predefined values.
-   */
+	
+	/**
+	 *Constructor for Class TreeSword.
+	 *Calls superclass with predefined values.
+	 */	
 	public TreeSword()
 	{
 		super(30,100,10,null,500);
