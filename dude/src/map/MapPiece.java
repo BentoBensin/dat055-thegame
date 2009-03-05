@@ -16,9 +16,6 @@ import java.awt.*;
  *
  */
 
-/**
- * Constructor for objects of class MapPiece
- */
 public class MapPiece
 {
     private Point point;

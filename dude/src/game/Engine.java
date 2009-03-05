@@ -15,9 +15,13 @@ import map.Maps;
 import command.Command;
 
 /**
+ * MVC - Controller
+ * Engine takes input from client, sends it to the correct place
+ * binds together LogicModel Commands and Map
+ * @see LogicModel , IDGen , Parser, Maps
  * @file Engine.java
  * @version 0.2
- * @author Josef Johansson and Mattias Lögdberg
+ * @author Josef Johansson and Mattias Lgdberg
  */
 public class Engine {
     /**

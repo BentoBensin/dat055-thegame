@@ -4,6 +4,7 @@ import game.Engine;
 import gui.Gui;
 
 /**
+ * the starting point for the application~
  * @file Main.java
  * @version 0.2
  * @author Raul Bache

@@ -1,21 +1,20 @@
 package game;
 
+import gamecharacter.GameCharacter;
+
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.TreeMap;
 /**
+ * MVC - Model
  * Logic Model contains all client's in the game,
  * Can search for Clients with ID, x,y cordinates
  * Clients can be added, returned and removed
  *
  * @file LogicModel.java
  * @version 0.4
- * @author Mattias Lögdberg
+ * @author Mattias Lgdberg
  */
-
-import gamecharacter.GameCharacter;
-
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.TreeMap;
-
 public class LogicModel {
 
     private TreeMap<Integer,Client> tm;

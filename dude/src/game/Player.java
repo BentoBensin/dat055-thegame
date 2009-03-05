@@ -8,9 +8,11 @@ import main.Envelope;
 import main.Strings;
 
 /**
+ * Player extends Client, which holds the Thread for updating the GameCharacter
+ * This should take a networkmodule instead of engine someday.
  * @file Player.java
  * @version 0.2
- * @author Mattias Lgdberg
+ * @author Mattias Lögdberg
  */
 public class Player extends Client{
 	

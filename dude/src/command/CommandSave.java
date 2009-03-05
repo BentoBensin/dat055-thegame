@@ -21,6 +21,7 @@ public class CommandSave extends Command {
 	@Override
 	/**
 	 * Performs the saving, serializing the gamecharacters and putting them to a file
+	 * @param client
 	 */
 	public void execute(Client client) {
 		

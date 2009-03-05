@@ -24,6 +24,7 @@ public class CommandPauseToggle extends Command
      * Executes the pause command
      * pauses all clients if they are unpaused and
      * unpauses if paused
+     * @param client
      */
     public void execute(Client client)
     {

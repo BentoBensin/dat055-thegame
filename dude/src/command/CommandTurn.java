@@ -4,7 +4,7 @@ import game.Client;
 import game.Engine;
 
 /**
- * should this be used?
+ * GUI handles the turning of the client.. so this is useless
  * @author Josef Johansson
  *
  */
@@ -20,6 +20,7 @@ public class CommandTurn extends Command
 
     /**
      * Executes the turn command
+     * @param client
      */
     public void execute(Client client)
     {

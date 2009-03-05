@@ -1,6 +1,10 @@
 package game;
 
-
+import gamecharacter.GameCharacter;
+import java.awt.Point;
+import java.util.ArrayList;
+import main.Envelope;
+import main.Strings;
 /**
  * Monster extends Client it is a logical representation
  * of an enemy in our game.
@@ -8,15 +12,6 @@ package game;
  * @version 0.3
  * @author Mattias, GammelTeddie, Raul
  */
- 
-import gamecharacter.GameCharacter;
-
-import java.awt.Point;
-import java.util.ArrayList;
-
-import main.Envelope;
-import main.Strings;
-
 public class Monster extends Client {
 	private ArrayList<GameCharacter> temp;
 	private int moveRemaining;

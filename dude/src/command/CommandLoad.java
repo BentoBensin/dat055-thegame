@@ -8,6 +8,8 @@ import java.io.*;
 /**
  * This class resets the engine and reloads the players saved in the sav-file and puts them
  * in the game engine
+ * @file CommandLoad.java
+ * @version 0.1
  * @author raul
  *
  */
@@ -21,6 +23,7 @@ public class CommandLoad extends Command {
 	@Override
 	 /**
 	  * Executes the load command
+	  * @param client
 	  */
 	public void execute(Client client) 
 	{

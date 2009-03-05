@@ -6,12 +6,10 @@ import game.Engine;
 import java.util.Scanner;
 
 /**
+ * CommandUpdate handles the update for all clients, returning all the nearby Gamecharacters
  * @file CommandUpdate
  * @version 0.1
  * @author mathal
- *
- *	CommandUpdate handles the update for all clients, returning all the nearby Gamecharacters
- *	
  */
 
 public class CommandUpdate extends Command{
@@ -21,6 +19,7 @@ public class CommandUpdate extends Command{
     }
  /**
   * Executes the update command
+  * @param client
   */
     public void execute(Client client)
     {
