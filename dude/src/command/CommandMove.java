@@ -2,8 +2,10 @@ package command;
 
 import game.Client;
 import game.Engine;
-import main.Strings;
+
 import java.awt.Point;
+
+import main.Strings;
 
 /**
  * Makes the client move forward
@@ -43,10 +45,10 @@ public class CommandMove extends Command
 			if(client.getGameCharacter().getDirection().equals(Strings.South)) y+=stepSize;
 			if(client.getGameCharacter().getDirection().equals(Strings.East)) x+=stepSize;
 			if(client.getGameCharacter().getDirection().equals(Strings.West)) x-=stepSize;
-			// tog bort && engine.checkSpot( 1,x,y ) från nedanstående så länge
+			// tog bort && engine.checkSpot( 1,x,y ) frn nedanstende s lnge
 			if (engine.checkSpot( 0, x, y ) && engine.checkSpot( 1, x, y ))
             {
-            	//System.out.println("Position ändras. Från " + client.getGameCharacter().getPoint() + " till " + new Point(x,y));
+            	//System.out.println("Position ndras. Frn " + client.getGameCharacter().getPoint() + " till " + new Point(x,y));
                 client.getGameCharacter().updateCoordinates(new Point(x,y));
             }
     	}

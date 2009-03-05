@@ -1,7 +1,7 @@
 package map;
 
 
-import java.awt.*;
+import java.awt.Point;
 /**
  * This class represents a tile in the map.
  * The tile is represented in x,y and z coordinates.
@@ -62,6 +62,7 @@ public class MapPiece
     }
     /**
      * Constructor for cloning objects of class MapPiece
+     * @param MapPiece that we clone
      */
     public MapPiece(MapPiece mpiece)
     {

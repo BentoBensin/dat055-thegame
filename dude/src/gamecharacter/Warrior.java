@@ -1,7 +1,9 @@
 package gamecharacter;
 
 import items.TreeSword;
+
 import java.awt.Point;
+
 import main.Strings;
 
 /**

@@ -1,6 +1,7 @@
 package game;
 
 /**
+ * DesignPattern: Singleton
  * Generates a unique id-number for every client using the singleton design pattern.
  * 
  * @author Raul
@@ -21,7 +22,7 @@ public class IDGen
     }
    
     /**
-     * 
+     * returns the instance
      * @return IDGen
      */
     public IDGen getInstance(){

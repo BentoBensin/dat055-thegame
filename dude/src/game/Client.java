@@ -1,6 +1,7 @@
 package game;
 
 import gamecharacter.GameCharacter;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -98,7 +99,7 @@ public abstract class Client extends Observable implements Runnable {
     }
     /**
      * Return the Clients ID
-     * @return
+     * @return int - the id of client
      */
     public int getID() {
         return id;

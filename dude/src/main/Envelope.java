@@ -1,6 +1,7 @@
 package main;
 
 import gamecharacter.GameCharacter;
+
 import java.util.ArrayList;
 /**
  * A class that wraps up a LinkedList
@@ -15,6 +16,10 @@ public class Envelope {
 	{
 		this.l = l;
 	}
+	/**
+	 * 
+	 * @return ArrayList of GameCharacters
+	 */
 	public ArrayList<GameCharacter> getGuiLinkedList()
 	{
 		return l;

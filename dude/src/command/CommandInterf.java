@@ -2,11 +2,11 @@ package command;
 
 import game.Client;
 /**
+ * This is the interface for Commands in this game
  * @file CommandInterf.java
  * @version 0.1
  * @author mathal
  *	
- *	This is the interface for Commands in this game
  */
 public interface CommandInterf {
 

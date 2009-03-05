@@ -1,7 +1,8 @@
 package gui;
 
-import main.Strings;
 import java.util.HashMap;
+
+import main.Strings;
 /**
  * Localizationsupport for GUI
  * To use this do like this
@@ -44,13 +45,13 @@ public class Localization {
 		LocalizationEnglish.put(Strings.GameTitle	, 				"The Game");
 				
 		LocalizationSwedish.put(Strings.InGameMenuFunctions[0],"Stara spelet");
-		LocalizationSwedish.put(Strings.InGameMenuFunctions[1],"Inställningar");
+		LocalizationSwedish.put(Strings.InGameMenuFunctions[1],"Instllningar");
 //		LocalizationSwedish.put(Strings.InGameMenuFunctions[2],"Ladda");
 //		LocalizationSwedish.put(Strings.InGameMenuFunctions[3],"Spara");
 		LocalizationSwedish.put(Strings.InGameMenuFunctions[2],"Avsluta");
 		LocalizationSwedish.put(Strings.GivePlayerName,			"Ange ett spelarnamn");
 		LocalizationSwedish.put(Strings.PlayerName,				"Spelarnamn ");		
-		LocalizationSwedish.put(Strings.ChooseOne,				"Välj ett alternativ ");
+		LocalizationSwedish.put(Strings.ChooseOne,				"Vlj ett alternativ ");
 		LocalizationSwedish.put(Strings.Input,					"Mata in ");		
 		LocalizationSwedish.put(Strings.ButtonLoad,				"Ladda");		
 		LocalizationSwedish.put(Strings.ButtonSave,				"Spara");
@@ -63,13 +64,13 @@ public class Localization {
 		LocalizationSwedish.put(Strings.GameTitle	, 				"The Game");
 		
 		LocalizationMust.put(Strings.InGameMenuFunctions[0],"Stara spelet");
-		LocalizationMust.put(Strings.InGameMenuFunctions[1],"Inställningar");
+		LocalizationMust.put(Strings.InGameMenuFunctions[1],"Instllningar");
 	//	LocalizationMust.put(Strings.InGameMenuFunctions[2],"Ladda");
 	//	LocalizationMust.put(Strings.InGameMenuFunctions[3],"Spara");
 		LocalizationMust.put(Strings.InGameMenuFunctions[2],"Avsluta");
 		LocalizationMust.put(Strings.GivePlayerName,			"Ange ett spelarnamn");
 		LocalizationMust.put(Strings.PlayerName,				"Spelarnamn ");		
-		LocalizationMust.put(Strings.ChooseOne,				"Välj ett alternativ ");
+		LocalizationMust.put(Strings.ChooseOne,				"Vlj ett alternativ ");
 		LocalizationMust.put(Strings.Input,					"Mata in ");		
 		LocalizationMust.put(Strings.ButtonLoad,				"Ladda");		
 		LocalizationMust.put(Strings.ButtonSave,				"Spara");

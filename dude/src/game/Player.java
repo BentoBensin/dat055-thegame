@@ -4,6 +4,7 @@ import gamecharacter.GameCharacter;
 
 import java.awt.Point;
 import java.util.ArrayList;
+
 import main.Envelope;
 import main.Strings;
 
@@ -105,6 +106,7 @@ public class Player extends Client{
 	}
 	/**
 	*Clones this Player
+	*@return new Player object
 	*/
 	public Object clone() {
 		return new Player(this);

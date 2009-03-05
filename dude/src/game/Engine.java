@@ -59,7 +59,7 @@ public class Engine {
     }
     /**
      * Creates an n number of enemies
-     * @param n
+     * @param number of enemies to create
      */
     public void createEnemies( int n ){
     	Client monster;
@@ -88,6 +88,10 @@ public class Engine {
     	return new ArrayList<GameCharacter>();
     }
     
+    /**
+     * returns every client we have in logicModel
+     * @return Arraylist of clients
+     */
     public ArrayList<Client> getAllClients() {
     	return logicModel.getAllClients();
     }
@@ -99,6 +103,14 @@ public class Engine {
     {
        	maps.loadMap(mapPath);
     }
+    /**
+     * checks if a spot is possible to walk on
+     * this is just passing by to maps
+     * @param z
+     * @param x
+     * @param y
+     * @return true if possible to walk, false if not
+     */
     public boolean checkSpot(int z, int x, int y) {
     	return maps.checkSpot(z, x, y);
     }

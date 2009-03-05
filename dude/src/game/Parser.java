@@ -1,7 +1,6 @@
 package game;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 import command.Command;
 import command.Commands;
@@ -68,6 +67,7 @@ public class Parser
 
     /**
      * Return a list of valid command words.
+     * @return string of all commands
      */
     public String showCommands()
     {

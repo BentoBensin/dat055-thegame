@@ -43,6 +43,7 @@ public class TranspContainer extends JPanel {
 	/**
 	 * Overrides paint in superclass, its this method that is invoked everytime
 	 * we repaint our TranspContainer
+	 * @param g a Graphics object
 	 */
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -131,7 +132,10 @@ public class TranspContainer extends JPanel {
 			graphic.drawImage(bimg, 0, 0, null);
 		}
 	}
-	
+	/**
+	 * Sets the background image
+	 * @param bimg
+	 */
 	public void setBackImage(BufferedImage bimg) {
 		if( bimg != null ){
 			Graphics2D graphic = getNewGraphics();

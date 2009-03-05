@@ -1,8 +1,10 @@
 package game;
 
 import gamecharacter.GameCharacter;
+
 import java.awt.Point;
 import java.util.ArrayList;
+
 import main.Envelope;
 import main.Strings;
 /**

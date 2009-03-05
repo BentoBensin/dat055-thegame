@@ -1,13 +1,17 @@
 package command;
-import java.io.*;
 import game.Client;
-import game.Player;
 import game.Engine;
+import game.Player;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
  * Saves the game enviroment into a file that is loadable.
+ * @file CommandSave.java
+ * @version 0.1
  * @author teddie
  *
  */

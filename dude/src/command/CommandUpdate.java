@@ -3,8 +3,6 @@ package command;
 import game.Client;
 import game.Engine;
 
-import java.util.Scanner;
-
 /**
  * CommandUpdate handles the update for all clients, returning all the nearby Gamecharacters
  * @file CommandUpdate

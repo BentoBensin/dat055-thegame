@@ -61,7 +61,7 @@ public class Weapon extends Item implements Serializable{
 	
 	/**
 	 * Returns the range of the current weapon
-	 * @return
+	 * @return the range of the weapon
 	 */
 	public int getRange()
 	{
