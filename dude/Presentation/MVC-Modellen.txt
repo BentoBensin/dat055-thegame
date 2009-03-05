@@ -1,0 +1,18 @@
+Beskrivning på MVC-Modellen
+I vårat program har vi använt MVC ( Model View Controller ) och valt att dela upp det genom att ha en Controller och View som känner till Model. Om man ser till UML-Diagrammet på paket är detta uppdelat genom följande:
+Model
+ LogicModel
+ GameCharacter
+ Items
+ Map
+View
+ Gui
+Controller
+ Engine
+ Parser
+
+När vi strukturerade upp det hela ville vi ha en ren koppling mellan Client och Engine för att lättare kunna göra spelet över nätverk senare, med detta kom att GameCharacter fick ta över alla dataegenskaper från client så den blev en ren modell och mellan engine och client skickas då bara kommandon och gamecharacters.
+
+
+
+brainfreeeze
